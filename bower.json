@@ -1,0 +1,8 @@
+{
+  "name": "webui-h5show",
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "qunit": "~1.12.0"
+  }
+}
