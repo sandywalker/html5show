@@ -1,6 +1,6 @@
 # h5Show
 
-> slide show by html5 (Developing...)
+> Cool animate html5 slider creator plugin ! 	(Developing...)
 
 
 ## Getting Started
