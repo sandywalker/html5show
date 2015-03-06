@@ -198,22 +198,41 @@
 
 
     function H5Show(elId,options){
-    	var config = extend(defaults,options);
+    	this.container = byId( elId );
+    	this.config = extend(defaults,options);
+    	this.pages = arrayify( $$('.page'),this.container);
     	
+    	this.init();
     }
 
     H5Show.prototype = {
 
     	init:function(){
 
+    		for(var i in this.pages){
+    			this.initPage(i);
+    		}
+    		this.showPage();
     	},
 
     	initPage:function(idx){
-
+    		
     	},
 
-    	showPage:function(idx){
+    	setPageIndex:function(idx){
+    		this.index = idx;
+    		this.showPage();
+    	},
 
+    	getPage:function(idx){
+    		return idx>=0&&idx<this.pages.length?this.pages[idx]:this.pages[0];
+    	}
+
+    	showPage:function(){
+    		var page = getPage(this.index);
+    		// if (page){
+    		// 	page.classList.add('show');
+    		// }
     	},
 
     	nextPage:function(){
