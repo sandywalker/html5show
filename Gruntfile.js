@@ -25,7 +25,21 @@ module.exports = function (grunt) {
       },
       dist: {
         src: ['src/<%= pkg.name %>.js'],
-        dest: 'dist/jquery.<%= pkg.name %>.js'
+        dest: 'dist/<%= pkg.name %>.js'
+      },
+      css:{
+        src:['src/animate.css','src/<%= pkg.name %>.css'],
+        dest:'dist/<%= pkg.name %>.css'
+      }
+    },
+    sass: {                              // Task
+      dist: {                            // Target
+        options: {                       // Target options
+          style: 'expanded'
+        },
+        files: {                         // Dictionary of files
+          'src/<%= pkg.name %>.css': 'src/<%= pkg.name %>.scss'      // 'destination': 'source'
+        }
       }
     },
     uglify: {
@@ -34,9 +48,20 @@ module.exports = function (grunt) {
       },
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'dist/jquery.<%= pkg.name %>.min.js'
+        dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
+    cssmin: {
+         options: {
+             keepSpecialComments: 1,
+         },
+         compress: {
+             files: {
+                 'dist/<%= pkg.name %>.min.css': ['dist/<%= pkg.name %>.css']
+             }
+         }
+    },
+
     qunit: {
       all: {
         options: {
@@ -59,12 +84,6 @@ module.exports = function (grunt) {
           jshintrc: 'src/.jshintrc'
         },
         src: ['src/**/*.js']
-      },
-      test: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
-        src: ['test/**/*.js']
       }
     },
     watch: {
@@ -91,8 +110,12 @@ module.exports = function (grunt) {
     }
   });
 
+
+  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+
   // Default task.
-  grunt.registerTask('default', ['jshint', 'connect', 'qunit', 'clean', 'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'sass','connect', 'clean', 'concat','uglify','cssmin']);
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);

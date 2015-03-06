@@ -2,26 +2,71 @@
   <html>
   <head>
     <meta charset="utf-8">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" 
     <title>h5Show Test Suite</title>
-    <!-- Load local jQuery. -->
-    <script src="../bower_components/jquery/jquery.js"></script>
-    <!-- Load local QUnit. -->
-    <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css" media="screen">
-    <script src="../bower_components/qunit/qunit/qunit.js"></script>
-    <!-- Load local lib and tests. -->
     <script src="../src/webui-h5show.js"></script>
-    <script src="webui-h5show_test.js"></script>
-    <!-- Removing access to jQuery and $. But it'll still be available as _$, if
-         you REALLY want to mess around with jQuery in the console. REMEMBER WE
-         ARE TESTING A PLUGIN HERE, THIS HELPS ENSURE BEST PRACTICES. REALLY. -->
-    <script>window._$ = jQuery.noConflict(true);</script>
+    
+    <style>
+      body{
+        font-size: 14px;
+      }
+
+      #page{
+        position: absolute;
+        background: #eee;
+        top:0;
+        bottom:0;
+        right:0;
+        left:0;
+      }
+
+      h1{
+        position: absolute;
+        font-size: 5.2vw;
+        left:20%;
+        top:20%;
+      }
+
+      h2{
+        position: absolute;
+        font-size: 2.9em;
+        right:20%;
+        bottom:20%;
+      }
+    </style>
+    
   </head>
   <body>
-    <div id="qunit"></div>
-    <div id="qunit-fixture">
-      <span>lame test markup</span>
-      <span>normal test markup</span>
-      <span>awesome test markup</span>
+
+    <div id="h5show" data-direction="upDown" data-indicator="true" data-arrow="false">
+      <div class="page" data-show="slideUp" data-hide="slideDown" data-stay="10">
+         <div id="box1 ani" data-pos="20,20" data-size="33%,33%" data-time="2s" data-duration="1.5s" data-show="fadeIn" data-hide="fadeOut" data-in="swipe">
+           
+         </div>
+      </div>
+      <div class="page">
+         
+      </div>
+      <div class="page">
+         
+      </div>
+      <div class="page">
+         
+      </div>
+      <div class="page">
+         
+      </div>
     </div>
+
+
+    <script src="../src/webui-h5show.js"></script>
+    <script>
+    (function(){
+       var show = new H5Show('.h5show',{index:0,page:{
+         show:'ddd'
+       }});
+
+    })();
+    </script>
   </body>
 </html>
