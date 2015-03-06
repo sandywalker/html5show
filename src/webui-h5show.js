@@ -193,6 +193,11 @@
     		show:'show',
     		hide:'hide',
     		stay:10
+		},
+		sprite:{
+			show:'show',
+			hide:null,
+			showing:null
 		}
     };
 
