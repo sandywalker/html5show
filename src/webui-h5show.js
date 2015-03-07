@@ -100,7 +100,7 @@
 
 
 
-
+    //if object is plain object
     var isPlainObject = function( obj ) {
 
 		if ( typeof obj  !== "object"  ) {
@@ -117,6 +117,7 @@
 		return true;
 	};
 
+    // merge object's value and return
     var extend = function() {
     	var src, copyIsArray, copy, name, options, clone,
     		target = arguments[0] || {},
@@ -181,11 +182,14 @@
     	return target;
     };
 
+    //proxy of console.warn
     var warn = function(msg){
         if (console){
                     console.warn('idx:' + idx + ' is not valid !');
         }
     };
+
+    //proxy of console.log
     var log = function(msg){
         if (console){
                     console.log('idx:' + idx + ' is not valid !');
@@ -217,12 +221,13 @@
 
     var _defaultDuration = 1.5;
 
-    var _sPage = '.page';
-    var _cPageContainer = 'page-container';
-    var _cAnimated = 'animated';
-    var _cPageActive = 'page-active';
+    var _sPage = '.page'; //page selector
+    var _cPageContainer = 'page-container'; //page container class name
+    var _cAnimated = 'animated'; //animated class name
+    var _cPageActive = 'page-active'; //active page class name
 
 
+    //Construct method, set container by element Id, extend options and set value to config
     function H5Show(elId,options){
 
     	this.container = byId( elId );
@@ -234,6 +239,7 @@
 
     H5Show.prototype = {
 
+        //Initialize pages,pageCount,lastIdx, showPage by index of config
     	init:function(){
             this.pages = arrayify( $$(_sPage),this.container);
             this.pageCount = this.pages.length;
@@ -246,12 +252,14 @@
     		this.setPageIndex(this.config.index);
     	},
 
+        //Initialize page classes ,config and elements in page;
     	initPage:function(page){
             page.config = extend(this.config.page,page.dataset);
             this.setDuration(page,page.config.duration);
     		page.inited = true;
     	},
 
+        //Set page index, hide last page if exists ,then show page
     	setPageIndex:function(idx){
             if (idx<0||idx>this.pageCount-1){
                 warn('idx:' + idx + ' is not valid !');
@@ -264,12 +272,14 @@
     		this.showPage(idx);
     	},
 
+        //Get page element by index specified, if idx argument is not passed, index is set to this.idx
     	getPage:function(idx){
             if (idx==undefined){
                 idx = this.idx;
             }
     		return idx>=0&&idx<this.pageCount?this.pages[idx]:this.pages[0];
     	},
+        //Hide page by index
         hidePage:function(idx){
             var page = this.getPage(idx);
             if (page){
@@ -282,6 +292,7 @@
             };
         },
 
+        //Show page by index
     	showPage:function(idx){
             
             
@@ -292,6 +303,7 @@
             page.classList.add(_cAnimated,_cPageActive,page.config.show);
             this.lastIdx = this.idx;
             
+            //if autoPlay is true, show next page after stay time
             if (this.config.autoPlay){
                 var that = this;
                 setTimeout(function(){
@@ -300,15 +312,18 @@
             }
     	},
 
+        //Show next page
     	nextPage:function(){
             var idx = this.idx<this.pageCount-1?this.idx+1:0;
             this.setPageIndex(idx);
     	},
+        //Show previous page
     	prevPage:function(){
              if (this.idx>0){
                 this.setPageIndex(idx-1);
              }
     	},
+        //Set animation duration of the element
         setDuration :function(el,duration){
             if (duration!=_defaultDuration){
                 css(el,{
