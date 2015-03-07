@@ -2,59 +2,36 @@
   <html>
   <head>
     <meta charset="utf-8">
-    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" 
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"> 
     <title>h5Show Test Suite</title>
-    <script src="../src/webui-h5show.js"></script>
     
+    <link rel="stylesheet" href="../src/animate.css">
+    <link rel="stylesheet" href="../src/webui-h5show.css">
     <style>
-      body{
-        font-size: 14px;
-      }
-
-      #page{
-        position: absolute;
-        background: #eee;
-        top:0;
-        bottom:0;
-        right:0;
-        left:0;
-      }
-
-      h1{
-        position: absolute;
-        font-size: 5.2vw;
-        left:20%;
-        top:20%;
-      }
-
-      h2{
-        position: absolute;
-        font-size: 2.9em;
-        right:20%;
-        bottom:20%;
-      }
+       
     </style>
     
   </head>
   <body>
 
     <div id="h5show" data-direction="upDown" data-indicator="true" data-arrow="false">
-      <div class="page" data-show="slideUp" data-hide="slideDown" data-stay="10">
-         <div id="box1 ani" data-pos="20,20" data-size="33%,33%" data-time="2s" data-duration="1.5s" data-show="fadeIn" data-hide="fadeOut" data-showing="swipe">
-           
-         </div>
+      <div class="page" data-show="fadeInUp" data-hide="fadeOutDown" data-stay="10">
+         <p>page1</p>
+         <!-- <div id="box1 ani" data-pos="20,20" data-size="33%,33%" data-time="2s" data-duration="1.5s" data-show="fadeIn" data-hide="fadeOut" data-showing="swipe">
+            page1
+         </div> -->
       </div>
       <div class="page">
-         
+         <p>page2</p>
       </div>
       <div class="page">
-         
+         <p>page3</p>
       </div>
       <div class="page">
-         
+         <p>page4</p>
       </div>
       <div class="page">
-         
+         <p>page5</p>
       </div>
     </div>
 
@@ -62,7 +39,7 @@
     <script src="../src/webui-h5show.js"></script>
     <script>
     (function(){
-       var show = new H5Show('h5show',{});
+       var show = new H5Show('h5show',{autoPlay:true});
 
     })();
     </script>

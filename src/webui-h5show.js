@@ -181,18 +181,32 @@
     	return target;
     };
 
+    var warn = function(msg){
+        if (console){
+                    console.warn('idx:' + idx + ' is not valid !');
+        }
+    };
+    var log = function(msg){
+        if (console){
+                    console.log('idx:' + idx + ' is not valid !');
+        }
+    }
+
+    
 
 
 
-    var defaults = {
+    var _defaults = {
     	index:0,
+        autoPlay:false,
     	direction:'upDown',
     	indicator:false,
     	arrow:false,
     	page:{
     		show:'show',
     		hide:'hide',
-    		stay:10
+    		stay:3,
+            duration:1.5
 		},
 		sprite:{
 			show:'show',
@@ -201,11 +215,19 @@
 		}
     };
 
+    var _defaultDuration = 1.5;
+
+    var _sPage = '.page';
+    var _cPageContainer = 'page-container';
+    var _cAnimated = 'animated';
+    var _cPageActive = 'page-active';
+
 
     function H5Show(elId,options){
+
     	this.container = byId( elId );
-    	this.config = extend(defaults,options);
-    	this.pages = arrayify( $$('.page'),this.container);
+    	this.config = extend(_defaults,options);
+    	
     	
     	this.init();
     }
@@ -213,42 +235,90 @@
     H5Show.prototype = {
 
     	init:function(){
-
+            this.pages = arrayify( $$(_sPage),this.container);
+            this.pageCount = this.pages.length;
+            this.container.classList.add(_cPageContainer);
     		for(var i in this.pages){
-    			this.initPage(i);
+                this.pages[i].inited = false;
+                
     		}
-    		this.showPage();
+            this.lastIdx = -1;
+    		this.setPageIndex(this.config.index);
     	},
 
-    	initPage:function(idx){
-    		
+    	initPage:function(page){
+            page.config = extend(this.config.page,page.dataset);
+            this.setDuration(page,page.config.duration);
+    		page.inited = true;
     	},
 
     	setPageIndex:function(idx){
-    		this.index = idx;
-    		this.showPage();
+            if (idx<0||idx>this.pageCount-1){
+                warn('idx:' + idx + ' is not valid !');
+                return;
+            }
+            this.idx = idx;
+            if (this.lastIdx>=0){
+                this.hidePage(this.lastIdx);
+            }
+    		this.showPage(idx);
     	},
 
     	getPage:function(idx){
-    		return idx>=0&&idx<this.pages.length?this.pages[idx]:this.pages[0];
-    	}
+            if (idx==undefined){
+                idx = this.idx;
+            }
+    		return idx>=0&&idx<this.pageCount?this.pages[idx]:this.pages[0];
+    	},
+        hidePage:function(idx){
+            var page = this.getPage(idx);
+            if (page){
+                page.classList.remove(page.config.show);
+                page.classList.add(page.config.hide);
 
-    	showPage:function(){
-    		var page = getPage(this.index);
-    		// if (page){
-    		// 	page.classList.add('show');
-    		// }
+                setTimeout(function(){
+                    page.classList.remove(_cPageActive,_cAnimated,page.config.hide);
+                } ,page.config.duration*1000);
+            };
+        },
+
+    	showPage:function(idx){
+            
+            
+            var page = this.getPage(idx);
+            if (!page.inited){
+                this.initPage(page);
+            }
+            page.classList.add(_cAnimated,_cPageActive,page.config.show);
+            this.lastIdx = this.idx;
+            
+            if (this.config.autoPlay){
+                var that = this;
+                setTimeout(function(){
+                    that.nextPage();
+                }, (page.config.duration + page.config.stay)*1000);
+            }
     	},
 
     	nextPage:function(){
-
+            var idx = this.idx<this.pageCount-1?this.idx+1:0;
+            this.setPageIndex(idx);
     	},
     	prevPage:function(){
-
-    	}
-
-
+             if (this.idx>0){
+                this.setPageIndex(idx-1);
+             }
+    	},
+        setDuration :function(el,duration){
+            if (duration!=_defaultDuration){
+                css(el,{
+                    animationDuration: duration+'s',
+                    animationFillMode:'both'
+                });
+            }
+        }
     };
+
 
 
     window.H5Show = H5Show;
