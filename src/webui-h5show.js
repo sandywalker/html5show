@@ -207,8 +207,8 @@
     	indicator:false,
     	arrow:false,
     	page:{
-    		show:'show',
-    		hide:'hide',
+    		show:'fadeInUp',
+    		hide:'fadeOutDown',
     		stay:3,
             duration:1.5
 		},

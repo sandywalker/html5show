@@ -38,7 +38,8 @@ module.exports = function (grunt) {
           style: 'expanded'
         },
         files: {                         // Dictionary of files
-          'src/<%= pkg.name %>.css': 'src/<%= pkg.name %>.scss'      // 'destination': 'source'
+          'src/<%= pkg.name %>.css': 'src/<%= pkg.name %>.scss',     // 'destination': 'source'
+          'src/animate-page.css': 'src/animate-page.scss'
         }
       }
     },

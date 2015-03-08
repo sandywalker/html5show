@@ -6,16 +6,20 @@
     <title>h5Show Test Suite</title>
     
     <link rel="stylesheet" href="../src/animate.css">
+    <link rel="stylesheet" href="../src/animate-page.css">
     <link rel="stylesheet" href="../src/webui-h5show.css">
     <style>
-       
+       .page{
+          background: #666;
+          color:#fff;
+       }
     </style>
     
   </head>
   <body>
 
     <div id="h5show" data-direction="upDown" data-indicator="true" data-arrow="false">
-      <div class="page" data-show="fadeInUp" data-hide="fadeOutDown" data-stay="10">
+      <div class="page" data-show="pt-page-rotateFall" data-hide="fadeOutDown" data-stay="10">
          <p>page1</p>
          <!-- <div id="box1 ani" data-pos="20,20" data-size="33%,33%" data-time="2s" data-duration="1.5s" data-show="fadeIn" data-hide="fadeOut" data-showing="swipe">
             page1
