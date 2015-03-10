@@ -99,8 +99,8 @@
     };
 
     //Get element  from url hash
-    var getElementFromHash = function(){
-        return byId( window.location.hash.replace(/^#\/?/,"") );
+    var getIdFromHash = function(){
+        return window.location.hash.replace(/^#\/?/,"");
     };
 
 
@@ -254,6 +254,7 @@
 
         //Initialize pages,pageCount,lastIdx, showPage by index of config
     	init:function(){
+            this.pageMap = {};
             this.pages = arrayify( $$(_sPage),this.container);
             this.pageCount = this.pages.length;
             this.container.classList.add(_cPageContainer);
@@ -264,9 +265,10 @@
                 if (!page.id) {
                     page.id = 'page' + (page.idx+1);
                 }
+                this.pageMap[page.id] = page;
     	    }
             this.lastIdx = -1;
-            this.idx = this.getIdxFromHash()||this.config.index;
+            this.idx = this.idxFromHash()||this.config.index;
     		this.goto(this.getPage(this.idx));
     	},
 
@@ -282,7 +284,7 @@
         initEventListeners:function(){
             var that = this;
             window.addEventListener('hashchange', function () {
-                    that.setIdx( that.getIdxFromHash());
+                    that.setIdx( that.idxFromHash());
             }, false);
 
             this.container.addEventListener('h5show.pageEnter', function (e) {
@@ -301,8 +303,8 @@
             }
         },
 
-        getIdxFromHash:function(){
-            var page = getElementFromHash();
+        idxFromHash:function(){
+            var page = this.pageMap[getIdFromHash()];
             return page?page.idx:0;
         },
 
