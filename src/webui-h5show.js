@@ -98,6 +98,11 @@
         el.dispatchEvent(event);
     };
 
+    //Get element  from url hash
+    var getElementFromHash = function(){
+        return byId( window.location.hash.replace(/^#\/?/,"") );
+    };
+
 
 
     //if object is plain object
@@ -117,6 +122,7 @@
 		return true;
 	};
 
+    // this method source code is from jquery 2.0.x
     // merge object's value and return
     var extend = function() {
     	var src, copyIsArray, copy, name, options, clone,
@@ -138,7 +144,7 @@
     		target = {};
     	}
 
-    	// extend jQuery itself if only one argument is passed
+
     	if ( i === length ) {
     		target = this;
     		i--;
@@ -168,6 +174,7 @@
 
 						// Never move original objects, clone them
 						//console.log('abc');
+
 						target[ name ] = extend( deep, clone, copy );
 
 					// Don't bring in undefined values
@@ -182,23 +189,21 @@
     	return target;
     };
 
+
+
     //proxy of console.warn
     var warn = function(msg){
         if (console){
-                    console.warn('idx:' + idx + ' is not valid !');
+                    console.warn(msg);
         }
     };
 
     //proxy of console.log
     var log = function(msg){
         if (console){
-                    console.log('idx:' + idx + ' is not valid !');
+                    console.log(msg);
         }
     }
-
-    
-
-
 
     var _defaults = {
     	index:0,
@@ -210,7 +215,7 @@
     		show:'fadeInUp',
     		hide:'fadeOutDown',
     		stay:3,
-            duration:1.5
+            duration:1
 		},
 		sprite:{
 			show:'show',
@@ -227,14 +232,22 @@
     var _cPageActive = 'page-active'; //active page class name
 
 
+    var hidePageTimeout = null; //timeout that hide page after animate
+    var autoPlayTimeout = null; //timeout that auto play to next page
+
+
+    
+    var lastHash = '';  // last hash detected
+
+
+
+
     //Construct method, set container by element Id, extend options and set value to config
     function H5Show(elId,options){
-
     	this.container = byId( elId );
-    	this.config = extend(_defaults,options);
-    	
-    	
-    	this.init();
+        this.config = extend({},_defaults,options);
+    	this.initEventListeners();
+        this.init();
     }
 
     H5Show.prototype = {
@@ -246,21 +259,62 @@
             this.container.classList.add(_cPageContainer);
     		for(var i in this.pages){
                 this.pages[i].inited = false;
-                
-    		}
+                this.pages[i].idx = toNumber(i);
+    	    }
             this.lastIdx = -1;
-    		this.setPageIndex(this.config.index);
+            this.idx = this.getIdxFromHash()||this.config.index;
+    		this.goto(this.getPage(this.idx));
     	},
 
         //Initialize page classes ,config and elements in page;
     	initPage:function(page){
-            page.config = extend(this.config.page,page.dataset);
+            page.config = extend({},this.config.page,page.dataset);
             this.setDuration(page,page.config.duration);
     		page.inited = true;
     	},
 
+        //Initialize default event listeners
+        initEventListeners:function(){
+            var that = this;
+            window.addEventListener('hashchange', function () {
+                    that.setIdx( that.getIdxFromHash());
+            }, false);
+
+            this.container.addEventListener('h5show.pageEnter', function (e) {
+                var newHash = '#/' + e.target.id;
+                if (window.location.hash!==newHash){
+                    window.location.hash = lastHash = '#/' + e.target.id;
+                }else{
+                    that.setIdx(e.target.idx);
+                }
+            }, false);
+        },
+        //Go to page by id
+        goto:function(page){
+            if (page){
+                triggerEvent(page, 'h5show.pageEnter');
+            }
+        },
+
+        getIdxFromHash:function(){
+            var page = getElementFromHash();
+            return page?page.idx:0;
+        },
+
+        //Get page element by index specified, if idx argument is not passed, index is set to this.idx
+    	getPage:function(idx){
+            if (idx==undefined){
+                idx = this.idx;
+            }
+    		var page =  idx>=0&&idx<this.pageCount?this.pages[idx]:this.pages[0];
+            if (!page.inited){
+                this.initPage(page);
+            }
+            return page;
+    	},
+
         //Set page index, hide last page if exists ,then show page
-    	setPageIndex:function(idx){
+        setIdx:function(idx){
             if (idx<0||idx>this.pageCount-1){
                 warn('idx:' + idx + ' is not valid !');
                 return;
@@ -269,58 +323,46 @@
             if (this.lastIdx>=0){
                 this.hidePage(this.lastIdx);
             }
-    		this.showPage(idx);
-    	},
-
-        //Get page element by index specified, if idx argument is not passed, index is set to this.idx
-    	getPage:function(idx){
-            if (idx==undefined){
-                idx = this.idx;
-            }
-    		return idx>=0&&idx<this.pageCount?this.pages[idx]:this.pages[0];
-    	},
+            this.showPage(idx);
+        },
         //Hide page by index
         hidePage:function(idx){
             var page = this.getPage(idx);
             if (page){
                 page.classList.remove(page.config.show);
                 page.classList.add(page.config.hide);
-
-                setTimeout(function(){
-                    page.classList.remove(_cPageActive,_cAnimated,page.config.hide);
+                var hideClass = page.config.hide;
+                window.clearTimeout(hidePageTimeout);
+                hidePageTimeout = window.setTimeout(function(){
+                    page.classList.remove(_cPageActive,_cAnimated,hideClass);
                 } ,page.config.duration*1000);
             };
         },
 
         //Show page by index
     	showPage:function(idx){
-            
-            
             var page = this.getPage(idx);
-            if (!page.inited){
-                this.initPage(page);
-            }
             page.classList.add(_cAnimated,_cPageActive,page.config.show);
-            this.lastIdx = this.idx;
-            
+            this.lastIdx = page.idx;
             //if autoPlay is true, show next page after stay time
             if (this.config.autoPlay){
                 var that = this;
-                setTimeout(function(){
+                window.clearTimeout(autoPlayTimeout);
+                autoPlayTimeout = setTimeout(function(){
                     that.nextPage();
-                }, (page.config.duration + page.config.stay)*1000);
+                }, (toNumber(page.config.duration) + toNumber(page.config.stay))*1000);
             }
     	},
 
         //Show next page
     	nextPage:function(){
             var idx = this.idx<this.pageCount-1?this.idx+1:0;
-            this.setPageIndex(idx);
+            this.goto(this.getPage(idx));
     	},
         //Show previous page
     	prevPage:function(){
              if (this.idx>0){
-                this.setPageIndex(idx-1);
+                this.goto(this.getPage(idx-1));
              }
     	},
         //Set animation duration of the element
@@ -331,7 +373,12 @@
                     animationFillMode:'both'
                 });
             }
-        }
+        },
+
+        //Events 
+        
+
+
     };
 
 

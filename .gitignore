@@ -5,4 +5,4 @@ dist
 .DS_Store
 *.sublime-project
 *.sublime-workspace
-
+*.todo

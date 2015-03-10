@@ -1,0 +1,26 @@
+.page-container{
+	position:absolute;
+	top:0;
+	bottom:0;
+	right:0;
+	left:0;
+}
+
+.page {
+	position: absolute;
+	display:none;
+	overflow: hidden;
+	top:0;
+	bottom:0;
+	right:0;
+	left:0;
+}
+
+
+.page-active{
+	display: block;
+}
+
+.delay {
+  display: none;
+}
