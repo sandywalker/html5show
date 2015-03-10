@@ -76,12 +76,6 @@
         return document.getElementById(id);
     };
     
-    // `$` returns first element for given CSS `selector` in the `context` of
-    // the given element or whole document.
-    // var $ = function ( selector, context ) {
-    //     context = context || document;
-    //     return context.querySelector(selector);
-    // };
     
     // `$$` return an array of elements for given CSS `selector` in the `context` of
     // the given element or whole document.
@@ -207,6 +201,10 @@
     	return target;
     };
 
+
+
+
+
     //Delay by second
     var delay = function(handle,second,callback){
         if (handle){
@@ -229,6 +227,110 @@
     //         window.console.log(msg);
     //     }
     // };
+
+    //====================== private var and func ======================//
+
+    // Parse dataset of element, then layout by css
+    var _layoutElement = function(el){
+        
+        //Convert to css size value
+        var toCssSize = function(v){
+                if (v.indexOf('%')===-1&&v.indexOf('px')===-1){
+                    v+='px';
+                }
+            return v;
+        };
+
+        //Is position set to  center 
+        var isCenter = function(v){
+            return v==='center'||v==='middle';
+        };
+
+        //Get x position
+        var getXPos = function(v,styles){
+             var x = toCssSize(v);
+             if (x.indexOf('-')===-1){
+                styles.left=x;
+             }else{
+                styles.right=x.substr(1);  
+             }
+        };
+
+        //Get y position
+        var getYPos = function(v,styles){
+             var y = toCssSize(v);
+             if (y.indexOf('-')===-1){
+                styles.top=y;
+             }else{
+                styles.bottom=y.substr(1);     
+             }   
+        };
+
+        var ds = el.dataset;
+        var styles = {};
+        //Caculate the position info
+        if (ds.pos){
+            styles.position='absolute';
+            var pos = ds.pos.split(',');
+            if (pos.length===1){pos.push(pos[0]);}
+            if (pos.length){
+                var xc = isCenter(pos[0]);
+                var yc = isCenter(pos[1]);
+                if (xc){
+                    styles.left = '50%';
+                    styles.transform = 'translate(-50%, 0)';
+                    styles.textAlign = 'center';
+                    if (yc){
+                        styles.top = '50%';
+                        styles.transform = 'translate(-50%,-50%)';
+                    }else{
+                        getYPos(pos[1],styles);
+                    }
+                }else{
+                    getXPos(pos[0],styles);
+                    if (yc){
+                        styles.top = '50%';
+                        styles.transform = 'translate(0,-50%)';
+                    }else{
+                        getYPos(pos[1],styles);
+                    }
+                }
+                
+            }    
+        } 
+
+        //Caulate the size info
+
+        //Is position set to  center 
+        var isSizeAuto = function(v){
+            return v==='auto';
+        };
+
+        if (ds.fontsize){
+            var fsize = toCssSize(ds.fontsize);
+            if (fsize.indexOf('%')>=0){
+                fsize = fsize.replace('%','vh');
+            }
+            styles.fontSize = fsize;
+        }
+
+        
+        if (ds.size){
+           var sizes = ds.size.split(',');
+           if (sizes.length===1){sizes.push(sizes[0]);}
+           if (sizes.length){
+                if (!isSizeAuto(sizes[0])){
+                    styles.width = toCssSize(sizes[0]);
+                }
+                if (!isSizeAuto(sizes[1])){
+                    styles.height = toCssSize(sizes[1]);
+                }
+           }
+
+        }  
+        css(el,styles);
+    }; //End of _layoutElement
+
 
     var _defaults = {
     	index:0,
@@ -281,14 +383,16 @@
     	init:function(){
             //pageMap is help object to find page by id, maybe faster than document.getElementById
             this.pageMap = {};
+            //sprites is object to keep all sprites, by page id;
+            this.sprites = {};
             this.pages = arrayify( $$(_sPage),this.container);
             this.pageCount = this.pages.length;
             this.container.classList.add(_cPageContainer);
     		
-            for(var i in this.pages){
+            for(var i=0;i<this.pages.length;i++){
                 var page = this.pages[i];
                 page.inited = false;
-                page.idx = toNumber(i);
+                page.idx = i;
                 //If page id is not setted, create one;
                 if (!page.id) {
                     page.id = 'page' + (page.idx+1);
@@ -308,8 +412,20 @@
             cfg.stay = toNumber(cfg.stay);
             cfg.duration = toNumber(cfg.duration);
             this.setDuration(page,cfg.duration);
+
+            this.initSprites(page);
+
     		page.inited = true;
     	},
+        //Initialize all elements in page as sprites
+        initSprites:function(page){
+            var sprites = page.querySelectorAll('*');
+            this.sprites[page.id] = sprites;
+            for(var i= 0 ;i<sprites.length;i++){
+                var sprite = sprites[i];
+                _layoutElement(sprite);
+            }
+        },
 
         //Initialize default event listeners
         initEventListeners:function(){
