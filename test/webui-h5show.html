@@ -43,7 +43,7 @@
   <body>
 
     <div id="h5show" data-direction="upDown" data-indicator="true" data-arrow="false">
-      <div class="page" data-show="pg-rotateCubeTopIn" data-hide="pg-rotateCubeBottomOut" data-stay="10">
+      <div class="page" data-show="pg-rotateCubeTopIn" data-hide="pg-rotateCubeBottomOut" data-stay="1">
          <p>page1</p>
          <!-- <div id="box1 ani" data-pos="20,20" data-size="33%,33%" data-time="2s" data-duration="1.5s" data-show="fadeIn" data-hide="fadeOut" data-showing="swipe">
             page1
@@ -67,7 +67,7 @@
     <script src="../src/webui-h5show.js"></script>
     <script>
     (function(){
-       var show = new H5Show('h5show',{autoPlay:true});
+       var show = new H5Show('h5show',{autoPlay:true,page:{stay:1}});
 
     })();
     </script>

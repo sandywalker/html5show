@@ -22,7 +22,7 @@
             memory = {};
         
         return function ( prop ) {
-            if ( typeof memory[ prop ] === "undefined" ) {
+            if ( typeof memory[ prop ] === 'undefined' ) {
                 
                 var ucProp  = prop.charAt(0).toUpperCase() + prop.substr(1),
                     props   = (prop + ' ' + prefixes.join(ucProp + ' ') + ucProp).split(' ');
@@ -93,27 +93,45 @@
     // `triggerEvent` builds a custom DOM event with given `eventName` and `detail` data
     // and triggers it on element given as `el`.
     var triggerEvent = function (el, eventName, detail) {
-        var event = document.createEvent("CustomEvent");
+        var event = document.createEvent('CustomEvent');
         event.initCustomEvent(eventName, true, true, detail);
         el.dispatchEvent(event);
     };
 
     //Get element  from url hash
     var getIdFromHash = function(){
-        return window.location.hash.replace(/^#\/?/,"");
+        return window.location.hash.replace(/^#\/?/,'');
     };
+
+    var changeClass = function(action){
+        return function(){
+            var length = arguments.length;
+            if (length>=2){
+                var classes = Array.prototype.slice.call(arguments, 1);
+                var clist = arguments[0].classList;
+                if (clist){
+                    for(var i in classes){
+                        clist[action](classes[i]);
+                    }
+                }
+            }
+        }
+    };
+
+    var addClass = changeClass('add');
+    var removeClass = changeClass('remove');
 
 
 
     //if object is plain object
     var isPlainObject = function( obj ) {
 
-		if ( typeof obj  !== "object"  ) {
+		if ( typeof obj  !== 'object'  ) {
 			return false;
 		}
 
 		if ( obj.constructor &&
-				!hasOwnProperty.call( obj.constructor.prototype, "isPrototypeOf" ) ) {
+				!hasOwnProperty.call( obj.constructor.prototype, 'isPrototypeOf' ) ) {
 			return false;
 		}
 
@@ -132,7 +150,7 @@
     		deep = true;
 
     	// Handle a deep copy situation
-    	if ( typeof target === "boolean" ) {
+    	if ( typeof target === 'boolean' ) {
     		deep = target;
     		// skip the boolean and the target
     		target = arguments[ i ] || {};
@@ -140,7 +158,7 @@
     	}
 
     	// Handle case when target is a string or something (possible in deep copy)
-    	if ( typeof target !== "object" && !typeof obj === "function" ) {
+    	if ( typeof target !== 'object' && !typeof obj === 'function' ) {
     		target = {};
     	}
 
@@ -189,19 +207,26 @@
     	return target;
     };
 
+    //Delay by second
+    var delay = function(handle,second,callback){
+        if (handle){
+            window.clearTimeout(handle);    
+        }
+        handle = window.setTimeout(callback,second*1000);
+    }
 
 
-    //proxy of console.warn
+    //Proxy of console.warn
     var warn = function(msg){
         if (console){
-                    console.warn(msg);
+            console.warn(msg);
         }
     };
 
-    //proxy of console.log
+    //Proxy of console.log
     var log = function(msg){
         if (console){
-                    console.log(msg);
+            console.log(msg);
         }
     }
 
@@ -254,14 +279,17 @@
 
         //Initialize pages,pageCount,lastIdx, showPage by index of config
     	init:function(){
+            //pageMap is help object to find page by id, maybe faster than document.getElementById
             this.pageMap = {};
             this.pages = arrayify( $$(_sPage),this.container);
             this.pageCount = this.pages.length;
             this.container.classList.add(_cPageContainer);
-    		for(var i in this.pages){
+    		
+            for(var i in this.pages){
                 var page = this.pages[i];
                 page.inited = false;
                 page.idx = toNumber(i);
+                //If page id is not setted, create one;
                 if (!page.id) {
                     page.id = 'page' + (page.idx+1);
                 }
@@ -275,8 +303,11 @@
         //Initialize page classes ,config and elements in page;
     	initPage:function(page){
 
-            page.config = extend({},this.config.page,page.dataset);
-            this.setDuration(page,page.config.duration);
+            var cfg = page.config = extend({},this.config.page,page.dataset);
+            //Make sure stay,duration is number
+            cfg.stay = toNumber(cfg.stay);
+            cfg.duration = toNumber(cfg.duration);
+            this.setDuration(page,cfg.duration);
     		page.inited = true;
     	},
 
@@ -289,8 +320,9 @@
 
             this.container.addEventListener('h5show.pageEnter', function (e) {
                 var newHash = '#/' + e.target.id;
+                //If the hash is changed, uses hashchange event handler to process, otherwise set page index
                 if (window.location.hash!==newHash){
-                    window.location.hash = lastHash = '#/' + e.target.id;
+                    window.location.hash = lastHash = newHash;
                 }else{
                     that.setIdx(e.target.idx);
                 }
@@ -302,7 +334,7 @@
                 triggerEvent(page, 'h5show.pageEnter');
             }
         },
-
+        //Get page index from hash
         idxFromHash:function(){
             var page = this.pageMap[getIdFromHash()];
             return page?page.idx:0;
@@ -336,13 +368,13 @@
         hidePage:function(idx){
             var page = this.getPage(idx);
             if (page){
-                page.classList.remove(page.config.show);
-                page.classList.add(page.config.hide);
-                var hideClass = page.config.hide;
-                window.clearTimeout(hidePageTimeout);
-                hidePageTimeout = window.setTimeout(function(){
-                    page.classList.remove(_cPageActive,_cAnimated,hideClass);
-                } ,page.config.duration*1000);
+                var cfg = page.config;
+                removeClass(page,cfg.show);
+                addClass(page,cfg.hide);
+                
+                delay(hidePageTimeout,cfg.duration,function(){
+                    removeClass(page,_cPageActive,_cAnimated,cfg.hide);
+                });
             };
         },
 
@@ -351,13 +383,12 @@
             var page = this.getPage(idx);
             page.classList.add(_cAnimated,_cPageActive,page.config.show);
             this.lastIdx = page.idx;
-            //if autoPlay is true, show next page after stay time
+            //If autoPlay is true, show next page after stay time
             if (this.config.autoPlay){
                 var that = this;
-                window.clearTimeout(autoPlayTimeout);
-                autoPlayTimeout = setTimeout(function(){
+                delay(autoPlayTimeout,page.config.duration+ page.config.stay,function(){
                     that.nextPage();
-                }, (toNumber(page.config.duration) + toNumber(page.config.stay))*1000);
+                });
             }
     	},
 
