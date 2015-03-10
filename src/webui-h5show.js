@@ -258,8 +258,12 @@
             this.pageCount = this.pages.length;
             this.container.classList.add(_cPageContainer);
     		for(var i in this.pages){
-                this.pages[i].inited = false;
-                this.pages[i].idx = toNumber(i);
+                var page = this.pages[i];
+                page.inited = false;
+                page.idx = toNumber(i);
+                if (!page.id) {
+                    page.id = 'page' + (page.idx+1);
+                }
     	    }
             this.lastIdx = -1;
             this.idx = this.getIdxFromHash()||this.config.index;
@@ -268,6 +272,7 @@
 
         //Initialize page classes ,config and elements in page;
     	initPage:function(page){
+
             page.config = extend({},this.config.page,page.dataset);
             this.setDuration(page,page.config.duration);
     		page.inited = true;
