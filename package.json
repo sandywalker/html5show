@@ -1,5 +1,5 @@
 {
-  "name": "webui-h5show",
+  "name": "h5show",
   "version": "1.0.0",
   "description": "h5Show",
   "keywords": [
@@ -10,7 +10,7 @@
     "email": "sanddywalker@gmail.com",
     "url": "https://github.com/sanddywalker@gmail.com"
   },
-  "repository": "sanddywalker@gmail.com/webui-h5show",
+  "repository": "sanddywalker@gmail.com/h5show",
   "license": "MIT",
   "scripts": {
     "test": "grunt"

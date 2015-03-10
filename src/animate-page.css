@@ -359,7 +359,6 @@
 }
 
 .pg-rotateCubeLeftIn {
-  z-index: 999;
   -webkit-transform-origin: 0% 50%;
   -webkit-animation: rotateCubeLeftIn 0.6s both ease-in;
   -moz-transform-origin: 0% 50%;
@@ -378,7 +377,6 @@
 }
 
 .pg-rotateCubeRightIn {
-  z-index: 999;
   -webkit-transform-origin: 100% 50%;
   -webkit-animation: rotateCubeRightIn 0.6s both ease-in;
   -moz-transform-origin: 100% 50%;
@@ -388,7 +386,6 @@
 }
 
 .pg-rotateCubeTopOut {
-  z-index: 999;
   -webkit-transform-origin: 50% 100%;
   -webkit-animation: rotateCubeTopOut 0.6s both ease-in;
   -moz-transform-origin: 50% 100%;
@@ -398,7 +395,6 @@
 }
 
 .pg-rotateCubeTopIn {
-  z-index: 999;
   -webkit-transform-origin: 50% 0%;
   -webkit-animation: rotateCubeTopIn 0.6s both ease-in;
   -moz-transform-origin: 50% 0%;
@@ -417,7 +413,6 @@
 }
 
 .pg-rotateCubeBottomIn {
-  z-index: 999;
   -webkit-transform-origin: 50% 100%;
   -webkit-animation: rotateCubeBottomIn 0.6s both ease-in;
   -moz-transform-origin: 50% 100%;

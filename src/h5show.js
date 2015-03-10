@@ -78,10 +78,10 @@
     
     // `$` returns first element for given CSS `selector` in the `context` of
     // the given element or whole document.
-    var $ = function ( selector, context ) {
-        context = context || document;
-        return context.querySelector(selector);
-    };
+    // var $ = function ( selector, context ) {
+    //     context = context || document;
+    //     return context.querySelector(selector);
+    // };
     
     // `$$` return an array of elements for given CSS `selector` in the `context` of
     // the given element or whole document.
@@ -115,7 +115,7 @@
                     }
                 }
             }
-        }
+        };
     };
 
     var addClass = changeClass('add');
@@ -158,7 +158,7 @@
     	}
 
     	// Handle case when target is a string or something (possible in deep copy)
-    	if ( typeof target !== 'object' && !typeof obj === 'function' ) {
+    	if ( typeof target !== 'object' && typeof obj !== 'function' ) {
     		target = {};
     	}
 
@@ -213,22 +213,22 @@
             window.clearTimeout(handle);    
         }
         handle = window.setTimeout(callback,second*1000);
-    }
+    };
 
 
     //Proxy of console.warn
     var warn = function(msg){
-        if (console){
-            console.warn(msg);
+        if (window.console){
+            window.console.warn(msg);
         }
     };
 
     //Proxy of console.log
-    var log = function(msg){
-        if (console){
-            console.log(msg);
-        }
-    }
+    // var log = function(msg){
+    //     if (window.console){
+    //         window.console.log(msg);
+    //     }
+    // };
 
     var _defaults = {
     	index:0,
@@ -342,7 +342,7 @@
 
         //Get page element by index specified, if idx argument is not passed, index is set to this.idx
     	getPage:function(idx){
-            if (idx==undefined){
+            if (idx===undefined){
                 idx = this.idx;
             }
     		var page =  idx>=0&&idx<this.pageCount?this.pages[idx]:this.pages[0];
@@ -375,7 +375,7 @@
                 delay(hidePageTimeout,cfg.duration,function(){
                     removeClass(page,_cPageActive,_cAnimated,cfg.hide);
                 });
-            };
+            }
         },
 
         //Show page by index
@@ -400,12 +400,12 @@
         //Show previous page
     	prevPage:function(){
              if (this.idx>0){
-                this.goto(this.getPage(idx-1));
+                this.goto(this.getPage(this.idx-1));
              }
     	},
         //Set animation duration of the element
         setDuration :function(el,duration){
-            if (duration!=_defaultDuration){
+            if (duration!==_defaultDuration){
                 css(el,{
                     animationDuration: duration+'s',
                     animationFillMode:'both'
