@@ -6,16 +6,12 @@
     <title>h5Show Test Suite</title>
     
     <link rel="stylesheet" href="../src/animate.css">
+    <link rel="stylesheet" href="../src/animations.css">
     <link rel="stylesheet" href="../src/animate-page.css">
     <link rel="stylesheet" href="../src/h5show.css">
     <style>
-       .page{
-          background: #666;
+       body{
           color:#fff;
-          font-size: 122px;
-          text-align: center;
-          padding-top:100px;
-          padding:1;
        }
 
        #page1{
@@ -36,6 +32,10 @@
           background: #eb65a0;
        }
 
+       .box{
+         background:#5bb12f;
+       }
+
 
     </style>
     
@@ -43,13 +43,21 @@
   <body>
 
     <div id="h5show" data-direction="upDown" data-indicator="true" data-arrow="false">
-      <div class="page" data-show="pg-rotateCubeTopIn" data-hide="pg-rotateCubeBottomOut" data-stay="1">
-         <p>page1</p>
+      <div  id="page1" class="page" data-show="pg-rotateCubeTopIn" data-hide="pg-rotateCubeBottomOut" data-stay="1">
+         <h1 id="abc" data-pos="center" data-fontsize="10%" data-size="100%,auto"  data-time="1" data-duration="1" data-show="expandOpen" data-hide="fadeOut" data-showing="aaa">
+            Hello H5Show
+         </h1>
+         <p data-fontsize="8%" data-time="1.5" >This is Demo !</p>
+         <div class="box" data-pos="-0,-0" data-size="50%,30%" >
+            <span data-pos="center" data-fontsize="5%" class="pan">Show me</span>
+         </div>
+
+      </div>
+      <div class="page" data-show="pg-rotateCubeBottomIn" data-hide="pg-rotateCubeTopOut" >
+
          <!-- <div id="box1 ani" data-pos="20,20" data-size="33%,33%" data-time="2s" data-duration="1.5s" data-show="fadeIn" data-hide="fadeOut" data-showing="swipe">
             page1
          </div> -->
-      </div>
-      <div class="page" data-show="pg-rotateCubeBottomIn" data-hide="pg-rotateCubeTopOut" >
          <p>page2</p>
       </div>
       <div class="page" data-show="pg-rotateUnfoldLeft" data-hide="pg-rotateFoldRight" >
@@ -67,7 +75,16 @@
     <script src="../src/h5show.js"></script>
     <script>
     (function(){
-       var show = new H5Show('h5show',{autoPlay:true,page:{stay:1}});
+       var show = new H5Show('h5show',{autoPlay:false});
+
+       var page1 = document.getElementById('page1');
+       // var arr =  getAllChildren(page1);
+       // console.log(arr.length);
+       // for(var i in page1.children){
+       //    if (page1.childNodes[i].nodeType === 1){
+       //        console.log(page1.childNodes[i]);
+       //    }
+       // };
 
     })();
     </script>

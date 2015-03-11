@@ -1,6 +1,6 @@
 # h5Show
 
-> Cool animate html5 slider creator plugin ! 	(Developing...)
+> Cool animation html building tool, based on the power of CSS3 animation in modern browsers, it is lightweight,fast, responsive ! 	(Developing...Shipped soon!)
 
 
 ## Getting Started
@@ -20,4 +20,4 @@ In your web page:
 
 ## License
 
-MIT © sandy
+MIT © Sandy Duan

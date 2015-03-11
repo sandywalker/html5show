@@ -230,11 +230,15 @@
 
     //====================== private var and func ======================//
 
+
+    var _defaultPageDuration = 1.5;
+    var _defaultDuration = 1;
+
     // Parse dataset of element, then layout by css
     var _layoutElement = function(el){
         
         //Convert to css size value
-        var toCssSize = function(v){
+        var cssSize = function(v){
                 if (v.indexOf('%')===-1&&v.indexOf('px')===-1){
                     v+='px';
                 }
@@ -248,7 +252,8 @@
 
         //Get x position
         var getXPos = function(v,styles){
-             var x = toCssSize(v);
+             var x = cssSize(v);
+
              if (x.indexOf('-')===-1){
                 styles.left=x;
              }else{
@@ -258,7 +263,7 @@
 
         //Get y position
         var getYPos = function(v,styles){
-             var y = toCssSize(v);
+             var y = cssSize(v);
              if (y.indexOf('-')===-1){
                 styles.top=y;
              }else{
@@ -273,27 +278,33 @@
             styles.position='absolute';
             var pos = ds.pos.split(',');
             if (pos.length===1){pos.push(pos[0]);}
+
             if (pos.length){
                 var xc = isCenter(pos[0]);
                 var yc = isCenter(pos[1]);
                 if (xc){
-                    styles.left = '50%';
-                    styles.transform = 'translate(-50%, 0)';
+                    //styles.left = '50%';
+                    styles.marginLeft = 'auto';
+                    styles.marginRight = 'auto';
                     styles.textAlign = 'center';
-                    if (yc){
-                        styles.top = '50%';
-                        styles.transform = 'translate(-50%,-50%)';
-                    }else{
-                        getYPos(pos[1],styles);
-                    }
-                }else{
-                    getXPos(pos[0],styles);
+
                     if (yc){
                         styles.top = '50%';
                         styles.transform = 'translate(0,-50%)';
                     }else{
                         getYPos(pos[1],styles);
                     }
+
+                }else{
+                    getXPos(pos[0],styles);
+
+                    if (yc){
+                        styles.top = '50%';
+                        styles.transform = 'translate(0,-50%)';
+                    }else{
+                        getYPos(pos[1],styles);
+                    }
+
                 }
                 
             }    
@@ -302,14 +313,14 @@
         //Caulate the size info
 
         //Is position set to  center 
-        var isSizeAuto = function(v){
+        var isAutoSize = function(v){
             return v==='auto';
         };
 
         if (ds.fontsize){
-            var fsize = toCssSize(ds.fontsize);
+            var fsize = cssSize(ds.fontsize);
             if (fsize.indexOf('%')>=0){
-                fsize = fsize.replace('%','vh');
+                fsize = fsize.replace('%','vw');
             }
             styles.fontSize = fsize;
         }
@@ -318,18 +329,55 @@
         if (ds.size){
            var sizes = ds.size.split(',');
            if (sizes.length===1){sizes.push(sizes[0]);}
+
            if (sizes.length){
-                if (!isSizeAuto(sizes[0])){
-                    styles.width = toCssSize(sizes[0]);
+                
+                if (!isAutoSize(sizes[0])){
+                    styles.width = cssSize(sizes[0]);
                 }
-                if (!isSizeAuto(sizes[1])){
-                    styles.height = toCssSize(sizes[1]);
+                if (!isAutoSize(sizes[1])){
+                    styles.height = cssSize(sizes[1]);
                 }
            }
 
         }  
+
+        if (ds.time){
+            el.classList.add('hide');
+        }
+
         css(el,styles);
     }; //End of _layoutElement
+
+
+    //Set animation duration of the element
+    var setDuration =function(el,duration,def){
+        if (duration!==def){
+            css(el,{
+                animationDuration: duration+'s',
+                animationFillMode:'both'
+            });
+        }
+    };
+
+    //Animate the element if dataset has time property
+    var _animateElement = function(el,defDuration){
+        var ds = el.dataset;
+        var cfg = el.config;
+        var styles = {};
+
+        if (ds.time){
+            setDuration(el,cfg.duration,_defaultDuration);
+            window.setTimeout(function(){
+                removeClass(el,'hide');
+                addClass(el,'animated',cfg.show);
+                //$item.removeClass('hide animated').addClass('animated ' + $item.data('in'));
+            }, ds.time*1000);
+            window.setTimeout(function(){
+                console.log(el.style.transform);
+            }, 3000);
+        }
+    };
 
 
     var _defaults = {
@@ -342,16 +390,17 @@
     		show:'fadeInUp',
     		hide:'fadeOutDown',
     		stay:3,
-            duration:1
+            duration:1.5
 		},
 		sprite:{
-			show:'show',
-			hide:null,
-			showing:null
+			show:'fadeIn',
+			hide:'fadeOut',
+			showing:null,
+            duration:1
 		}
     };
 
-    var _defaultDuration = 1.5;
+    
 
     var _sPage = '.page'; //page selector
     var _cPageContainer = 'page-container'; //page container class name
@@ -411,7 +460,7 @@
             //Make sure stay,duration is number
             cfg.stay = toNumber(cfg.stay);
             cfg.duration = toNumber(cfg.duration);
-            this.setDuration(page,cfg.duration);
+            setDuration(page,cfg.duration,_defaultPageDuration);
 
             this.initSprites(page);
 
@@ -423,7 +472,11 @@
             this.sprites[page.id] = sprites;
             for(var i= 0 ;i<sprites.length;i++){
                 var sprite = sprites[i];
+                var cfg = sprite.config = extend({},this.config.sprite,sprite.dataset);
+                cfg.duration = toNumber(cfg.duration);
+                console.log(cfg);
                 _layoutElement(sprite);
+                _animateElement(sprite);
             }
         },
 
@@ -518,21 +571,10 @@
              if (this.idx>0){
                 this.goto(this.getPage(this.idx-1));
              }
-    	},
-        //Set animation duration of the element
-        setDuration :function(el,duration){
-            if (duration!==_defaultDuration){
-                css(el,{
-                    animationDuration: duration+'s',
-                    animationFillMode:'both'
-                });
-            }
-        },
-
+    	}
+        
         //Events 
         
-
-
     };
 
 
