@@ -252,11 +252,10 @@ slideRight
 	80%{
 		-webkit-transform: translateX(4%);
 	}
-	95%{
-		-webkit-transform: translateX(-2%);
+l		-webkit-transform: translateX(-2%);
 	}			
 	100% {
-		-webkit-transform: translateX(0%);
+		-webkit-transform: translateX(0%);y6
 	}
 }
 

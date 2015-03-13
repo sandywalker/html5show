@@ -234,6 +234,9 @@
     var _defaultPageDuration = 1.5;
     var _defaultDuration = 1;
 
+    
+
+
     // Parse dataset of element, then layout by css
     var _layoutElement = function(el){
         
@@ -267,48 +270,12 @@
              if (y.indexOf('-')===-1){
                 styles.top=y;
              }else{
-                styles.bottom=y.substr(1);     
+                styles.bottom=y.substr(1); 
              }   
         };
 
         var ds = el.dataset;
         var styles = {};
-        //Caculate the position info
-        if (ds.pos){
-            styles.position='absolute';
-            var pos = ds.pos.split(',');
-            if (pos.length===1){pos.push(pos[0]);}
-
-            if (pos.length){
-                var xc = isCenter(pos[0]);
-                var yc = isCenter(pos[1]);
-                if (xc){
-                    //styles.left = '50%';
-                    styles.marginLeft = 'auto';
-                    styles.marginRight = 'auto';
-                    styles.textAlign = 'center';
-
-                    if (yc){
-                        styles.top = '50%';
-                        styles.transform = 'translate(0,-50%)';
-                    }else{
-                        getYPos(pos[1],styles);
-                    }
-
-                }else{
-                    getXPos(pos[0],styles);
-
-                    if (yc){
-                        styles.top = '50%';
-                        styles.transform = 'translate(0,-50%)';
-                    }else{
-                        getYPos(pos[1],styles);
-                    }
-
-                }
-                
-            }    
-        } 
 
         //Caulate the size info
 
@@ -340,11 +307,51 @@
                 }
            }
 
-        }  
+        }
 
+        //Caculate the position info
+        if (ds.pos){
+            styles.position='absolute';
+            var pos = ds.pos.split(',');
+            if (pos.length===1){pos.push(pos[0]);}
+            if (pos.length){
+                var xc = isCenter(pos[0]);
+                var yc = isCenter(pos[1]);
+                if (xc){
+                    //styles.left = '50%';
+                    styles.marginLeft = 'auto';
+                    styles.marginRight = 'auto';
+                    styles.textAlign = 'center';
+
+                    if (yc){
+                        //The transform is conflict with animate css use transform property , result in top offset .
+                        //I can't find any perfect solution to fix it;
+                        styles.top = '50%';
+                        styles.transform = 'translateY(-50%)';
+                    }else{
+                        getYPos(pos[1],styles);
+                    }
+
+                }else{
+                    getXPos(pos[0],styles);
+
+                    if (yc){
+                        styles.top = '50%';
+                        styles.transform = 'translateY(-50%)';
+                    }else{
+                        getYPos(pos[1],styles);
+                    }
+
+                }
+                
+            } 
+        } 
+        
+        
         if (ds.time){
             el.classList.add('hide');
         }
+
 
         css(el,styles);
     }; //End of _layoutElement
@@ -373,9 +380,7 @@
                 addClass(el,'animated',cfg.show);
                 //$item.removeClass('hide animated').addClass('animated ' + $item.data('in'));
             }, ds.time*1000);
-            window.setTimeout(function(){
-                console.log(el.style.transform);
-            }, 3000);
+            
         }
     };
 
@@ -474,7 +479,6 @@
                 var sprite = sprites[i];
                 var cfg = sprite.config = extend({},this.config.sprite,sprite.dataset);
                 cfg.duration = toNumber(cfg.duration);
-                console.log(cfg);
                 _layoutElement(sprite);
                 _animateElement(sprite);
             }
@@ -559,6 +563,7 @@
                     that.nextPage();
                 });
             }
+
     	},
 
         //Show next page

@@ -18,7 +18,7 @@ body,h1,h2,h3,h4,h5,h6,p{
 
 .page {
 	position: absolute;
-	display:none;
+	visibility:hidden;
 	overflow: hidden;
 	top:0;
 	bottom:0;
@@ -28,7 +28,7 @@ body,h1,h2,h3,h4,h5,h6,p{
 
 
 .page-active{
-	display: block;
+	visibility:visible;
 }
 
 .delay {
