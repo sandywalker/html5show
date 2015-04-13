@@ -2,9 +2,9 @@
   <html>
   <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"> 
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <title>h5Show Test Suite</title>
-    
+
     <link rel="stylesheet" href="../src/animate.css">
     <link rel="stylesheet" href="../src/animations.css">
     <link rel="stylesheet" href="../src/animate-page.css">
@@ -16,7 +16,7 @@
 
        #page1{
          background: #bccf02;
-         
+
        }
 
        #page2{
@@ -39,44 +39,51 @@
 
 
     </style>
-    
+
   </head>
   <body>
 
     <div id="h5show" data-direction="upDown" data-indicator="true" data-arrow="false">
-      <div  id="page1" class="page" data-show="pg-rotateCubeTopIn" data-hide="pg-rotateCubeBottomOut" data-stay="1">
-         <h1 id="abc" data-pos="center,40%" data-fontsize="5%" data-size="100%,auto"  data-time="1" data-duration="1.5" data-show="bounceInUp" data-hide="fadeOut" data-showing="aaa">
+      <div  id="page1" class="page" data-show="pg-rotateCubeTopIn" data-hide="pg-rotateCubeBottomOut">
+         <h1 id="abc" data-pos="center,40%" data-fontsize="5%" data-size="100%,auto"  data-time="1" data-duration="1.5"
+             data-show="bounceInUp"  data-showing="pulse" data-hide="bounceOutDown" data-stay="2">
             Hello H5Show
          </h1>
-         <p data-fontsize="8%" data-time="1.5" data-show="slideRight" >This is Demo !</p>
-         <div class="box" data-time="1" data-pos="-0,-0" data-size="50%,30%" >
+         <p data-fontsize="8%" data-time="1.5" data-show="bounceInLeft" >This is Demo !</p>
+         <div class="box" data-time="2" data-pos="-0,-0" data-size="50%,30%" >
             <span data-pos="center" data-fontsize="5%" class="pan">Show me</span>
          </div>
 
       </div>
       <div class="page" data-show="pg-rotateCubeBottomIn" data-hide="pg-rotateCubeTopOut" >
-
+        <h1 data-pos="center,40%" data-fontsize="5%" data-size="100%,auto"  data-time="1" data-duration="1.5"
+            data-show="bounceInUp" data-hide="bounceOutDown" data-showing="pulse" data-stay="2">
+          Hello H5Show
+        </h1>
+        <p data-fontsize="8%" data-time="1.5" data-show="bounceInLeft" >This is Demo !</p>
+        <div class="box" data-time="2.5" data-stay="3" data-pos="-0,-0" data-size="50%,30%"  data-hide="bounceOutRight" >
+          <span data-pos="center" data-fontsize="5%" class="pan" >Show me</span>
+        </div>
          <!-- <div id="box1 ani" data-pos="20,20" data-size="33%,33%" data-time="2s" data-duration="1.5s" data-show="fadeIn" data-hide="fadeOut" data-showing="swipe">
             page1
          </div> -->
-         <p>page2</p>
       </div>
-      <div class="page" data-show="pg-rotateUnfoldLeft" data-hide="pg-rotateFoldRight" >
-         <p>page3</p>
-      </div>
-      <div class="page" data-show="pg-rotateCubeLeftIn" data-hide="pg-rotateCubeRightOut" >
-         <p>page4</p>
-      </div>
-      <div class="page" data-show="pg-rotateRoomRightIn" data-hide="pg-rotateRoomLeftOut" >
-         <p>page5</p>
-      </div>
+      <!--<div class="page" data-show="pg-rotateUnfoldLeft" data-hide="pg-rotateFoldRight" >-->
+         <!--<p>page3</p>-->
+      <!--</div>-->
+      <!--<div class="page" data-show="pg-rotateCubeLeftIn" data-hide="pg-rotateCubeRightOut" >-->
+         <!--<p>page4</p>-->
+      <!--</div>-->
+      <!--<div class="page" data-show="pg-rotateRoomRightIn" data-hide="pg-rotateRoomLeftOut" >-->
+         <!--<p>page5</p>-->
+      <!--</div>-->
     </div>
 
 
     <script src="../src/h5show.js"></script>
     <script>
     (function(){
-       var show = new H5Show('h5show',{autoPlay:false});
+       var show = new H5Show('h5show',{autoPlay:true});
 
        var page1 = document.getElementById('page1');
        // var arr =  getAllChildren(page1);
