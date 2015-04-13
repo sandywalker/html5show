@@ -1,32 +1,32 @@
 /*
- * 
- * 
+ *
+ *
  *
  * Copyright (c) 2015 Sandy Duan
  * Licensed under the MIT license.
  */
 (function (document, window ) {
 	'use strict';
-    
 
-    // HELPER FUNCTIONS 
+
+    // HELPER FUNCTIONS
     //Most helper functions is heavily inspired by impress.js http://bartaz.github.io/impress.js
-    
+
     // `pfx` is a function that takes a standard CSS property name as a parameter
     // and returns it's prefixed version valid for current browser it runs in.
     // The code is heavily inspired by Modernizr http://www.modernizr.com/
     var pfx = (function () {
-        
+
         var style = document.createElement('dummy').style,
             prefixes = 'Webkit Moz O ms Khtml'.split(' '),
             memory = {};
-        
+
         return function ( prop ) {
             if ( typeof memory[ prop ] === 'undefined' ) {
-                
+
                 var ucProp  = prop.charAt(0).toUpperCase() + prop.substr(1),
                     props   = (prop + ' ' + prefixes.join(ucProp + ' ') + ucProp).split(' ');
-                
+
                 memory[ prop ] = null;
                 for ( var i in props ) {
                     if ( style[ props[i] ] !== undefined ) {
@@ -34,20 +34,20 @@
                         break;
                     }
                 }
-            
+
             }
-            
+
             return memory[ prop ];
         };
-    
+
     })();
-    
+
     // `arraify` takes an array-like object and turns it into real Array
     // to make all the Array.prototype goodness available.
     var arrayify = function ( a ) {
         return [].slice.call( a );
     };
-    
+
     // `css` function applies the styles given in `props` object to the element
     // given as `el`. It runs all property names through `pfx` function to make
     // sure proper prefixed version of the property is used.
@@ -63,27 +63,27 @@
         }
         return el;
     };
-    
+
     // `toNumber` takes a value given as `numeric` parameter and tries to turn
     // it into a number. If it is not possible it returns 0 (or other value
     // given as `fallback`).
     var toNumber = function (numeric, fallback) {
         return isNaN(numeric) ? (fallback || 0) : Number(numeric);
     };
-    
+
     // `byId` returns element with given `id` - you probably have guessed that ;)
     var byId = function ( id ) {
         return document.getElementById(id);
     };
-    
-    
+
+
     // `$$` return an array of elements for given CSS `selector` in the `context` of
     // the given element or whole document.
     var $$ = function ( selector, context ) {
         context = context || document;
         return arrayify( context.querySelectorAll(selector) );
     };
-    
+
     // `triggerEvent` builds a custom DOM event with given `eventName` and `detail` data
     // and triggers it on element given as `el`.
     var triggerEvent = function (el, eventName, detail) {
@@ -208,9 +208,9 @@
     //Delay by second
     var delay = function(handle,second,callback){
         if (handle){
-            window.clearTimeout(handle);    
+            window.clearTimeout(handle);
         }
-        handle = window.setTimeout(callback,second*1000);
+        return window.setTimeout(callback,second*1000);
     };
 
 
@@ -234,12 +234,12 @@
     var _defaultPageDuration = 1.5;
     var _defaultDuration = 1;
 
-    
+
 
 
     // Parse dataset of element, then layout by css
     var _layoutElement = function(el){
-        
+
         //Convert to css size value
         var cssSize = function(v){
                 if (v.indexOf('%')===-1&&v.indexOf('px')===-1){
@@ -248,7 +248,7 @@
             return v;
         };
 
-        //Is position set to  center 
+        //Is position set to  center
         var isCenter = function(v){
             return v==='center'||v==='middle';
         };
@@ -260,7 +260,7 @@
              if (x.indexOf('-')===-1){
                 styles.left=x;
              }else{
-                styles.right=x.substr(1);  
+                styles.right=x.substr(1);
              }
         };
 
@@ -270,8 +270,8 @@
              if (y.indexOf('-')===-1){
                 styles.top=y;
              }else{
-                styles.bottom=y.substr(1); 
-             }   
+                styles.bottom=y.substr(1);
+             }
         };
 
         var ds = el.dataset;
@@ -279,7 +279,7 @@
 
         //Caulate the size info
 
-        //Is position set to  center 
+        //Is position set to  center
         var isAutoSize = function(v){
             return v==='auto';
         };
@@ -292,13 +292,13 @@
             styles.fontSize = fsize;
         }
 
-        
+
         if (ds.size){
            var sizes = ds.size.split(',');
            if (sizes.length===1){sizes.push(sizes[0]);}
 
            if (sizes.length){
-                
+
                 if (!isAutoSize(sizes[0])){
                     styles.width = cssSize(sizes[0]);
                 }
@@ -343,11 +343,11 @@
                     }
 
                 }
-                
-            } 
-        } 
-        
-        
+
+            }
+        }
+
+
         if (ds.time){
             el.classList.add('hide');
         }
@@ -368,20 +368,52 @@
     };
 
     //Animate the element if dataset has time property
-    var _animateElement = function(el,defDuration){
+    var _animateElement = function(el){
         var ds = el.dataset;
         var cfg = el.config;
-        var styles = {};
 
+        if (!cfg.duration){
+          cfg.duration = _defaultDuration;
+        }
         if (ds.time){
+            //Must change ds.time to Number
+            var time = toNumber(ds.time);
+
             setDuration(el,cfg.duration,_defaultDuration);
+
+            // Set Show animation
             window.setTimeout(function(){
                 removeClass(el,'hide');
                 addClass(el,'animated',cfg.show);
-                //$item.removeClass('hide animated').addClass('animated ' + $item.data('in'));
-            }, ds.time*1000);
-            
+            }, time*1000);
+
+            // Set Showing animation if user specify;
+            if (ds.showing){
+              window.setTimeout(function(){
+                removeClass(el,cfg.show);
+                addClass(el,cfg.showing);
+              },(time+cfg.duration)*1000);
+            };
+
+            if (ds.stay){
+               var stay = toNumber(ds.stay);
+               window.setTimeout(function(){
+                 removeClass(el,cfg.showing);
+                 var hide = cfg.hide||'hide';
+                 addClass(el,hide);
+               },(time+cfg.duration+stay)*1000);
+            }
+
         }
+    };
+
+    //Hide the element
+    var _hideElement = function(el){
+      var cfg = el.config;
+      removeClass(el,cfg.showing,cfg.show,cfg.hide);
+      if (cfg.time){
+        addClass(el,'hide');
+      }
     };
 
 
@@ -395,7 +427,7 @@
     		show:'fadeInUp',
     		hide:'fadeOutDown',
     		stay:3,
-            duration:1.5
+        duration:1.5
 		},
 		sprite:{
 			show:'fadeIn',
@@ -405,7 +437,7 @@
 		}
     };
 
-    
+
 
     var _sPage = '.page'; //page selector
     var _cPageContainer = 'page-container'; //page container class name
@@ -413,11 +445,11 @@
     var _cPageActive = 'page-active'; //active page class name
 
 
-    var hidePageTimeout = null; //timeout that hide page after animate
-    var autoPlayTimeout = null; //timeout that auto play to next page
+    var hidePageHandler = null; //handler that hide page after animate
+    var autoPlayHandler = null; //handler that auto play to next page
 
 
-    
+
     var lastHash = '';  // last hash detected
 
 
@@ -434,7 +466,7 @@
     H5Show.prototype = {
 
         //Initialize pages,pageCount,lastIdx, showPage by index of config
-    	init:function(){
+    	  init:function(){
             //pageMap is help object to find page by id, maybe faster than document.getElementById
             this.pageMap = {};
             //sprites is object to keep all sprites, by page id;
@@ -442,7 +474,7 @@
             this.pages = arrayify( $$(_sPage),this.container);
             this.pageCount = this.pages.length;
             this.container.classList.add(_cPageContainer);
-    		
+
             for(var i=0;i<this.pages.length;i++){
                 var page = this.pages[i];
                 page.inited = false;
@@ -452,36 +484,37 @@
                     page.id = 'page' + (page.idx+1);
                 }
                 this.pageMap[page.id] = page;
-    	    }
+    	      }
             this.lastIdx = -1;
             this.idx = this.idxFromHash()||this.config.index;
-    		this.goto(this.getPage(this.idx));
-    	},
+    		    this.goto(this.getPage(this.idx));
+    	  },
 
         //Initialize page classes ,config and elements in page;
-    	initPage:function(page){
+        initPage:function(page){
 
-            var cfg = page.config = extend({},this.config.page,page.dataset);
-            //Make sure stay,duration is number
-            cfg.stay = toNumber(cfg.stay);
-            cfg.duration = toNumber(cfg.duration);
-            setDuration(page,cfg.duration,_defaultPageDuration);
 
-            this.initSprites(page);
+          var cfg = page.config = extend({},this.config.page,page.dataset);
+          //Make sure stay,duration is number
+          cfg.stay = toNumber(cfg.stay);
+          cfg.duration = toNumber(cfg.duration);
+          setDuration(page,cfg.duration,_defaultPageDuration);
+          this.initSprites(page);
 
-    		page.inited = true;
-    	},
+          page.inited = true;
+
+    	  },
         //Initialize all elements in page as sprites
         initSprites:function(page){
-            var sprites = page.querySelectorAll('*');
-            this.sprites[page.id] = sprites;
-            for(var i= 0 ;i<sprites.length;i++){
-                var sprite = sprites[i];
-                var cfg = sprite.config = extend({},this.config.sprite,sprite.dataset);
-                cfg.duration = toNumber(cfg.duration);
-                _layoutElement(sprite);
-                _animateElement(sprite);
-            }
+          var sprites = page.querySelectorAll('*');
+          if (!sprites) return;
+          this.sprites[page.id] = sprites;
+          for(var i= 0 ;i<sprites.length;i++){
+              var sprite = sprites[i];
+              var cfg = sprite.config = extend({},this.config.sprite,sprite.dataset);
+              cfg.duration = toNumber(cfg.duration);
+              _layoutElement(sprite);
+          }
         },
 
         //Initialize default event listeners
@@ -514,7 +547,7 @@
         },
 
         //Get page element by index specified, if idx argument is not passed, index is set to this.idx
-    	getPage:function(idx){
+    	  getPage:function(idx){
             if (idx===undefined){
                 idx = this.idx;
             }
@@ -523,7 +556,7 @@
                 this.initPage(page);
             }
             return page;
-    	},
+    	  },
 
         //Set page index, hide last page if exists ,then show page
         setIdx:function(idx){
@@ -537,49 +570,93 @@
             }
             this.showPage(idx);
         },
+        //Hide sprites of the page
+        hidePageSprites:function(page){
+          var sprites = this.sprites[page.id];
+          if (sprites){
+            for(var i= 0 ;i<sprites.length;i++){
+              var sprite = sprites[i];
+              _hideElement(sprite);
+            }
+          }
+        },
+
         //Hide page by index
         hidePage:function(idx){
             var page = this.getPage(idx);
+            var that = this;
             if (page){
                 var cfg = page.config;
                 removeClass(page,cfg.show);
                 addClass(page,cfg.hide);
-                
-                delay(hidePageTimeout,cfg.duration,function(){
+
+                delay(hidePageHandler,cfg.duration,function(){
                     removeClass(page,_cPageActive,_cAnimated,cfg.hide);
+                    that.hidePageSprites(page);
                 });
             }
         },
 
+        //Show and animate the sprites of the page
+        showSprites:function(page){
+          var sprites = this.sprites[page.id];
+          for(var i= 0 ;i<sprites.length;i++){
+            var sprite = sprites[i];
+            _animateElement(sprite);
+          }
+        },
+
         //Show page by index
-    	showPage:function(idx){
+    	  showPage:function(idx){
             var page = this.getPage(idx);
-            page.classList.add(_cAnimated,_cPageActive,page.config.show);
+            addClass(page,_cAnimated,_cPageActive,page.config.show);
+            this.showSprites(page);
             this.lastIdx = page.idx;
             //If autoPlay is true, show next page after stay time
             if (this.config.autoPlay){
                 var that = this;
-                delay(autoPlayTimeout,page.config.duration+ page.config.stay,function(){
+                delay(autoPlayHandler,page.config.duration + that.getPageStay(page),function(){
                     that.nextPage();
                 });
             }
 
-    	},
+    	  },
+        //Calculate stay time of the page
+        getPageStay:function(page){
+          var stay = page.config.stay;
+          //Max sprites time + duration
+          var msd = 0;
+          var sprites = this.sprites[page.id];
+          if (sprites&&sprites.length){
+            for(var i in sprites){
+              var sp = sprites[i];
+              var cfg = sp.config;
+              if (cfg){
+                var time = cfg.time?toNumber(cfg.time):0;
+                time+=page.config.duration;
+                msd = Math.max(msd, time + cfg.duration);
+                
+              }
+            }
+          }
+          //if calculated msd larger than config.stay than use  msd,if not use config.stay
+          return Math.max(stay,msd);
+        },
 
         //Show next page
-    	nextPage:function(){
-            var idx = this.idx<this.pageCount-1?this.idx+1:0;
-            this.goto(this.getPage(idx));
-    	},
+        nextPage:function(){
+              var idx = this.idx<this.pageCount-1?this.idx+1:0;
+              this.goto(this.getPage(idx));
+        },
         //Show previous page
-    	prevPage:function(){
-             if (this.idx>0){
-                this.goto(this.getPage(this.idx-1));
-             }
-    	}
-        
-        //Events 
-        
+        prevPage:function(){
+               if (this.idx>0){
+                  this.goto(this.getPage(this.idx-1));
+               }
+        }
+
+        //Events
+
     };
 
 
