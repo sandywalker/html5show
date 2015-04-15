@@ -398,7 +398,7 @@
             if (ds.stay){
                var stay = toNumber(ds.stay);
                window.setTimeout(function(){
-                 removeClass(el,cfg.showing);
+                 removeClass(el,cfg.show,cfg.showing);
                  var hide = cfg.hide||'hide';
                  addClass(el,hide);
                },(time+cfg.duration+stay)*1000);
@@ -630,15 +630,17 @@
           if (sprites&&sprites.length){
             for(var i in sprites){
               var sp = sprites[i];
-              var cfg = sp.config;
-              if (cfg){
-                var time = cfg.time?toNumber(cfg.time):0;
-                time+=page.config.duration;
-                msd = Math.max(msd, time + cfg.duration);
-                
+              var scfg = sp.config;
+              if (scfg){
+                var time = scfg.time?toNumber(scfg.time):0;
+                time+=scfg.stay?toNumber(scfg.stay):0;
+                //time+=page.config.duration;
+
+                msd = Math.max(msd, time + scfg.duration);
               }
             }
           }
+          console.log(stay,msd,page.id);
           //if calculated msd larger than config.stay than use  msd,if not use config.stay
           return Math.max(stay,msd);
         },
