@@ -43,7 +43,8 @@
   </head>
   <body>
 
-    <div id="h5show" data-direction="upDown" data-indicator="true" data-arrow="false">
+    <div id="h5show" data-direction="upDown" data-indicator="left" data-arrow="top">
+
       <div  id="page1" class="page" data-show="pg-rotateCubeTopIn" data-hide="pg-rotateCubeBottomOut">
          <h1 id="abc" data-pos="center,40%" data-fontsize="5%" data-size="100%,auto"  data-time="1" data-duration="1.5"
              data-show="bounceInUp"  data-showing="pulse" data-hide="bounceOutDown" data-stay="2">
@@ -61,7 +62,7 @@
           Hello H5Show
         </h1>
         <p data-fontsize="8%" data-time="1.5" data-show="bounceInLeft" >This is Demo !</p>
-        <div class="box" data-time="2.5" data-stay="3" data-pos="-0,-0" data-size="50%,30%"  data-hide="bounceOutRight" >
+        <div class="box" data-time="1.5" data-stay="3" data-pos="-0,-0" data-size="50%,30%">
           <span data-pos="center" data-fontsize="5%" class="pan" >Show me</span>
         </div>
          <!-- <div id="box1 ani" data-pos="20,20" data-size="33%,33%" data-time="2s" data-duration="1.5s" data-show="fadeIn" data-hide="fadeOut" data-showing="swipe">
@@ -83,7 +84,7 @@
     <script src="../src/h5show.js"></script>
     <script>
     (function(){
-       var show = new H5Show('h5show',{autoPlay:true});
+       var show = new H5Show('h5show',{autoPlay:false});
 
        var page1 = document.getElementById('page1');
        // var arr =  getAllChildren(page1);
