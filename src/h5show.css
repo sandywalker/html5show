@@ -1,20 +1,17 @@
 /*reset*/
 body, h1, h2, h3, h4, h5, h6, p {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 .hide {
-  display: none;
-}
+  display: none; }
 
 .page-container {
   position: absolute;
   top: 0;
   bottom: 0;
   right: 0;
-  left: 0;
-}
+  left: 0; }
 
 .page {
   position: absolute;
@@ -23,15 +20,37 @@ body, h1, h2, h3, h4, h5, h6, p {
   top: 0;
   bottom: 0;
   right: 0;
-  left: 0;
-}
+  left: 0; }
 
 .page-active {
-  visibility: visible;
-}
+  visibility: visible; }
 
 .delay {
-  display: none;
-}
+  display: none; }
+
+.indicator, .indicator-top {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  margin: 0 0 0 -30%;
+  padding: 0;
+  width: 60%;
+  text-align: center;
+  z-index: 9999; }
+  .indicator li, .indicator-top li {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 1px;
+    background: #222;
+    opacity: .3;
+    border-radius: 6px; }
+    .indicator li.active, .indicator-top li.active {
+      background: #eee;
+      opacity: .8; }
+
+.indicator-top {
+  bottom: auto;
+  top: 5%; }
 
 /*# sourceMappingURL=h5show.css.map */
