@@ -2,7 +2,7 @@
 	-webkit-animation: $animation;
 	-moz-animation: $animation;
 	animation: $animation;
-} 
+}
 
 @mixin animate($origin,$animation){
 	-webkit-transform-origin: $origin;
@@ -11,7 +11,7 @@
 	-moz-animation: $animation;
 	transform-origin: $origin;
 	animation: $animation;
-} 
+}
 
 .pg-rotateRightSideFirst {
 	@include animate(100% 50%,rotateLeftSideFirst .8s both ease-in)
@@ -31,23 +31,23 @@
 }
 
 .pg-flipInLeft {
-	@include animate(50% 50%,flipInLeft .5s both ease-out)	
+	@include animate(50% 50%,flipInLeft .5s both ease-out)
 }
 
 .pg-flipOutLeft {
-	@include animate(50% 50%,flipOutLeft .5s both ease-in)	
-}	
+	@include animate(50% 50%,flipOutLeft .5s both ease-in)
+}
 
  .pg-flipInRight {
- 	@include animate(50% 50%,flipInRight .5s both ease-out)	
- }	
+ 	@include animate(50% 50%,flipInRight .5s both ease-out)
+ }
 
 .pg-flipOutTop {
 	@include animate(50% 50%,flipOutTop .5s both ease-in)
 }
 
 .pg-flipInBottom {
-	@include animate(50% 50%,flipInBottom .5s both ease-out)		
+	@include animate(50% 50%,flipInBottom .5s both ease-out)
 }
 
 
@@ -76,8 +76,8 @@
 
 /* push */
 .pg-rotatePushLeft {
-	@include animate(0% 50%,rotatePushLeft .8s both ease)	
-}	
+	@include animate(0% 50%,rotatePushLeft .8s both ease)
+}
 .pg-rotatePushRight {
 	@include animate(100% 50%,rotatePushRight .8s both ease)
 }
@@ -100,7 +100,7 @@
 	@include animate(50% 0%,rotatePullTop .5s both ease)
 }
 .pg-rotatePullBottom {
-	@include animate(50% 100%,rotatePullBottom .5s both ease)	
+	@include animate(50% 100%,rotatePullBottom .5s both ease)
 }
 
  /* fold */
@@ -109,25 +109,25 @@
  	@include animate(0% 50%,rotateFoldRight .7s both ease)
  }
  .pg-rotateFoldLeft {
- 	@include animate(100% 50%,rotateFoldLeft .7s both ease)	
+ 	@include animate(100% 50%,rotateFoldLeft .7s both ease)
  }
  .pg-rotateFoldTop {
-	@include animate(50% 100%,rotateFoldTop .7s both ease)		
+	@include animate(50% 100%,rotateFoldTop .7s both ease)
 }
  .pg-rotateFoldBottom {
-	@include animate(50% 0%,rotateFoldBottom .7s both ease)			
+	@include animate(50% 0%,rotateFoldBottom .7s both ease)
 }
 
 /* unfold */
 
  .pg-rotateUnfoldLeft {
- 	@include animate(100% 50%,rotateUnfoldLeft .7s both ease)	
+ 	@include animate(100% 50%,rotateUnfoldLeft .7s both ease)
  }
  .pg-rotateUnfoldRight {
-	@include animate(0% 50%,rotateUnfoldRight .7s both ease)	
+	@include animate(0% 50%,rotateUnfoldRight .7s both ease)
  }
  .pg-rotateUnfoldTop {
- 	@include animate(50% 100%,rotateUnfoldTop .7s both ease)	
+ 	@include animate(50% 100%,rotateUnfoldTop .7s both ease)
  }
  .pg-rotateUnfoldBottom {
  	@include animate(50% 0%,rotateUnfoldBottom .7s both ease)
@@ -139,48 +139,48 @@
 	@include animate(100% 50%,rotateRoomLeftOut .8s both ease)
  }
  .pg-rotateRoomLeftIn {
- 	@include animate(0% 50%,rotateRoomLeftIn .8s both ease)	
+ 	@include animate(0% 50%,rotateRoomLeftIn .8s both ease)
  }
  .pg-rotateRoomRightOut {
- 	@include animate(0% 50%,rotateRoomRightOut .8s both ease)	
+ 	@include animate(0% 50%,rotateRoomRightOut .8s both ease)
  }
  .pg-rotateRoomRightIn {
- 	@include animate(100% 50%,rotateRoomRightIn .8s both ease)	
+ 	@include animate(100% 50%,rotateRoomRightIn .8s both ease)
  }
  .pg-rotateRoomTopOut {
- 	@include animate(50% 100%,rotateRoomTopOut .8s both ease)	
+ 	@include animate(50% 100%,rotateRoomTopOut .8s both ease)
  }
  .pg-rotateRoomTopIn {
- 	@include animate(50% 0%,rotateRoomTopIn .8s both ease)	
+ 	@include animate(50% 0%,rotateRoomTopIn .8s both ease)
  }
  .pg-rotateRoomBottomOut {
- 	@include animate(50% 0%,rotateRoomBottomOut .8s both ease)	
+ 	@include animate(50% 0%,rotateRoomBottomOut .8s both ease)
  }
  .pg-rotateRoomBottomIn {
- 	@include animate(50% 100%,rotateRoomBottomIn .8s both ease)	
+ 	@include animate(50% 100%,rotateRoomBottomIn .8s both ease)
  }
 
 /* cube */
  .pg-rotateCubeLeftOut {
- 	@include animate(100% 50%,rotateCubeLeftOut .6s both ease-in)	
+ 	@include animate(100% 50%,rotateCubeLeftOut .6s both ease-in)
  }
  .pg-rotateCubeLeftIn {
  	@include animate(0% 50%,rotateCubeLeftIn .6s both ease-in)
  }
  .pg-rotateCubeRightOut {
- 	@include animate(0% 50%,rotateCubeRightOut .6s both ease-in)	
+ 	@include animate(0% 50%,rotateCubeRightOut .6s both ease-in)
  }
  .pg-rotateCubeRightIn {
  	@include animate(100% 50%,rotateCubeRightIn .6s both ease-in)
  }
  .pg-rotateCubeTopOut {
- 	@include animate(50% 100%,rotateCubeTopOut .6s both ease-in)	
+ 	@include animate(50% 100%,rotateCubeTopOut .6s both ease-in)
  }
  .pg-rotateCubeTopIn {
- 	@include animate(50% 0%,rotateCubeTopIn .6s both ease-in)	
+ 	@include animate(50% 0%,rotateCubeTopIn .6s both ease-in)
  }
  .pg-rotateCubeBottomOut {
- 	@include animate(50% 0%,rotateCubeBottomOut .6s both ease-in)	
+ 	@include animate(50% 0%,rotateCubeBottomOut .6s both ease-in)
  }
  .pg-rotateCubeBottomIn {
  	@include animate(50% 100%,rotateCubeBottomIn .6s both ease-in)
@@ -188,17 +188,17 @@
 
  /* carousel */
  .pg-rotateCarouselLeftOut {
- 	@include animate(100% 50%,rotateCarouselLeftOut .8s both ease)	
+ 	@include animate(100% 50%,rotateCarouselLeftOut .8s both ease)
  }
  .pg-rotateCarouselLeftIn {
- 	@include animate(0% 50%,rotateCarouselLeftIn .8s both ease)	
+ 	@include animate(0% 50%,rotateCarouselLeftIn .8s both ease)
  }
  .pg-rotateCarouselRightOut {
- 	@include animate(0% 50%,rotateCarouselRightOut .8s both ease)	
+ 	@include animate(0% 50%,rotateCarouselRightOut .8s both ease)
  }
  .pg-rotateCarouselRightIn {
- 	@include animate(100% 50%,rotateCarouselRightIn .8s both ease)	
- } 
+ 	@include animate(100% 50%,rotateCarouselRightIn .8s both ease)
+ }
  .pg-rotateCarouselTopOut {
  	@include animate(50% 100%,rotateCarouselTopOut .8s both ease)
  }
@@ -217,7 +217,7 @@
  	@include animate(-50% 50%,rotateSidesOut .5s both ease-in)
  }
  .pg-rotateSidesIn {
- 	@include animate(150% 50%,rotateSidesIn .5s both ease-in)	
+ 	@include animate(150% 50%,rotateSidesIn .5s both ease-in)
  }
 
  /* slide */
@@ -226,7 +226,7 @@
  }
  .pg-rotateSlideIn {
 	@include animateSimple(rotateSlideIn 1s both ease)
- } 
+ }
 
 /********************************* keyframes **************************************/
 

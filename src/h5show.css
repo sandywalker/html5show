@@ -3,15 +3,17 @@ body, h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0; }
 
+html, body {
+  height: 100%;
+  overflow: hidden; }
+
 .hide {
   display: none; }
 
 .page-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0; }
+  position: relative;
+  width: 100%;
+  height: 100%; }
 
 .page {
   position: absolute;
@@ -28,29 +30,42 @@ body, h1, h2, h3, h4, h5, h6, p {
 .delay {
   display: none; }
 
-.indicator, .indicator-top {
+.indicator, .indicator-bottom, .indicator-top, .indicator-left, .indicator-right {
   position: absolute;
   left: 50%;
-  bottom: 5%;
+  cursor: pointer;
   margin: 0 0 0 -30%;
+  padding: 0;
   padding: 0;
   width: 60%;
   text-align: center;
   z-index: 9999; }
-  .indicator li, .indicator-top li {
+  .indicator li, .indicator-bottom li, .indicator-top li, .indicator-left li, .indicator-right li {
     display: inline-block;
     width: 12px;
     height: 12px;
-    margin: 1px;
+    margin: 2px;
     background: #222;
     opacity: .3;
     border-radius: 6px; }
-    .indicator li.active, .indicator-top li.active {
+    .indicator li.active, .indicator-bottom li.active, .indicator-top li.active, .indicator-left li.active, .indicator-right li.active {
       background: #eee;
       opacity: .8; }
 
+.indicator-bottom {
+  bottom: 3%; }
+
 .indicator-top {
-  bottom: auto;
-  top: 5%; }
+  top: 3%; }
+
+.indicator-left, .indicator-right {
+  left: 3%;
+  top: 50%;
+  width: 15px;
+  margin: 0; }
+
+.indicator-right {
+  left: auto;
+  right: 3%; }
 
 /*# sourceMappingURL=h5show.css.map */

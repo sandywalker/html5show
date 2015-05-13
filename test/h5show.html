@@ -43,12 +43,12 @@
   </head>
   <body>
 
-    <div id="h5show" data-direction="upDown" data-indicator="left" data-arrow="top">
-      <ul class="indicator indicator-top">
-         <li data-page="0" class="active"></li>
-         <li data-page="1"></li>
-         <li data-page="2"></li>
-      </ul>
+    <div id="h5show" data-direction="upDown" data-indicator="bottom" data-arrow="top">
+      <!--<ul class="indicator indicator-left">-->
+         <!--<li data-page="0" class="active"></li>-->
+         <!--<li data-page="1"></li>-->
+         <!--<li data-page="2"></li>-->
+      <!--</ul>-->
       <div  id="page1" class="page" data-show="pg-rotateCubeTopIn" data-hide="pg-rotateCubeBottomOut">
          <h1 id="abc" data-pos="center,40%" data-fontsize="5%" data-size="100%,auto"  data-time="1" data-duration="1.5"
              data-show="bounceInUp"  data-showing="pulse" data-hide="bounceOutDown" data-stay="2">
@@ -73,22 +73,22 @@
             page1
          </div> -->
       </div>
-      <!--<div class="page" data-show="pg-rotateUnfoldLeft" data-hide="pg-rotateFoldRight" >-->
-         <!--<p>page3</p>-->
-      <!--</div>-->
-      <!--<div class="page" data-show="pg-rotateCubeLeftIn" data-hide="pg-rotateCubeRightOut" >-->
-         <!--<p>page4</p>-->
-      <!--</div>-->
-      <!--<div class="page" data-show="pg-rotateRoomRightIn" data-hide="pg-rotateRoomLeftOut" >-->
-         <!--<p>page5</p>-->
-      <!--</div>-->
+      <div class="page" data-show="pg-rotateUnfoldLeft" data-hide="pg-rotateFoldRight" >
+         <p>page3</p>
+      </div>
+      <div class="page" data-show="pg-rotateCubeLeftIn" data-hide="pg-rotateCubeRightOut" >
+         <p>page4</p>
+      </div>
+      <div class="page" data-show="pg-rotateRoomRightIn" data-hide="pg-rotateRoomLeftOut" >
+         <p>page5</p>
+      </div>
     </div>
 
 
     <script src="../src/h5show.js"></script>
     <script>
     (function(){
-       var show = new H5Show('h5show',{autoPlay:false});
+       var show = new H5Show('h5show',{autoPlay:true});
 
        var page1 = document.getElementById('page1');
        // var arr =  getAllChildren(page1);

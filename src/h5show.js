@@ -458,9 +458,11 @@
     //Construct method, set container by element Id, extend options and set value to config
     function H5Show(elId,options){
     	this.container = byId( elId );
-        this.config = extend({},_defaults,options);
-    	this.initEventListeners();
-        this.init();
+      this.config = extend({},_defaults,options,this.container.dataset);
+
+      this.initEventListeners();
+      this.init();
+
     }
 
     H5Show.prototype = {
@@ -474,6 +476,12 @@
             this.pages = arrayify( $$(_sPage),this.container);
             this.pageCount = this.pages.length;
             this.container.classList.add(_cPageContainer);
+
+
+
+            if (this.config.indicator){
+               this.initIndicator();
+            }
 
             for(var i=0;i<this.pages.length;i++){
                 var page = this.pages[i];
@@ -489,6 +497,24 @@
             this.idx = this.idxFromHash()||this.config.index;
     		    this.goto(this.getPage(this.idx));
     	  },
+        //Initialize indicator and set position,fix the position when it is set to left or right
+        initIndicator:function(){
+          var ul = document.createElement("ul");
+          var ind = this.config.indicator;
+          addClass(ul,'indicator','indicator-'+ ind);
+          for(var i=0;i<this.pages.length;i++){
+             var li = document.createElement('li');
+             li.dataset.page = i;
+             ul.appendChild(li);
+          }
+          this.container.appendChild(ul);
+
+          //fix the left,right position
+          if ('left'===ind||'right'===ind){
+            ul.style.top = ul.offsetTop - ul.clientHeight / 2 + 'px';
+          }
+          this.indicator = ul;
+        },
 
         //Initialize page classes ,config and elements in page;
         initPage:function(page){
@@ -533,6 +559,11 @@
                     that.setIdx(e.target.idx);
                 }
             }, false);
+            //if (this.indicator){
+            //  this.indicator.addEventListener('click',function(e){
+            //      console.log(e);
+            //  });
+            //}
         },
         //Go to page by id
         goto:function(page){
@@ -568,8 +599,23 @@
             if (this.lastIdx>=0){
                 this.hidePage(this.lastIdx);
             }
+
             this.showPage(idx);
+            if (this.indicator){
+              this.activeIndicator(idx);
+            }
         },
+        activeIndicator:function(idx){
+           var list = $$('li',this.indicator);
+           for(var i in list){
+             var li = list[i];
+             removeClass(li,'active');
+             if (idx==i){
+               addClass(li,'active');
+             }
+           }
+        },
+
         //Hide sprites of the page
         hidePageSprites:function(page){
           var sprites = this.sprites[page.id];
@@ -612,6 +658,7 @@
             addClass(page,_cAnimated,_cPageActive,page.config.show);
             this.showSprites(page);
             this.lastIdx = page.idx;
+
             //If autoPlay is true, show next page after stay time
             if (this.config.autoPlay){
                 var that = this;
@@ -640,7 +687,7 @@
               }
             }
           }
-          console.log(stay,msd,page.id);
+
           //if calculated msd larger than config.stay than use  msd,if not use config.stay
           return Math.max(stay,msd);
         },
