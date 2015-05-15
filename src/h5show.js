@@ -235,8 +235,6 @@
     var _defaultDuration = 1;
 
 
-
-
     // Parse dataset of element, then layout by css
     var _layoutElement = function(el){
 
@@ -477,8 +475,6 @@
             this.pageCount = this.pages.length;
             this.container.classList.add(_cPageContainer);
 
-
-
             if (this.config.indicator){
                this.initIndicator();
             }
@@ -514,11 +510,21 @@
             ul.style.top = ul.offsetTop - ul.clientHeight / 2 + 'px';
           }
           this.indicator = ul;
+
+
+          var that = this;
+          this.indicator.addEventListener('click',function(e){
+            var tgt = e.target;
+            if (tgt.nodeName.toLowerCase()==='li'){
+                var idx = toNumber(tgt.dataset.page);
+                that.goto(that.getPage(idx));
+            };
+          });
+
         },
 
         //Initialize page classes ,config and elements in page;
         initPage:function(page){
-
 
           var cfg = page.config = extend({},this.config.page,page.dataset);
           //Make sure stay,duration is number
@@ -559,11 +565,23 @@
                     that.setIdx(e.target.idx);
                 }
             }, false);
-            //if (this.indicator){
-            //  this.indicator.addEventListener('click',function(e){
-            //      console.log(e);
-            //  });
-            //}
+
+
+
+          //recognize gestures made by touch
+          var hm = new Hammer(this.container);
+          hm.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+
+
+          hm.on('swipe',function(e){
+            if (e.direction===Hammer.DIRECTION_RIGHT|| e.direction===Hammer.DIRECTION_DOWN){
+               that.prevPage();
+            }else{
+               that.nextPage();
+            };
+
+          });
+
         },
         //Go to page by id
         goto:function(page){
@@ -599,7 +617,6 @@
             if (this.lastIdx>=0){
                 this.hidePage(this.lastIdx);
             }
-
             this.showPage(idx);
             if (this.indicator){
               this.activeIndicator(idx);
@@ -654,20 +671,27 @@
 
         //Show page by index
     	  showPage:function(idx){
-            var page = this.getPage(idx);
-            addClass(page,_cAnimated,_cPageActive,page.config.show);
-            this.showSprites(page);
-            this.lastIdx = page.idx;
 
-            //If autoPlay is true, show next page after stay time
-            if (this.config.autoPlay){
-                var that = this;
-                delay(autoPlayHandler,page.config.duration + that.getPageStay(page),function(){
-                    that.nextPage();
-                });
-            }
+          window.clearTimeout(autoPlayHandler);
+          var page = this.getPage(idx);
+          addClass(page,_cAnimated,_cPageActive,page.config.show);
+          this.showSprites(page);
+          this.lastIdx = page.idx;
+
+          this.prepareNext(idx);
 
     	  },
+        //Prepare next page to show
+        prepareNext:function(idx){
+          var page = this.getPage(idx);
+          //If autoPlay is true, show next page after stay time
+          if (this.config.autoPlay){
+            var that = this;
+            autoPlayHandler = delay(autoPlayHandler,page.config.duration + that.getPageStay(page),function(){
+              that.nextPage();
+            });
+          }
+        },
         //Calculate stay time of the page
         getPageStay:function(page){
           var stay = page.config.stay;
@@ -700,7 +724,8 @@
         //Show previous page
         prevPage:function(){
                if (this.idx>0){
-                  this.goto(this.getPage(this.idx-1));
+                  var idx = this.idx-1;
+                  this.goto(this.getPage(idx));
                }
         }
 
