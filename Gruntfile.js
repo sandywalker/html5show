@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         dest: 'dist/<%= pkg.name %>.js'
       },
       css:{
-        src:['src/animate.css','src/<%= pkg.name %>.css'],
+        src:['src/animate.css','src/animations.css','src/<%= pkg.name %>.css'],
         dest:'dist/<%= pkg.name %>.css'
       }
     },

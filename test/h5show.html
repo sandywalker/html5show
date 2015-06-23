@@ -16,8 +16,7 @@
        }
 
        #page1{
-         background: #bccf02;
-
+          background: green;
        }
 
        #page2{
@@ -44,44 +43,47 @@
   </head>
   <body>
 
-    <div id="h5show" data-direction="upDown" data-indicator="bottom" data-arrow="top">
+    <div id="h5show" data-direction="horizontal" data-indicator="true" data-arrow="true">
       <!--<ul class="indicator indicator-left">-->
          <!--<li data-page="0" class="active"></li>-->
          <!--<li data-page="1"></li>-->
          <!--<li data-page="2"></li>-->
       <!--</ul>-->
-      <div  id="page1" class="page" data-show="pg-rotateCubeTopIn" data-hide="pg-rotateCubeBottomOut">
+      <div  id="page1" class="page">
+         <h1>page1</h1>
          <h1 id="abc" data-pos="center,40%" data-fontsize="5%" data-size="100%,auto"  data-time="1" data-duration="1.5"
              data-show="bounceInUp"  data-showing="pulse" data-hide="bounceOutDown" data-stay="2">
             Hello H5Show
          </h1>
          <p data-fontsize="8%" data-time="1.5" data-show="bounceInLeft" >This is Demo !</p>
-         <div class="box" data-time="2" data-pos="-0,-0" data-size="50%,30%" >
+         <div data-bg="../resources/img/bg1.jpg" data-time="2" data-pos="-0,-0" data-size="300,300" >
             <span data-pos="center" data-fontsize="5%" class="pan">Show me</span>
          </div>
 
       </div>
-      <div class="page" data-show="pg-rotateCubeBottomIn" data-hide="pg-rotateCubeTopOut" >
-        <h1 data-pos="center,40%" data-fontsize="5%" data-size="100%,auto"  data-time="1" data-duration="1.5"
-            data-show="bounceInUp" data-hide="bounceOutDown" data-showing="pulse" data-stay="2">
-          Hello H5Show
-        </h1>
+      <div class="page" >
+        <h1>page2</h1>
+        <div data-bg="../resources/img/bg1.jpg" data-pos="0,0" data-time="1" data-size="50%,100%" data-show="bounceInDown"></div>
+        <!--<h1 data-pos="center,40%" data-fontsize="5%" data-size="100%,auto"  data-time="1" data-duration="1.5"-->
+            <!--data-show="bounceInUp" data-hide="bounceOutDown" data-showing="pulse" data-stay="2">-->
+          <!--Hello H5Show-->
+        <!--</h1>-->
         <p data-fontsize="8%" data-time="1.5" data-show="bounceInLeft" >This is Demo !</p>
-        <div class="box" data-time="1.5" data-stay="3" data-pos="-0,-0" data-size="50%,30%">
-          <span data-pos="center" data-fontsize="5%" class="pan" >Show me</span>
-        </div>
+        <!--<div class="box" data-time="1.5" data-stay="3" data-pos="-0,-0" data-size="50%,30%">-->
+          <!--<span data-pos="center" data-fontsize="5%" class="pan" >Show me</span>-->
+        <!--</div>-->
          <!-- <div id="box1 ani" data-pos="20,20" data-size="33%,33%" data-time="2s" data-duration="1.5s" data-show="fadeIn" data-hide="fadeOut" data-showing="swipe">
             page1
          </div> -->
       </div>
-      <div class="page" data-show="pg-rotateUnfoldLeft" data-hide="pg-rotateFoldRight" >
-         <p>page3</p>
+      <div class="page">
+         <div class="bg-light "  data-pos="center,center" data-time="1" data-size="20%,20%" data-show="bounceInDown"></div>
       </div>
-      <div class="page" data-show="pg-rotateCubeLeftIn" data-hide="pg-rotateCubeRightOut" >
-         <p>page4</p>
+      <div class="page">
+         <h1>page4</h1>
       </div>
-      <div class="page" data-show="pg-rotateRoomRightIn" data-hide="pg-rotateRoomLeftOut" >
-         <p>page5</p>
+      <div class="page">
+         <h1>page5</h1>
       </div>
     </div>
 

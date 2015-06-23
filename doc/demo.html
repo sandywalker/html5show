@@ -1,0 +1,165 @@
+<!doctype html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <title>h5Show Demo</title>
+
+    <link rel="stylesheet" href="../src/animate.css">
+    <link rel="stylesheet" href="../src/animations.css">
+    <link rel="stylesheet" href="../src/animate-page.css">
+    <link rel="stylesheet" href="../src/h5show.css">
+    <link rel="stylesheet" href="assets/css/doc.css">
+
+
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="container">
+        <div class="brand">H5Show</div> 
+        <ul class="nav">
+            <li><a href="index.html">Home</a></li>
+            <li class="active"><a href="demo.html">Demo</a></li>
+            <li><a href="docs.html">Docs</a></li>
+            <li><a href="templates.html">Templates</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+      </div>  
+    </div>  
+    <div class="container">
+        <div class="size-options">
+            <ul id="phoneSizes" class="phone-sizes">
+                <li class="active"  data-size="phone">
+                  <div class="icon icon-phone"></div>
+                  Phone
+                </li>
+                <li  data-size="phoneh">
+                  <div class="icon icon-phoneh" data-size="phoneh"></div>  
+                  Phone-horizontal
+                </li>
+                <li  data-size="pad">
+                  <div class="icon icon-pad" data-size="pad"></div>  
+                  Pad
+                </li>
+            </ul>
+        </div>
+
+       
+        <div class="demo-container container-phone" id="demo">
+                  <div id="showBox" data-direction="horizontal" data-indicator="true" data-arrow="true">
+                      
+                      <div class="page start-page" data-bg="assets/img/bg8.jpg" data-indicator="false" data-arrow="false">
+                          <div data-fontsize="250" data-pos="50%,30%" data-size="120,300" data-origin="center">
+                            <div data-pos="0" data-time="1" data-show="expandOpen" data-stay="0">5</div>
+                            <div data-pos="0" data-time="2" data-show="expandOpen" data-stay="0">4</div>
+                            <div data-pos="0" data-time="3" data-show="expandOpen" data-stay="0">3</div>
+                            <div data-pos="0" data-time="4" data-show="expandOpen" data-stay="0">2</div>
+                            <div data-pos="0" data-time="5" data-show="expandOpen" data-stay="0">1</div>
+                          </div>
+                          <div  class="text-center" data-fontsize="14" data-pos="50%,40%" data-size="120,20" data-origin="center"
+                            data-time="6.5" data-show="expandOpen"> <a href="#/page2"> Start...</a></div>  
+                      </div>
+
+                      <div   class="page" data-bg="assets/img/bg2.jpg" data-stay="8">
+
+                         <div class="bg-dark round text-center"  data-pos="50%" data-origin="center,bottom" data-color="white" data-size="120,120"   data-time="1"  data-show="expandOpen" >
+                            <h3 class="hello" data-pos="0,30" data-show="rotateIn" data-time="1.3">Hello H5Show</h3>
+                          </div>
+                         <div data-pos="center,53%" class="text-center">
+                         
+                          <div class="bg-white center line" data-size="50%,1" data-time="2.5" data-show="expandOpen"></div>
+                            <p data-time="3.5" data-color="white"  data-show="expandOpen" ><strong>Amazing</strong></p>
+                            <p  data-time="4" data-color="white"  data-show="expandOpen"><strong>Flexible</strong> </p>
+                            <p  data-time="4.5" data-color="white"  data-show="expandOpen"><strong>Powerful</strong> </p> 
+                            <p class="italic" data-time="5.5" data-color="white"  data-show="expandOpen">Something very interesting! </p>
+                         </div>
+                      </div>
+                      
+                     
+                      <div  class="page">
+                          <div data-bg="assets/img/img1.jpg" data-size="50%,100%" data-time="0.5" data-show="pullDown"></div>
+                          <div data-pos="75%,50%" data-origin="center"  data-size="100,300">
+                              <div data-bg="assets/img/img4.jpg" data-size="100,100" data-time="1.5" data-show="flip"></div>
+                              <div data-time="2" data-show="fadeInRightBig">
+                                  <div data-bg="assets/img/img7.png" data-size="100,100" data-time="2" data-show="pulse" data-duration="1.5"></div>
+                              </div>
+                              <div data-bg="assets/img/img6.jpg" data-size="100,100" data-time="3.5" data-show="flip"></div>
+                          </div>
+                      </div>
+
+                      <div  class="page" data-bg="assets/img/bg6.jpg">
+                           <div  class="hinge" data-time="0" data-show="zoomInLeft" data-pos="0,45%" data-origin="left,center" data-size="80%,60">
+                               <div class="skew bg-light"  data-size="80%,50"></div>
+                           </div> 
+                           <div class="hinge" data-time="0" data-show="zoomInRight" data-pos="30%,45%" data-origin="left,center"  data-size="100%,60">
+                              <div class="skew bg-light" data-size="80%,50"></div>
+                           </div>
+                           <div class="circle1" data-pos="30,28%" data-origin="right,top" data-size="150" data-time="1.5" data-show="expandOpen">
+                           </div>
+                            <div class="circle2" data-pos="60%,0" data-origin="center,bottom" data-size="100" data-time="2" data-show="expandOpen">
+                           </div>
+                           <div data-pos="65%,100%" data-origin="center" data-size="120" data-time="2.5" data-show="expandOpen">
+                              <div class="squareBorder1" data-size="200"></div>
+                           </div>
+                           <div class="photo1" data-pos="-20%,20%" data-size="35%" data-bg="assets/img/img9.jpg" data-time="3" data-show="rotateIn"></div>
+                           <div data-pos="5%,-5%" data-size="120" data-bg="assets/img/txt1.png" data-time="3.5" data-show="fadeIn"></div> 
+                         
+                      </div>
+
+                      <div  class="page">
+                         <div data-time="0.7" data-show="expandOpen" data-pos="60%,50%" data-origin="center" data-size="200,200">
+                            <div class="round color1" data-size="200,200" data-time="0.7" data-show="pulse"></div>
+                         </div>
+
+                         <div class="round color2" data-pos="-20%,-20%" data-size="50,50" data-time="1" data-show="expandOpen"></div>
+                         <div class="round color3" data-pos="0,-10%" data-size="150,150" data-time="1.3" data-show="expandOpen"></div>
+                         <div class="round color3" data-pos="80%,10%" data-size="100,100" data-time="1.6" data-show="expandOpen"></div>
+                         <div class="round color2" data-pos="10%,15%" data-size="120,120" data-time="1.9" data-show="expandOpen"></div>
+                         <div class="round color4" data-pos="55%,10%" data-size="50,50" data-time="2.2" data-show="expandOpen"></div>
+                         <div class="round color3" data-pos="-5%,-5%" data-size="50,50" data-time="2.5" data-show="expandOpen"></div>
+
+                         <div data-pos="50%,50%" data-size="150,150"  data-time="3" data-show="bounceInDown" data-origin="center">
+                            <div class="text-center">
+                              <img data-size="150,150" src="assets/img/logo.png">
+                            </div>
+                         </div>
+                      </div>
+                      
+                </div>
+        </div>
+    </div>
+
+
+    <script src="../src/hammer.min.js"></script>
+    <script src="../src/h5show.js"></script>
+    <script>
+    (function(){
+
+      var ps = document.getElementById('phoneSizes');
+      var demo = document.getElementById('demo');
+
+      var sizeClickHandler = function(e){
+
+          for(var i in ps.children){
+              var li = ps.children[i];
+              li.className = '';
+          }
+          this.classList.add('active');
+          demo.className = 'demo-container container-' + this.dataset.size;
+      };
+
+       for(var i in ps.children){
+          var li = ps.children[i];
+          li.onclick = sizeClickHandler;
+       }
+
+
+
+       var show = new H5Show('showBox',{autoPlay:true,urlHash:true});
+
+
+    })();
+    </script>
+  </body>
+</html>

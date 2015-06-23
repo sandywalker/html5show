@@ -1,0 +1,196 @@
+<!doctype html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+    <title>H5Show-Home</title>
+
+    <link rel="stylesheet" href="../src/animate.css">
+    <link rel="stylesheet" href="../src/animations.css">
+    <link rel="stylesheet" href="../src/animate-page.css">
+    <link rel="stylesheet" href="../src/h5show.css">
+    <link rel="stylesheet" href="assets/css/doc.css">
+    <link rel="stylesheet" href="assets/css/tomorrow-night.css">
+
+
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="container">
+        <div class="brand">H5Show</div>
+        <ul class="nav">
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="demo.html">Demo</a></li>
+            <li><a href="docs.html#config">Docs</a></li>
+            <li><a href="templates.html">Templates</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+    </div>
+    <header class="banner" id="banner">
+        <div class="page">
+          <div class="intro" data-pos="100,100">
+            <h1 data-time="0.5" data-show="bounceInLeft">H5Show</h1>
+            <h2 data-time="1.2" data-show="bounceInRight">Write HTML, Show Magic!</h2>
+            <p data-time="2" data-show="fadeInUp">Opensource animation creator for</p>
+            <p data-time="2.5" data-show="fadeInDown">Sliders,Welcome pages,Presentations etc.</p>
+          </div>
+        </div>
+        <!--<ul>-->
+         <!-- -->
+          <!--<li>layout by HTML, using CSS3 for animation and javascript for control</li>-->
+          <!--<li>Responsive, design for all of your devices with different screens</li>-->
+          <!--<li>Flexible, easy to customize ,easy to extend! </li>-->
+        <!--</ul>-->
+    </header>
+    <div class="container container-index">
+        <div class="content">
+            <h1>What is H5Show </h1>
+            <p>
+              H5Show is a lightweight library to create animation using Html with little Javascript code, it's for both developers and designers,
+              you just need  to write simple Html, then left all other things  to the library.
+              <p>It can be used to create <span class="important">sliders</span>,<span class="important">welcome pages</span>,<span class="important">presentations</span> etc. Really easy to use,hope you will enjoy it!</p>
+            </p>
+          <!--<p>-->
+            <!--The library use Javascript to control the flow,  enhance the layout&animations which make it more powerful.-->
+          <!--</p>-->
+          <br/>
+            <p><a href="#">download h5show.min.js</a></p>
+          <br/>
+
+            <h1>Let's get started</h1>
+
+            <p><strong>1.</strong> Add stylesheet to the <code>&lt;head&gt;</code> element of your html.</p>
+            <pre class="prettyprint">
+
+        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;{path}/h5show.css&quot;&gt;
+            </pre>
+
+            <p> Put h5show.js to  appropriate place (commonly before the <code>&lt;/body&gt;</code>) of your html.</p>
+            <p class="muted">If your want to support the mobile touch events, put <a href="http://hammerjs.github.io/">hammerjs</a> (Thanks to  author:Jorik Tangelder:) before h5show.js:</p>
+
+            <pre  class="prettyprint">
+
+        &lt;!--&lt;script type=&quot;text/javascript&quot; src=&quot;{path}/hammer.min.js&quot;&gt;&lt;/script&gt;--&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;{path}/h5show.min.js&quot;&gt;&lt;/script&gt;
+            </pre>
+
+
+
+            <p><strong>2.</strong> Add a container  in which you put the animation pages.</p>
+            <pre class="prettyprint">
+        &lt;div id=&quot;showbox&quot;&gt;
+
+        &lt;/div&gt;
+            </pre>
+          <p>Set the container size,make sure position is  relative or absolute,set overflow hidden. </p>
+          <pre class="prettyprint">
+        #showBox{
+          width:500px
+          height:300px;
+          position: absolute;
+          overflow: hidden;
+        }
+          </pre>
+            <p><strong>3.</strong> Add animation pages and sprite elements in it,set  class:'page' to each page element.</p>
+            <pre class="prettyprint">
+
+         &lt;div id=&quot;showBox&quot;&gt;
+            &lt;div class=&quot;page&quot;&gt;
+                &lt;h1&gt;Hello h5Show&lt;/h1&gt;
+                &lt;p&gt;Amazing&lt;/p&gt;
+                &lt;p&gt;Flexible&lt;/p&gt;
+                &lt;p&gt;Powerful&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;page&quot;&gt;
+              ...
+            &lt;/div&gt;
+         &lt;/div&gt;
+            </pre>
+            <p><strong>4.</strong> Now, let's add some magic , add  dataset attributes to the elements which set the showtime and animation. </p>
+            <pre class="prettyprint">
+
+        &lt;div id=&quot;showBox&quot;&gt;
+          &lt;div class=&quot;page&quot;&gt;
+              &lt;h1 data-time="0.5" data-show="expandOpen"&gt;Hello h5Show&lt;/h1&gt;
+              &lt;p data-time="1" data-show="fadeInLeft"&gt;Amazing&lt;/p&gt;
+              &lt;p data-time="1.25" data-show="fadeInLeft"&gt;Flexible&lt;/p&gt;
+              &lt;p data-time="1.5" data-show="fadeInLeft"&gt;Powerful&lt;/p&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;page&quot;&gt;
+            &lt;h2&gt;page2&lt;/h2&gt;
+          &lt;/div&gt;
+       &lt;/div&gt;
+            </pre>
+
+            <p><strong>5.</strong> Last Step,using Javascript to create the  h5Show.</p>
+            <pre class="prettyprint">
+
+        &lt;script&gt;
+          (function(){
+          var show = new H5Show('showBox',{autoPlay:true});
+          })();
+        &lt;/script&gt;
+            </pre>
+
+            <p> OK, It's done ! <a href="#" id="showIndexDemo">Let's check the result.</a> </p>
+            <div id="indexDemo" class="hide">
+              <div id="showBox">
+                <div class="page" >
+                  <h1 data-time="0.5" data-show="expandOpen">Hello h5Show</h1>
+                  <p data-time="1" data-show="fadeInLeft">Amazing</p>
+                  <p data-time="1.25" data-show="fadeInLeft">Flexible</p>
+                  <p data-time="1.5" data-show="fadeInLeft">Powerful</p>
+                </div>
+                <div class="page">
+                  <h1 data-time="0.5" data-show="bigEntrance">Life is beautiful!</h1>
+                </div>
+              </div>
+            </div>
+          <br/>
+            <p>Visit our <a href="docs.html#config">docs page</a> for more details, and <a href="demo.html">demo page </a> to see some advanced usages.</p>
+          <br/>
+            <h1>Thanks</h1>
+            <p>
+              H5Show is inspired by two  CSS3 animation project <a href="http://daneden.me/animate">Animate.css</a> and <a href="www.justinaguilar.com/animations/">CSS3 ANIMATION CHEAT SHEET</a>,we strongly recommend you to visit these excellent projects.
+            </p>
+        </div>
+
+    </div>
+
+    <footer class="container">
+      <div class="footer-content">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>This project is maintained by <a href="http://sandywalker.github.io">Sandy Duan</a>.</p>
+        <p>License MIT © Sandy Duan</p>
+        <p>Hosted on <a href="https://github.com/sandywalker/h5show">Github</a>.</p>
+      </div>
+    </footer>
+
+
+    <script src="assets/js/prettify.js"></script>
+    <script src="../src/hammer.min.js"></script>
+    <script src="../src/h5show.js"></script>
+    <script>
+    (function(){
+      prettyPrint();
+
+      var bannerShow = new H5Show('banner',{autoPlay:true});
+
+      var btnShowIndexDemo = document.getElementById('showIndexDemo');
+      var indexDemo = document.getElementById('indexDemo');
+      btnShowIndexDemo.addEventListener('click',function(e){
+        e.preventDefault();
+        if (indexDemo.classList.contains('hide')){
+          indexDemo.classList.remove('hide');
+          var show = new H5Show('showBox',{autoPlay:true});
+        }
+      });
+
+
+
+    })();
+    </script>
+  </body>
+</html>

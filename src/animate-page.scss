@@ -13,6 +13,9 @@
 	animation: $animation;
 }
 
+
+
+
 .pg-rotateRightSideFirst {
 	@include animate(100% 50%,rotateLeftSideFirst .8s both ease-in)
 }

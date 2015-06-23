@@ -71,6 +71,15 @@
         return isNaN(numeric) ? (fallback || 0) : Number(numeric);
     };
 
+    // convert string value to bool, if str is null, return def;
+    var toBool = function (str,def) {
+        var _def = def||false;
+        if (str==null){
+            return _def;
+        }
+        return str==="true"||str === true ?true:false;
+    };
+
     // `byId` returns element with given `id` - you probably have guessed that ;)
     var byId = function ( id ) {
         return document.getElementById(id);
@@ -238,6 +247,15 @@
     // Parse dataset of element, then layout by css
     var _layoutElement = function(el){
 
+
+
+        var ds = el.dataset;
+        var styles = {};
+        var sizes = [];
+        var origins = [];
+
+
+
         //Convert to css size value
         var cssSize = function(v){
                 if (v.indexOf('%')===-1&&v.indexOf('px')===-1){
@@ -246,41 +264,83 @@
             return v;
         };
 
-        //Is position set to  center
-        var isCenter = function(v){
-            return v==='center'||v==='middle';
-        };
 
-        //Get x position
+
+
+
+
+
+
+        /* Get x position
+           v:  position x value,
+           styles: css styles of the element,
+           origin: origins
+        */
         var getXPos = function(v,styles){
              var x = cssSize(v);
-
+             var flag = -1;
              if (x.indexOf('-')===-1){
                 styles.left=x;
              }else{
                 styles.right=x.substr(1);
+                flag = 1;
+             }
+             if (origins&&sizes){
+                styles.marginLeft = calcMarginFix(sizes[0],origins[0],flag);
              }
         };
 
-        //Get y position
+
+        /* Get y position
+           v:  position y value,
+           styles: css styles of the element,
+           origins: origins
+        */
         var getYPos = function(v,styles){
              var y = cssSize(v);
+             var flag = -1;
              if (y.indexOf('-')===-1){
                 styles.top=y;
              }else{
                 styles.bottom=y.substr(1);
+                flag = 1;
+             }
+            if (origins&&sizes){
+                styles.marginTop = calcMarginFix(sizes[1],origins[1],flag);
              }
         };
 
-        var ds = el.dataset;
-        var styles = {};
 
-        //Caulate the size info
+
+        /*
+            calcMarginFix by origin
+            sz: width or height,
+            origin: origin
+            flag: determine margin is positive or negative,value can be 1 or -1,default value = -1
+        */
+        var calcMarginFix = function(sz,origin,flag){
+                if (!sz) return 0;
+
+                var fg = flag||-1;
+                var suffix = sz.indexOf('%')>=0?'%':'px';
+                var margin = 0;
+                var intSize = fg*parseInt(sz);
+                if (origin==='center'){
+                    margin = intSize/2;
+                }else if (origin==='right'||origin==='bottom'){
+                    margin = intSize;
+                }
+                return cssSize(margin+suffix);
+        }
+
+         //Caulate the size info
 
         //Is position set to  center
         var isAutoSize = function(v){
             return v==='auto';
         };
+
+
 
         if (ds.fontsize){
             var fsize = cssSize(ds.fontsize);
@@ -292,7 +352,7 @@
 
 
         if (ds.size){
-           var sizes = ds.size.split(',');
+           sizes= ds.size.split(',');
            if (sizes.length===1){sizes.push(sizes[0]);}
 
            if (sizes.length){
@@ -305,7 +365,15 @@
                 }
            }
 
+        }else{
+           styles.width = '100%';
         }
+
+        if (ds.origin){
+            origins = ds.origin.split(',');
+            if (origins.length ===1){origins.push(origins[0])}
+        }
+
 
         //Caculate the position info
         if (ds.pos){
@@ -313,35 +381,8 @@
             var pos = ds.pos.split(',');
             if (pos.length===1){pos.push(pos[0]);}
             if (pos.length){
-                var xc = isCenter(pos[0]);
-                var yc = isCenter(pos[1]);
-                if (xc){
-                    //styles.left = '50%';
-                    styles.marginLeft = 'auto';
-                    styles.marginRight = 'auto';
-                    styles.textAlign = 'center';
-
-                    if (yc){
-                        //The transform is conflict with animate css use transform property , result in top offset .
-                        //I can't find any perfect solution to fix it;
-                        styles.top = '50%';
-                        styles.transform = 'translateY(-50%)';
-                    }else{
-                        getYPos(pos[1],styles);
-                    }
-
-                }else{
-                    getXPos(pos[0],styles);
-
-                    if (yc){
-                        styles.top = '50%';
-                        styles.transform = 'translateY(-50%)';
-                    }else{
-                        getYPos(pos[1],styles);
-                    }
-
-                }
-
+                getXPos(pos[0],styles);
+                getYPos(pos[1],styles);
             }
         }
 
@@ -350,9 +391,37 @@
             el.classList.add('hide');
         }
 
+        if (ds.bg){
+            styles.background = ds.bg.indexOf('#')===-1?'url(' + ds.bg +') center center no-repeat':ds.bg;
+        }
+
+        if (ds.color){
+            styles.color = ds.color;
+        }
+
+        if (ds.opacity){
+            styles.opacity = ds.opacity;
+        }
 
         css(el,styles);
     }; //End of _layoutElement
+
+
+    var spriteHandlers = [];
+
+    var removeHandler = function(handler){
+       var idx = spriteHandlers.indexOf(handler);
+       if (idx>=0){
+            spriteHandlers.shift(idx);
+       }
+    };
+
+    var clearSpriteHandlers = function(){
+        for(var h in spriteHandlers){
+            window.clearTimeout(spriteHandlers[h]);
+        }
+        spriteHandlers.length = 0;
+    }
 
 
     //Set animation duration of the element
@@ -380,28 +449,40 @@
             setDuration(el,cfg.duration,_defaultDuration);
 
             // Set Show animation
-            window.setTimeout(function(){
+            var showH = window.setTimeout(function(){
                 removeClass(el,'hide');
                 addClass(el,'animated',cfg.show);
+                removeHandler(showH);
             }, time*1000);
-
+            spriteHandlers.push(showH);
             // Set Showing animation if user specify;
             if (ds.showing){
-              window.setTimeout(function(){
+
+              var showingH = window.setTimeout(function(){
                 removeClass(el,cfg.show);
                 addClass(el,cfg.showing);
+                removeHandler(showingH);
               },(time+cfg.duration)*1000);
+              spriteHandlers.push(showingH);
             };
 
             if (ds.stay){
                var stay = toNumber(ds.stay);
-               window.setTimeout(function(){
-                 removeClass(el,cfg.show,cfg.showing);
-                 var hide = cfg.hide||'hide';
-                 addClass(el,hide);
-               },(time+cfg.duration+stay)*1000);
-            }
+               var hideH = window.setTimeout(function(){
 
+                 removeClass(el,cfg.show,cfg.showing);
+
+                 if (el.classList.contains('hiding')){
+                     addClass(el,'hide');
+                 }else{
+                    var hide = cfg.hide||'hide';
+                    addClass(el,hide);
+                 }
+
+                 removeHandler(hideH);
+               },(time+cfg.duration+stay)*1000);
+               spriteHandlers.push(hideH);
+            };
         }
     };
 
@@ -412,20 +493,31 @@
       if (cfg.time){
         addClass(el,'hide');
       }
+      addClass(el,'hiding');
+    };
+
+    //Reset the element
+    var _resetElement = function(el){
+        var cfg = el.config;
+        removeClass(el,cfg.showing,cfg.show,cfg.hide);
+        if (cfg.time){
+            addClass(el,'hide');
+        }
     };
 
 
     var _defaults = {
-    	index:0,
         autoPlay:false,
-    	direction:'upDown',
-    	indicator:false,
+    	direction:'horizontal',
+    	indicator:true,
     	arrow:false,
+        index:0,
+        urlHash:false,
     	page:{
-    		show:'fadeInUp',
-    		hide:'fadeOutDown',
+    		show:null,
+    		hide:null,
     		stay:3,
-        duration:1.5
+            duration:1.5
 		},
 		sprite:{
 			show:'fadeIn',
@@ -443,12 +535,24 @@
     var _cPageActive = 'page-active'; //active page class name
 
 
+
     var hidePageHandler = null; //handler that hide page after animate
     var autoPlayHandler = null; //handler that auto play to next page
 
 
+    var _cPageAni = {
+        toL:'pg-moveToLeft',
+        toR:'pg-moveToRight',
+        fromL:'pg-moveFromLeft',
+        fromR:'pg-moveFromRight',
+        toT:'pg-moveToTop',
+        toB:'pg-moveToBottom',
+        fromT:'pg-moveFromTop',
+        fromB:'pg-moveFromBottom'
+    }
 
     var lastHash = '';  // last hash detected
+
 
 
 
@@ -471,13 +575,20 @@
             this.pageMap = {};
             //sprites is object to keep all sprites, by page id;
             this.sprites = {};
-            this.pages = arrayify( $$(_sPage),this.container);
+            this.pages = $$(_sPage,this.container);
             this.pageCount = this.pages.length;
             this.container.classList.add(_cPageContainer);
+
+            this.config.indicator = toBool(this.config.indicator);
+            this.config.arrow = toBool(this.config.arrow);
 
             if (this.config.indicator){
                this.initIndicator();
             }
+            if (this.config.arrow){
+               this.initArrow();
+            }
+
 
             for(var i=0;i<this.pages.length;i++){
                 var page = this.pages[i];
@@ -495,32 +606,57 @@
     	  },
         //Initialize indicator and set position,fix the position when it is set to left or right
         initIndicator:function(){
+
           var ul = document.createElement("ul");
           var ind = this.config.indicator;
+
+          if (ind === 'true' || ind === true){
+              ind = this.config.direction === 'horizontal'? 'bottom':'right';
+          }
           addClass(ul,'indicator','indicator-'+ ind);
           for(var i=0;i<this.pages.length;i++){
              var li = document.createElement('li');
              li.dataset.page = i;
+             li.dataset.flag = 'indicator';
              ul.appendChild(li);
           }
           this.container.appendChild(ul);
 
-          //fix the left,right position
+          //fix the left/right position
           if ('left'===ind||'right'===ind){
             ul.style.top = ul.offsetTop - ul.clientHeight / 2 + 'px';
           }
           this.indicator = ul;
 
 
-          var that = this;
-          this.indicator.addEventListener('click',function(e){
-            var tgt = e.target;
-            if (tgt.nodeName.toLowerCase()==='li'){
-                var idx = toNumber(tgt.dataset.page);
-                that.goto(that.getPage(idx));
-            };
-          });
+        },
+        initArrow:function(){
+            var isHor = this.config.direction === 'horizontal';
+            var that = this;
+            var _createArrow = function(direction,isHor){
+                var arr = document.createElement("div");
+                var dir = '';
+                if (direction==='prev'){
+                    dir = isHor?'left':'top';
+                }else if (direction==='next'){
+                    dir = isHor?'right':'bottom';
+                }
+                addClass(arr,'arrow','arrow-'+dir);
 
+                var inner = document.createElement('div');
+                inner.dataset.flag = 'arrow';
+                inner.dataset.direction = direction;
+                addClass(inner,'arrow-inner');
+
+                arr.dataset.flag = 'arrow';
+                arr.dataset.direction = direction;
+
+                arr.appendChild(inner);
+                that.container.appendChild(arr);
+                return arr;
+            };
+            this.arrowPrev = _createArrow('prev',isHor);
+            this.arrowNext =  _createArrow('next',isHor);
         },
 
         //Initialize page classes ,config and elements in page;
@@ -530,12 +666,21 @@
           //Make sure stay,duration is number
           cfg.stay = toNumber(cfg.stay);
           cfg.duration = toNumber(cfg.duration);
+
+          cfg.arrow = toBool(cfg.arrow,true);
+          cfg.indicator = toBool(cfg.indicator,true);
+
           setDuration(page,cfg.duration,_defaultPageDuration);
+          var styles ={};
+          if (cfg.bg){
+            styles.background = cfg.bg.indexOf('#')===-1?'url(' + cfg.bg +') center center no-repeat':cfg.bg;
+          }
+          css(page,styles);
           this.initSprites(page);
 
           page.inited = true;
 
-    	  },
+    	},
         //Initialize all elements in page as sprites
         initSprites:function(page){
           var sprites = page.querySelectorAll('*');
@@ -552,41 +697,61 @@
         //Initialize default event listeners
         initEventListeners:function(){
             var that = this;
-            window.addEventListener('hashchange', function () {
-                    that.setIdx( that.idxFromHash());
-            }, false);
+            if (that.config.urlHash){
+                window.addEventListener('hashchange', function () {
+                        that.setIdx( that.idxFromHash());
+                }, false);
 
-            this.container.addEventListener('h5show.pageEnter', function (e) {
-                var newHash = '#/' + e.target.id;
-                //If the hash is changed, uses hashchange event handler to process, otherwise set page index
-                if (window.location.hash!==newHash){
-                    window.location.hash = lastHash = newHash;
-                }else{
-                    that.setIdx(e.target.idx);
-                }
-            }, false);
-
-
-
-          //recognize gestures made by touch
-          var hm = new Hammer(this.container);
-          hm.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+                that.container.addEventListener('h5show.pageEnter', function (e) {
+                    var newHash = '#/' + e.target.id;
+                    //If the hash is changed, uses hashchange event handler to process, otherwise set page index.
+                    if (window.location.hash!==newHash){
+                        window.location.hash = lastHash = newHash;
+                    }else{
+                        that.setIdx(e.target.idx);
+                    }
+                }, false);
+            }
 
 
-          hm.on('swipe',function(e){
-            if (e.direction===Hammer.DIRECTION_RIGHT|| e.direction===Hammer.DIRECTION_DOWN){
-               that.prevPage();
-            }else{
-               that.nextPage();
-            };
+            //Init the click event handler for indicators and arrows.
+            that.container.addEventListener('click',function(e){
+                var tgt = e.target;
 
-          });
+                if (tgt.nodeName.toLowerCase()==='li' && tgt.dataset.flag==='indicator'){
+                     var idx = toNumber(tgt.dataset.page);
+                     that.goto(that.getPage(idx));
+                }else if (tgt.dataset.flag==='arrow'){
+                    tgt.dataset.direction === 'prev'? that.prevPage():that.nextPage();
+                };
+             });
+
+
+              //recognize gestures made by touch
+              if (Hammer){
+                  var hm = new Hammer(this.container);
+                  hm.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+
+
+                  hm.on('swipe',function(e){
+                    if (e.direction===Hammer.DIRECTION_RIGHT|| e.direction===Hammer.DIRECTION_DOWN){
+                       that.prevPage();
+                    }else{
+                       that.nextPage();
+                    };
+
+                  });
+              }
 
         },
         //Go to page by id
         goto:function(page){
             if (page){
-                triggerEvent(page, 'h5show.pageEnter');
+                if (this.config.urlHash){
+                    triggerEvent(page, 'h5show.pageEnter');
+                }else{
+                    this.setIdx(page.idx);
+                }
             }
         },
         //Get page index from hash
@@ -596,7 +761,7 @@
         },
 
         //Get page element by index specified, if idx argument is not passed, index is set to this.idx
-    	  getPage:function(idx){
+    	getPage:function(idx){
             if (idx===undefined){
                 idx = this.idx;
             }
@@ -614,15 +779,27 @@
                 return;
             }
             this.idx = idx;
+            this.calcPageAnimation();
             if (this.lastIdx>=0){
                 this.hidePage(this.lastIdx);
             }
             this.showPage(idx);
-            if (this.indicator){
-              this.activeIndicator(idx);
+            if (this.config.indicator){
+              this.updateIndicator(idx);
+            }
+
+            if (this.config.arrow){
+                this.updateArrow(idx);
             }
         },
-        activeIndicator:function(idx){
+        //Ativate current indicator
+        updateIndicator:function(idx){
+           if (!this.config.indicator) return;
+           addClass(this.indicator,'hide');
+           var page = this.getPage(idx);
+           if (this.pageCount>1&&page.config.indicator){
+              removeClass(this.indicator,'hide');
+           }
            var list = $$('li',this.indicator);
            for(var i in list){
              var li = list[i];
@@ -632,14 +809,38 @@
              }
            }
         },
+        //Update arrow's show/hide
+        updateArrow:function(idx){
+            if (!this.config.arrow) return;
 
+            addClass(this.arrowPrev,'hide');
+            addClass(this.arrowNext,'hide');
+            var page = this.getPage(idx);
+            if (this.pageCount>1&&page.config.arrow){
+                if (idx > 0){
+                    removeClass(this.arrowPrev,'hide');
+                }
+                removeClass(this.arrowNext,'hide');
+            }
+
+        },
         //Hide sprites of the page
-        hidePageSprites:function(page){
+        hideSprites:function(page){
           var sprites = this.sprites[page.id];
           if (sprites){
             for(var i= 0 ;i<sprites.length;i++){
               var sprite = sprites[i];
               _hideElement(sprite);
+            }
+          }
+        },
+        //Reset sprites of the page
+        resetSprites:function(page){
+          var sprites = this.sprites[page.id];
+          if (sprites){
+            for(var i= 0 ;i<sprites.length;i++){
+              var sprite = sprites[i];
+              _resetElement(sprite);
             }
           }
         },
@@ -650,14 +851,41 @@
             var that = this;
             if (page){
                 var cfg = page.config;
-                removeClass(page,cfg.show);
-                addClass(page,cfg.hide);
+                removeClass(page,cfg._show);
+                addClass(page,cfg._hide);
 
                 delay(hidePageHandler,cfg.duration,function(){
-                    removeClass(page,_cPageActive,_cAnimated,cfg.hide);
-                    that.hidePageSprites(page);
+                    if (that.idx!==idx){
+                        removeClass(page,_cPageActive,_cAnimated,cfg._hide);
+                        that.hideSprites(page);
+                    }
                 });
             }
+        },
+
+
+
+        //Calculate the page animation show and hide class, then add to page config _show/_hide
+        calcPageAnimation:function(){
+               var lastPage = this.lastIdx>=0?this.getPage(this.lastIdx):null;
+               var lcfg =  lastPage?lastPage.config:null;
+               var page = this.getPage(this.idx);
+               var cfg = page.config;
+               var isHor = this.config.direction === 'horizontal';
+               if (this.lastIdx < this.idx){
+                    if (lcfg){
+                        removeClass(lastPage,lcfg._hide);
+                        lcfg._hide = lcfg.hide||isHor?_cPageAni.toL:_cPageAni.toT;
+                    }
+                    cfg._show = cfg.show || isHor?_cPageAni.fromR:_cPageAni.fromB;
+               }else{
+
+                    if (lcfg){
+                        removeClass(lastPage,lcfg._hide);
+                        lcfg._hide = lcfg.hide||isHor?_cPageAni.toR:_cPageAni.toB;
+                    }
+                    cfg._show = cfg.show || isHor?_cPageAni.fromL:_cPageAni.fromT;
+               }
         },
 
         //Show and animate the sprites of the page
@@ -670,11 +898,14 @@
         },
 
         //Show page by index
-    	  showPage:function(idx){
+    	showPage:function(idx){
 
           window.clearTimeout(autoPlayHandler);
           var page = this.getPage(idx);
-          addClass(page,_cAnimated,_cPageActive,page.config.show);
+          addClass(page,_cAnimated,_cPageActive,page.config._show);
+          this.resetSprites(page);
+          clearSpriteHandlers();
+
           this.showSprites(page);
           this.lastIdx = page.idx;
 
@@ -687,13 +918,13 @@
           //If autoPlay is true, show next page after stay time
           if (this.config.autoPlay){
             var that = this;
-            autoPlayHandler = delay(autoPlayHandler,page.config.duration + that.getPageStay(page),function(){
+            autoPlayHandler = delay(autoPlayHandler,page.config.duration + that.calcPageStay(page),function(){
               that.nextPage();
             });
           }
         },
-        //Calculate stay time of the page
-        getPageStay:function(page){
+        //Calculate the stay time of the page
+        calcPageStay:function(page){
           var stay = page.config.stay;
           //Max sprites time + duration
           var msd = 0;
@@ -711,7 +942,6 @@
               }
             }
           }
-
           //if calculated msd larger than config.stay than use  msd,if not use config.stay
           return Math.max(stay,msd);
         },
