@@ -18,6 +18,9 @@ module.exports = function (grunt) {
     clean: {
       files: ['dist']
     },
+    jsbeautifier : {
+      files : ['src/**/*.js']
+    },
     concat: {
       options: {
         banner: '<%= banner %>',
@@ -32,6 +35,7 @@ module.exports = function (grunt) {
         dest:'dist/<%= pkg.name %>.css'
       }
     },
+
     sass: {                              // Task
       dist: {                            // Target
         options: {                       // Target options
@@ -114,9 +118,10 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-jsbeautifier');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'sass','connect', 'clean', 'concat','uglify','cssmin']);
+  grunt.registerTask('default', ['jsbeautifier','jshint', 'sass','connect', 'clean', 'concat','uglify','cssmin']);
   // grunt.registerTask('server', function () {
   //   grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
   //   grunt.task.run(['serve']);
