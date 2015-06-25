@@ -1,69 +1,287 @@
 <!doctype html>
-  <html>
-  <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-    <meta name="msapplication-tap-highlight" content="no" />
-    <title>Get Started</title>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="msapplication-tap-highlight" content="no"/>
+  <title>H5Show Docs</title>
 
-    <link rel="stylesheet" href="../src/animate.css">
-    <link rel="stylesheet" href="../src/anim
-    ations.css">
-    <link rel="stylesheet" href="../src/animate-page.css">
-    <link rel="stylesheet" href="../src/h5show.css">
-    <link rel="stylesheet" href="assets/css/doc.css">
+  <link rel="stylesheet" href="../src/animate.css">
+  <link rel="stylesheet" href="../src/animations.css">
+  <link rel="stylesheet" href="../src/animate-page.css">
+  <link rel="stylesheet" href="../src/h5show.css">
+  <link rel="stylesheet" href="assets/css/doc.css">
+  <link rel="stylesheet" href="assets/css/tomorrow-night.css">
 
 
-  </head>
-  <body>
-    <div class="navbar">
-      <div class="container">
-        <div class="brand">H5Show</div>
-        <ul class="nav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="demo.html">Demo</a></li>
-            <li  class="active"><a href="docs.html#config">Docs</a></li>
-            <li><a href="templates.html">Templates</a></li>
-            <li><a href="about.html">About</a></li>
-        </ul>
-      </div>
-    </div>
+</head>
+<body>
+<div class="navbar">
+  <div class="container">
+    <div class="brand">H5Show</div>
+    <ul class="nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="demo.html">Demo</a></li>
+      <li class="active"><a href="docs.html#config">Docs</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </div>
+</div>
 
-    <div class="container container-main container-doc">
+<div class="container container-main container-doc">
 
-       <ul class="side-nav">
-          <li><a href="#config">Config</a></li>
-          <li><a href="#layout">Layout</a></li>
-          <li><a href="#timeLine">TimeLine</a></li>
-          <li><a href="#animations">Animations</a></li>
+  <ul class="side-nav">
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#config">Config</a></li>
+    <li><a href="#layout">Layout</a></li>
+    <li><a href="#timeLine">TimeLine</a></li>
+    <li><a href="#animations">Animations</a></li>
+  </ul>
+  <div class="col-main">
+    <div id="intro">
+      <h2>Introduction</h2>
+
+      <p>H5Show is a pure lightweight Javascript library using HTML for layout,CSS3 for animation. It does not depend on
+        any third party libraries. </p>
+
+      <p>The library is inspired by two CSS3 animation project <a href="http://daneden.me/animate">Animate.css</a> and
+        <a href="www.justinaguilar.com/animations/">CSS3 ANIMATION CHEAT SHEET</a>.
+        We use Javascript to do a more detailed control and enhancements.</p>
+      <p>If you want to get started, please  visit our <a href="index.html">home page</a>.</p>
+      <br/>
+
+      <p>
+        Before proceed further, there are some important concepts need to figure out.
+      </p>
+      <ul>
+        <li><strong>Container:</strong> &nbsp; html element  use to wrap all of the elements in show.</li>
+        <li><strong>Page:</strong>  &nbsp;   stage which animations can run in, one show can have several pages.</li>
+        <li><strong>Sprite: </strong> &nbsp;  animated element,each page can have several sprites in it. </li>
       </ul>
-      <div class="col-main">
-            <div id="config">
-              <h2>Config Content</h2>
-            </div>
-            <div id="layout">
-              <h2>Layout Content</h2>
-            </div>
-            <div id="timeLine">
-              <h2>TimeLine Content</h2>
-            </div>
-            <div id="animations">
-              <h2>Animations Content</h2>
-            </div>
-
-      </div>
-      <div class="clearfix"></div>
+      <p>
+         Notice,all the time related numbers we mentioned below are for seconds.
+      </p>
     </div>
 
 
-    <script src="../src/hammer.min.js"></script>
-    <script src="../src/h5show.js"></script>
-    <script>
-    (function(){
+    <div id="config">
+      <h2>Config</h2>
+
+      <p>The library has some basic options, you can put these options to either container element's dataset attributes or use
+        Javascript code.</p>
+
+      <p class="muted">The following two codes are equivalent </p>
+            <pre class="prettyprint">
+
+        &lt;div id=&quot;showBox&quot; data-arrow=&quot;true&quot; data-indicator=&quot;false&quot;&gt;
+
+        &lt;/div&gt;
+
+        &lt;script&gt;
+          var h5show = new H5Show('showBox');
+        &lt;/script&gt;
+            </pre>
+
+        <pre class="prettyprint">
+        &lt;div id=&quot;showBox&quot;&gt;
+
+        &lt;/div&gt;
+
+        &lt;script&gt;
+          var h5show = new H5Show('showBox',{arrow:true,indicator:false});
+        &lt;/script&gt;
+          </pre>
+      <p>
+        Let's explain more details of  options, here is the default options.
+      </p>
+      <pre class="prettyprint">
+        {
+        autoPlay: false, // whether auto goto and  play next page when current page is shown.
+
+        direction: 'horizontal', //default page animation direction,values:'horizontal','vertical'
+
+        indicator: true, //  dots which indicate the whole pages indexes and  active page.
+
+        arrow: false, // shape button link to next page or previous page.
+
+        index: 0,     //default page index when the show is created.
+
+        urlHash: false, //whether rewrite url hash,
+                        //if the page have only one show,it can be true.
+                        //see demo page for example.
+
+        //default page options, can be override by each page options.
+        page: {
+            show: null, //default  animation class when page show,
+                        //if value is null,the library will  set animation automatically
+            hide: null, //default animation class when page hide , same as show
+
+            duration: 1.5, //default page animation duration,1.5 represents 1.5s
+
+            stay:0  //how long will the page stay
+                    //eg: 10 represents 10s
+                    //default value is 0 means the library will auto calculate.
+        },
+
+        //default sprite options,can be override by each sprite options.
+        sprite: {
+            show: 'fadeIn', //default  show animation class of sprite
+
+            hide: 'fadeOut',//default hide animation class of sprite
+
+            showing: null,//default  showing animation class of sprite
+
+            duration: 1 //default  animation duration, 1 represents 1s
+        }
 
 
+      </pre>
 
-    })();
-    </script>
-  </body>
+
+    </div>
+    <div id="layout">
+      <h2>Layout</h2>
+      <p>H5Show mainly use absolute position for layout, but it doesn't not means you must set every thing with <code>position:absolute</code> ,
+         it's just for convenient, you can write css usual. If you are good at css, we suggest you do that. Let's explain layout by example codes</p>
+      <p class="important"><strong>Size and Position</strong></p>
+      <div class="example-container">
+        <div class="example-code">
+          <pre class="prettyprint">
+&lt;div id=&quot;layout1&quot; &gt;
+  &lt;div class=&quot;page&quot;&gt;
+    &lt;div data-size=&quot;50&quot; data-pos=&quot;10&quot;&gt; sprite1 &lt;/div&gt;
+    &lt;!-- same as below --&gt;
+    &lt;div data-size=&quot;50,50&quot; data-pos=&quot;10,10&quot;&gt; sprite1 &lt;/div&gt;
+
+    &lt;div data-size=&quot;20%,30%&quot; data-pos=&quot;-10,-10&quot;&gt; sprite2&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+          </pre>
+         </div>
+        <div class="example-demo">
+            <div id="layout1" class="example-layout example-box">
+               <div class="page">
+                   <div class="example-layout-el" data-size="50,50" data-pos="10,10"> sp1 </div>
+                   <div class="example-layout-el" data-size="20%,30%" data-pos="-10,-10"> sp2 </div>
+               </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <br/>
+      <p>
+        <span class="important">Size</span><span class="muted">(data-size attribute)</span> option define the width and height of the sprite element,
+        values can be  number or percentage separated by comma. eg: <code>data-size="20,100%"</code>
+      </p>
+      <p class="code">
+        <code>data-size="50,100"</code> result in css style: <code>width:50px; height:100px;</code>
+        <br/>
+        <code>data-size="50%,200"</code> result in css style: <code>width:50%; height:200px;</code>
+      </p>
+      <p>If width and height are equal,it can be abbreviated with single value</p>
+      <p class="code">
+        <code>data-size="100"</code> equal with <code>data-size="100,100"</code>
+      </p>
+      <p>If you just want only the width or height left another auto size, value can be set to <code>'auto'</code></p>
+      <p class="code">
+        <code>data-size="100,auto"</code> result in css style <code>width:100%;</code>
+      </p>
+      <br/>
+      <p>
+        <span class="important">Pos</span><span class="muted">(data-pos attribute)</span> option define the position <span class="important">(xpos,ypos) </span>of the sprite element,
+        values can be  number or percentage separated by comma, each value can be set to  negative.
+      </p>
+      <p class="code">
+        <code>data-pos="20,20"</code> result in css style: <code>left:20px; top:20px;</code>
+        <br/>
+        <code>data-pos="20%,10%"</code> result in css style: <code>left:20%; top:10%;</code>
+      </p>
+      <p class="code">
+        <code>data-pos="20,-20%"</code> result in css style: <code>left:20px; bottom:20%;</code>
+        <br/>
+        <code>data-pos="-20,-20"</code> result in css style: <code>right:20px; bottom:20px;</code>
+        <br/>
+        <code>data-pos="-0,-0"</code> result in css style: <code>right:0; bottom:0;</code>
+
+      </p>
+      <p>If the values are equal,it can be abbreviated with single value</p>
+      <p class="code">
+        <code>data-pos="20"</code> equal with <code>data-pos="20,20"</code>
+      </p>
+      <p class="important"><strong>Origin</strong></p>
+      <p><span class="important">Origin</span><span class="muted">(data-origin attribute)</span> is related to size and position, affect then position of the sprite element.Let's take a example then explain.</p>
+      <div class="example-container">
+         <div class="example-code">
+          <pre class="prettyprint">
+&lt;div id=&quot;layout2&quot; &gt;
+&lt;div class=&quot;page&quot;&gt;
+  &lt;div data-size=&quot;80&quot; data-pos=&quot;50%&quot; data-origin=&quot;bottom,right&quot;&gt; right,bottom &lt;/div&gt;
+  &lt;div data-size=&quot;80&quot; data-pos=&quot;50%&quot; data-origin=&quot;center&quot;&gt; center &lt;/div&gt;
+  &lt;div data-size=&quot;80&quot; data-pos=&quot;50%&quot; &gt; default &lt;/div&gt;
+&lt;/div&gt;
+          </pre>
+         </div>
+        <div class="example-demo">
+          <div id="layout2" class="example-layout example-box">
+            <div class="page">
+              <div class="example-layout-el" data-size="80,80" data-pos="50%" data-origin="right,bottom"> right,bottom </div>
+              <div class="example-layout-el" data-size="80,80" data-pos="50%" data-origin="center"> center </div>
+              <div class="example-layout-el" data-size="80,80" data-pos="50%" > default </div>
+              <div data-size="1,100%" data-pos="50%,0" data-bg="#a06"></div>
+              <div data-size="100%,1" data-pos="0,50%" data-bg="#a06"></div>
+
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <p>
+          Origin is a starting position of the element, values are one or two specific strings separated by comma,
+          first value represent the point of X direction,can be set to <code>left,center,right</code>;<br/>
+          second value represent the point of Y direction,can be set to <code>top,center,bottom</code>. <br/>
+          Default origin  is <code>top,left</code>.
+        </p>
+        <p class="important"><strong>FontSize</strong></p>
+        <p>
+          <span class="important">FontSize</span><span class="muted">(data-fontsize attribute)</span>define fontsize the sprite element,
+          value can be  number or percentage  eg: <code>data-fontsize="20"</code>
+        </p>
+        <p class="code">
+          <code>data-fontsize="20" </code> result in css style: <code>font-size:20px;</code>
+          <br/>
+          <code>data-fontsize="2%" </code> result in css style: <code>font-size:20vw;</code>
+        </p>
+        <p class="important"> <strong>Color,Background and Opacity</strong> </p>
+        <p></p>
+      </div>
+    </div>
+    <div id="timeLine">
+      <h2>TimeLine Content</h2>
+    </div>
+    <div id="animations">
+      <h2>Animations Content</h2>
+    </div>
+
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+
+<script src="assets/js/prettify.js"></script>
+<script src="../src/h5show.js"></script>
+<script>
+  (function () {
+    prettyPrint();
+
+    var createExampleShow = function(selector,options){
+      var els = [].slice.call(document.querySelectorAll(selector));
+      for(var i in els){
+         var el = els[i];
+         new H5Show(el.id,options);
+      }
+    };
+    createExampleShow('.example-layout');
+  })();
+</script>
+</body>
 </html>

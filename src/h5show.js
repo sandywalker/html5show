@@ -481,7 +481,7 @@
                     removeClass(el, cfg.show, cfg.showing);
 
                     if (el.classList.contains('hiding')) {
-                        addClass(el, 'hide');
+                        addClass(el, cfg.hide);
                     } else {
                         var hide = cfg.hide || 'hide';
                         addClass(el, hide);
@@ -524,7 +524,6 @@
         page: {
             show: null,
             hide: null,
-            stay: 3,
             duration: 1.5
         },
         sprite: {
@@ -816,10 +815,11 @@
                 removeClass(this.indicator, 'hide');
             }
             var list = $$('li', this.indicator);
+
             for (var i in list) {
                 var li = list[i];
                 removeClass(li, 'active');
-                if (idx === i) {
+                if (idx === toNumber(i)) {
                     addClass(li, 'active');
                 }
             }
@@ -884,6 +884,9 @@
 
         //Calculate the page animation show and hide class, then add to page config _show/_hide
         calcPageAnimation: function() {
+            if (this.pageCount === 1) {
+                return;
+            }
             var lastPage = this.lastIdx >= 0 ? this.getPage(this.lastIdx) : null;
             var lcfg = lastPage ? lastPage.config : null;
             var page = this.getPage(this.idx);

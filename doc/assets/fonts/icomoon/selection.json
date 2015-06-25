@@ -1,0 +1,115 @@
+{
+	"IcoMoonType": "selection",
+	"icons": [
+		{
+			"icon": {
+				"paths": [
+					"M1024 576v-384h-192v-64c0-35.2-28.8-64-64-64h-704c-35.2 0-64 28.8-64 64v192c0 35.2 28.8 64 64 64h704c35.2 0 64-28.8 64-64v-64h128v256h-576v128h-32c-17.674 0-32 14.326-32 32v320c0 17.674 14.326 32 32 32h128c17.674 0 32-14.326 32-32v-320c0-17.674-14.326-32-32-32h-32v-64h576zM768 192h-704v-64h704v64z"
+				],
+				"attrs": [],
+				"tags": [
+					"paint-format",
+					"format",
+					"color"
+				],
+				"defaultCode": 57386,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"order": 6,
+				"id": 1720,
+				"prevSize": 32,
+				"code": 59660,
+				"ligatures": "paint-format, format",
+				"name": "paint-format"
+			},
+			"setIdx": 0,
+			"setId": 0,
+			"iconIdx": 12
+		},
+		{
+			"icon": {
+				"paths": [
+					"M1024 320l-512-256-512 256 512 256 512-256zM512 148.97l342.058 171.030-342.058 171.030-342.058-171.030 342.058-171.030zM921.444 460.722l102.556 51.278-512 256-512-256 102.556-51.278 409.444 204.722zM921.444 652.722l102.556 51.278-512 256-512-256 102.556-51.278 409.444 204.722z"
+				],
+				"attrs": [],
+				"tags": [
+					"stack",
+					"layers"
+				],
+				"defaultCode": 57494,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 214,
+				"order": 7,
+				"prevSize": 32,
+				"code": 59694,
+				"ligatures": "stack, layers",
+				"name": "stack"
+			},
+			"setIdx": 0,
+			"setId": 0,
+			"iconIdx": 46
+		},
+		{
+			"icon": {
+				"paths": [
+					"M256 192l-128-128h-64v64l128 128zM320 0h64v128h-64zM576 320h128v64h-128zM640 128v-64h-64l-128 128 64 64zM0 320h128v64h-128zM320 576h64v128h-64zM64 576v64h64l128-128-64-64zM1010 882l-636.118-636.118c-18.668-18.668-49.214-18.668-67.882 0l-60.118 60.118c-18.668 18.668-18.668 49.214 0 67.882l636.118 636.118c18.668 18.668 49.214 18.668 67.882 0l60.118-60.118c18.668-18.668 18.668-49.214 0-67.882zM480 544l-192-192 64-64 192 192-64 64z"
+				],
+				"attrs": [],
+				"tags": [
+					"magic-wand",
+					"wizard"
+				],
+				"defaultCode": 57836,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 582,
+				"order": 8,
+				"prevSize": 32,
+				"code": 59799,
+				"ligatures": "magic-wand, wizard",
+				"name": "magic-wand"
+			},
+			"setIdx": 0,
+			"setId": 0,
+			"iconIdx": 151
+		}
+	],
+	"height": 1024,
+	"metadata": {
+		"name": "icomoon"
+	},
+	"preferences": {
+		"showGlyphs": true,
+		"showQuickUse": true,
+		"showQuickUse2": true,
+		"showSVGs": true,
+		"fontPref": {
+			"prefix": "icon-",
+			"metadata": {
+				"fontFamily": "icomoon"
+			},
+			"metrics": {
+				"emSize": 1024,
+				"baseline": 6.25,
+				"whitespace": 50
+			}
+		},
+		"imagePref": {
+			"prefix": "icon-",
+			"png": true,
+			"useClassSelector": true,
+			"color": 4473924,
+			"bgColor": 16777215,
+			"classSelector": ".icon"
+		},
+		"historySize": 100,
+		"showCodes": false
+	}
+}

@@ -9,10 +9,22 @@ body{
 p{
   font-size: 18px;
   line-height: 1.45;
+  margin-bottom: 15px;
 }
 
-p.muted{
+.muted,p.muted{
   color:#999;
+}
+
+p.code{
+  background: #fff;
+  border:1px solid #ccc;
+  padding:10px;
+}
+
+code{
+  color:deeppink;
+  font-size: 14px;
 }
 
 .important{
@@ -172,9 +184,9 @@ footer p{
 	margin-left:200px;
 }
 
-.container-doc{
-  margin-top:60px;
-}
+/*.container-doc{*/
+  /*padding-top:60px;*/
+/*}*/
 
 #indexDemo{
   width:500px;
@@ -202,22 +214,41 @@ footer p{
   height:400px;
   margin:0;
   padding:1px 0;
-  background: -webkit-linear-gradient(deepskyblue,lightblue);
-  background: -o-linear-gradient(deepskyblue,lightblue);
-  background: -moz-linear-gradient(deepskyblue, lightblue);
-  background: linear-gradient(deepskyblue,lightblue);
+  background: -webkit-linear-gradient(#73552e,#ba9b78);
+  background: -o-linear-gradient(#73552e,#ba9b78);
+  background: -moz-linear-gradient(#73552e, #ba9b78);
+  background: linear-gradient(#73552e,#ba9b78);
   color:#fff;
   overflow: hidden;
   position: relative;
 }
 
-#banner .intro h1{
-   font-size: 60px;
-}
 
 #banner .intro h2{
   margin-bottom: 20px;
 }
+
+#banner .circle{
+   border:2px solid #FFF;
+   border-radius: 200px;
+   width:90px;
+   height:90px;
+   line-height: 90px;
+   font-size: 28px;
+   text-align: center;
+}
+#banner .feature{
+
+}
+
+#banner .feature h1{
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+
+
 
 
 /*----------------demo container -------------------*/
@@ -385,4 +416,100 @@ ul.phone-sizes li.active .icon{
    border:12px solid #eee;
    box-shadow: 0 10px 20px #999;
 
+}
+
+
+/*--------- docs ------------*/
+#intro,#config,#layout{
+  padding-top: 40px;
+}
+
+
+.example-container{
+  min-height: 100px;
+}
+
+.example-container .example-code,
+.example-container .example-demo{
+
+
+  min-height: 200px;
+}
+
+.example-container .example-code{
+  float:left;
+  width:68%;
+}
+
+.example-container .example-demo{
+  width:30%;
+  float:right;
+}
+
+.example-container .prettyprinted{
+  min-height: 180px;
+  margin:0;
+  overflow: scroll;
+}
+
+
+.example-container .example-demo{
+  height:200px;
+  overflow: hidden;
+}
+
+.example-box{
+  background: #222;
+  color:#fff;
+  font-size: 10px;
+  font-family: Menlo, 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', Monaco, Consolas, monospace;
+}
+
+.example-layout-el{
+  background: #555;
+  border:1px solid #aaa;
+}
+
+
+
+
+
+/*----- Icon moon -----*/
+
+
+
+
+@font-face {
+  font-family: 'icomoon';
+  src:url('../fonts/icomoon.eot?fem7z2');
+  src:url('../fonts/icomoon.eot?#iefixfem7z2') format('embedded-opentype'),
+  url('../fonts/icomoon.ttf?fem7z2') format('truetype'),
+  url('../fonts/icomoon.woff?fem7z2') format('woff'),
+  url('../fonts/icomoon.svg?fem7z2#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-paint-format:before {
+  content: "\e90c";
+}
+.icon-stack:before {
+  content: "\e92e";
+}
+.icon-magic-wand:before {
+  content: "\e997";
 }

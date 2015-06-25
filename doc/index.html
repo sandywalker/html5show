@@ -28,20 +28,71 @@
         </ul>
       </div>
     </div>
-    <header class="banner" id="banner">
-        <div class="page">
-          <div class="intro" data-pos="100,100">
-            <h1 data-time="0.5" data-show="bounceInLeft">H5Show</h1>
-            <h2 data-time="1.2" data-show="bounceInRight">Write HTML, Show Magic!</h2>
-            <p data-time="2" data-show="fadeInUp">Opensource animation creator for</p>
-            <p data-time="2.5" data-show="fadeInDown">Sliders,Welcome pages,Presentations etc.</p>
+    <header class="banner" id="banner" >
+        <div class="page" data-stay="6">
+          <div class="mockup" data-pos="-15%,100" data-size="320,200">
+            <div data-bg="assets/img/mac.png" data-pos="50,0" data-size="238,185" data-time="2" data-show="fadeInDown" ></div>
+            <div data-bg="assets/img/pad.png" data-pos="0,-0" data-size="88,115" data-time="2.2" data-show="fadeInRight" ></div>
+            <div data-bg="assets/img/phone.png" data-pos="100,-0" data-size="33,66" data-time="2.6" data-show="fadeInRight"></div>
           </div>
+          <div class="intro" data-pos="15%,100">
+            <h1 data-fontsize="5%" data-time="0.5" data-show="bounceInLeft">H5Show</h1>
+            <h2 data-fontsize="2%"  data-time="1.2" data-show="bounceInRight">Write HTML, Show Magic!</h2>
+            <p data-fontsize="1.3%"  data-time="2" data-show="fadeInUp">Opensource animation creator for</p>
+            <p data-fontsize="1.3%"  data-time="2.5" data-show="fadeInDown">Sliders,Welcome pages,Presentations etc.</p>
+          </div>
+
+
+        </div>
+        <div class="page">
+
+          <div class="text-center" data-pos="20%,50%" data-origin="left,center" data-size="90,120">
+            <div class="circle" data-time="0.5" data-show="zoomInLeft" data-stay="3" data-hide="zoomOutLeft">HTML</div>
+            <p  data-time="0.8" data-show="fadeIn" data-stay="3" data-hide="fadeOut">Layout</p>
+          </div>
+          <div data-pos="36%,50%" data-origin="left,center" data-fontsize="40" data-size="40,75">
+              <span data-time="0.8" data-show="bounceInDown" data-stay="3" data-hide="bounceOutUp">+</span>
+          </div>
+          <div class="text-center" data-pos="50%" data-origin="center" data-size="90,120">
+            <div class="circle" data-time="1.5" data-show="zoomIn" data-stay="2.5" data-hide="zoomOut">CSS3</div>
+            <p data-time="1.8" data-show="fadeIn"  data-stay="2.5" data-hide="fadeOut">Animation</p>
+          </div>
+          <div data-pos="-35%,50%" data-origin="right,center" data-fontsize="40" data-size="40,75">
+            <span data-time="1.8" data-show="bounceInDown"  data-stay="2.5" data-hide="bounceOutUp">+</span>
+          </div>
+          <div class="text-center" data-pos="-20%,50%" data-origin="right,center" data-size="90,120">
+            <div class="circle" data-time="2.2" data-show="zoomInRight" data-stay="2" data-hide="zoomOutRight" >JS</div>
+            <p data-time="2.5" data-show="fadeIn"  data-stay="2" data-hide="fadeOut">Control</p>
+          </div>
+
+        </div>
+        <div class="page" data-stay="10">
+          <div class="feature reuse " data-size="18%,auto" data-pos="20%,100">
+            <h1 data-fontsize="2.2%" data-time="0.5" data-show="rollIn"><i class="icon-paint-format font-icon"></i> Easy to reuse</h1>
+            <p data-time="1.5" data-show="flipInY">
+              Everything is html and css,just copy the template code and modify.It's also easy to create your own templates and share them.
+            </p>
+          </div>
+          <div class="feature customize" data-size="18%,auto"  data-pos="50%,100" data-origin="center,top">
+            <h1 data-fontsize="2.2%"  data-time="0.7" data-show="rollIn"><i class="icon-magic-wand font-icon"></i> Easy to custom</h1>
+            <p data-time="1.5" data-show="flipInY">
+              If you are good at css,you can easily write custom styles for layout and more sophisticated animations.
+            </p>
+          </div>
+          <div class="feature extend" data-size="18%,auto" data-pos="-20%,100" data-origin="right,top">
+            <h1 data-fontsize="2.2%" data-time="0.9" data-show="rollIn"><i class="icon-stack font-icon"></i> Easy to extend</h1>
+            <p data-time="1.5" data-show="flipInY">
+              The library is written by pure JS which can be extended with more powerful functions.
+            </p>
+          </div>
+
+
         </div>
         <!--<ul>-->
          <!-- -->
           <!--<li>layout by HTML, using CSS3 for animation and javascript for control</li>-->
           <!--<li>Responsive, design for all of your devices with different screens</li>-->
-          <!--<li>Flexible, easy to customize ,easy to extend! </li>-->
+          <!--<li>Flexible,easy to reuse, easy to customize ,easy to extend! </li>-->
         <!--</ul>-->
     </header>
     <div class="container container-index">
@@ -170,7 +221,7 @@
 
 
     <script src="assets/js/prettify.js"></script>
-    <script src="../src/hammer.min.js"></script>
+    <script src="assets/js/hammer.min.js"></script>
     <script src="../src/h5show.js"></script>
     <script>
     (function(){
