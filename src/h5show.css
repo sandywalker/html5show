@@ -1,9 +1,3 @@
-/*reset*/
-body, h1, h2, h3, h4, h5, h6, p {
-  margin: 0;
-  padding: 0;
-}
-
 /* if fullScreen mode , below css is needed */
 .hide {
   display: none;
@@ -101,8 +95,8 @@ body, h1, h2, h3, h4, h5, h6, p {
   transform: translateY(-50%);
 }
 .arrow-left .arrow-inner {
-  border-left: 3px solid #222;
-  border-bottom: 3px solid #222;
+  border-left: 3px solid #666;
+  border-bottom: 3px solid #666;
   transform: translate(15px, -2.5px) rotate(45deg);
 }
 
@@ -112,8 +106,8 @@ body, h1, h2, h3, h4, h5, h6, p {
   transform: translateY(-50%);
 }
 .arrow-right .arrow-inner {
-  border-right: 3px solid #222;
-  border-bottom: 3px solid #222;
+  border-right: 3px solid #666;
+  border-bottom: 3px solid #666;
   transform: translate(-15px, -2.5px) rotate(-45deg);
 }
 
@@ -123,8 +117,8 @@ body, h1, h2, h3, h4, h5, h6, p {
   transform: translateX(-50%);
 }
 .arrow-top .arrow-inner {
-  border-top: 3px solid #222;
-  border-left: 3px solid #222;
+  border-top: 3px solid #666;
+  border-left: 3px solid #666;
   transform: translate(-1px, 13.5px) rotate(45deg);
 }
 
@@ -134,8 +128,8 @@ body, h1, h2, h3, h4, h5, h6, p {
   transform: translateX(-50%);
 }
 .arrow-bottom .arrow-inner {
-  border-bottom: 3px solid #222;
-  border-right: 3px solid #222;
+  border-bottom: 3px solid #666;
+  border-right: 3px solid #666;
   transform: translate(1px, -15.5px) rotate(45deg);
 }
 

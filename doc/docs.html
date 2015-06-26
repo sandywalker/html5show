@@ -35,10 +35,10 @@
     <li><a href="#intro">Introduction</a></li>
     <li><a href="#config">Config</a></li>
     <li><a href="#layout">Layout</a></li>
-    <li><a href="#timeLine">TimeLine</a></li>
-    <li><a href="#animations">Animations</a></li>
+    <li><a href="#animation">Animation</a></li>
   </ul>
   <div class="col-main">
+
     <div id="intro">
       <h2>Introduction</h2>
 
@@ -46,7 +46,7 @@
         any third party libraries. </p>
 
       <p>The library is inspired by two CSS3 animation project <a href="http://daneden.me/animate">Animate.css</a> and
-        <a href="www.justinaguilar.com/animations/">CSS3 ANIMATION CHEAT SHEET</a>.
+        <a href="http://www.justinaguilar.com/animations/">CSS3 ANIMATION CHEAT SHEET</a>.
         We use Javascript to do a more detailed control and enhancements.</p>
       <p>If you want to get started, please  visit our <a href="index.html">home page</a>.</p>
       <br/>
@@ -55,8 +55,8 @@
         Before proceed further, there are some important concepts need to figure out.
       </p>
       <ul>
-        <li><strong>Container:</strong> &nbsp; html element  use to wrap all of the elements in show.</li>
-        <li><strong>Page:</strong>  &nbsp;   stage which animations can run in, one show can have several pages.</li>
+        <li><strong>Container:</strong> &nbsp; html element  used to wrap all of the elements in show.</li>
+        <li><strong>Page:</strong>  &nbsp;   a stage which animations can run in, one h5Show can have one or several pages.</li>
         <li><strong>Sprite: </strong> &nbsp;  animated element,each page can have several sprites in it. </li>
       </ul>
       <p>
@@ -97,7 +97,7 @@
       </p>
       <pre class="prettyprint">
         {
-        autoPlay: false, // whether auto goto and  play next page when current page is shown.
+        play: false, // whether auto goto and  play next page when current page is shown.
 
         direction: 'horizontal', //default page animation direction,values:'horizontal','vertical'
 
@@ -252,19 +252,274 @@
           <code>data-fontsize="2%" </code> result in css style: <code>font-size:20vw;</code>
         </p>
         <p class="important"> <strong>Color,Background and Opacity</strong> </p>
-        <p></p>
+        <p>
+          These options are not necessary for layout and not very recommended, because they will make the html more complex and unreadable .
+          We suggest you write css styles. Here is an example.
+        </p>
+        <div class="example-container">
+           <div class="example-code">
+              <pre class="prettyprint">
+&lt;div id=&quot;layout3&quot; &gt;
+  &lt;div class=&quot;page&quot;&gt;
+    &lt;p data-fontsize=&quot;18&quot;&gt;sp1 font-size:18px;&lt;/p&gt;
+    &lt;div data-pos=&quot;0,25%&quot; data-size=&quot;100%,50&quot; data-bg=&quot;#0a0&quot;&gt;sp2 green background&lt;/div&gt;
+    &lt;div data-pos=&quot;0,50%&quot; data-size=&quot;100%,50&quot; data-bg=&quot;#FFA955&quot;&gt;sp3 orange background&lt;/div&gt;
+    &lt;div data-bg=&quot;#fff&quot; data-opacity=&quot;0.3&quot; data-size=&quot;100&quot; data-pos=&quot;50%&quot; data-origin=&quot;center&quot;  &gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+              </pre>
+           </div>
+          <div class="example-demo">
+            <div id="layout3" class="example-layout example-box">
+              <div class="page">
+                <p data-fontsize="18">
+                  sp1 font-size:18px;
+                </p>
+                <div data-pos="0,25%" data-size="100%,50" data-bg="#096">
+                  sp2 green background
+                </div>
+                <div data-pos="0,50%" data-size="100%,50" data-bg="#FFA955">
+                  sp3 orange background
+                </div>
+                <div data-pos="50%" data-origin="center" data-size="100" data-bg="#fff" data-opacity="0.3"></div>
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
       </div>
     </div>
-    <div id="timeLine">
-      <h2>TimeLine Content</h2>
-    </div>
-    <div id="animations">
-      <h2>Animations Content</h2>
+
+    <div id="animation">
+      <h2>Animation</h2>
+      <p>
+        H5Show use CSS3 for all page and sprite animations, if you are not familiar with CSS3 animations please visit <a
+        href="http://www.w3schools.com/css/css3_animations.asp">w3cschools</a> website. We don't need you to learn everything about CSS3 animations,
+        just know the basic concepts of it.
+      </p>
+      <p>The two CSS3 animation project <a href="http://daneden.me/animate" target="_blank">Animate.css</a> and
+        <a href="http://www.justinaguilar.com/animations/" target="_blank">CSS3 ANIMATION CHEAT SHEET</a> we mentioned above,simplify the CSS3 animation with css classes,
+        you can create animation by just adding class to the target element.
+      </p>
+      <p>
+        Now, let's explain how to use these animation classes in h5show.
+      </p>
+      <p class="important"><strong>Page animations</strong></p>
+      <p>
+        The library will calculate the page animation class automatically by default. Here are two examples
+      </p>
+      <div class="example-container">
+         <div class="example-code">
+            <pre class="prettyprint">
+&lt;div id=&quot;ani1&quot; data-arrow=&quot;true&quot; data-indicator=&quot;false&quot;&gt;
+  &lt;div class=&quot;page&quot;&gt;page1&lt;/div&gt;
+  &lt;div class=&quot;page&quot;&gt;page2&lt;/div&gt;
+&lt;/div&gt;
+            </pre>
+         </div>
+        <div class="example-demo">
+           <div id="ani1" class="example-box example-ani" data-arrow="true" data-indicator="false">
+             <div class="page">page1</div>
+             <div class="page">page2</div>
+           </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <br/>
+
+      <div class="example-container">
+        <div class="example-code">
+            <pre class="prettyprint">
+&lt;div id=&quot;ani1&quot; data-direction=&quot;vertical&quot; data-arrow=&quot;true&quot; data-indicator=&quot;false&quot;&gt;
+  &lt;div class=&quot;page&quot;&gt;page1&lt;/div&gt;
+  &lt;div class=&quot;page&quot;&gt;page2&lt;/div&gt;
+&lt;/div&gt;
+            </pre>
+        </div>
+        <div class="example-demo">
+          <div id="ani2" class="example-box example-ani" data-direction="vertical" data-arrow="true" data-indicator="false">
+            <div class="page">page1</div>
+            <div class="page">page2</div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <p><span class="important">Show</span> <span class="muted">(data-show attribute)</span> option define the animation class when page show.</p>
+      <p><span class="important">Hide</span> <span class="muted">(data-hide attribute)</span> option define the animation class when page hide.</p>
+      <p>All available animation classes can be found by <a href="http://daneden.me/animate" target="_blank">Animate.css</a> and
+        <a href="http://www.justinaguilar.com/animations/" target="_blank">CSS3 ANIMATION CHEAT SHEET</a> .
+        You can also write your own animation classes by yourself, import to page and use them,it's very interesting! </p>
+
+      <p>
+        The below example shows how to use the custom animation class.
+      </p>
+
+      <div class="example-container">
+        <div class="example-code">
+            <pre class="prettyprint">
+&lt;div id=&quot;ani3&quot;   data-arrow=&quot;true&quot; &gt;
+  &lt;div class=&quot;page&quot; data-show=&quot;bounceInLeft&quot; data-hide=&quot;zoomOut&quot; data-bg=&quot;#090&quot;&gt;page1&lt;/div&gt;
+  &lt;div class=&quot;page&quot; data-show=&quot;zoomInDown&quot; data-hide=&quot;zoomOut&quot; data-bg=&quot;#FFA955&quot;&gt;page2&lt;/div&gt;
+&lt;/div&gt;
+            </pre>
+        </div>
+        <div class="example-demo">
+          <div id="ani3" class="example-box example-ani"  data-arrow="true" >
+            <div class="page" data-show="bounceInLeft" data-hide="zoomOut" data-bg="#FFA955">page1</div>
+            <div class="page" data-show="zoomInDown" data-hide="zoomOut" data-bg="#096">page2</div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+
+      <p class="important"><strong>Sprite animations</strong></p>
+      <p>
+        The sprite animation is very similar with page animation which has more features.You can determine when the sprite
+        will show, how long it will stay and how to animate when showing . Here is an example.
+      </p>
+      <div class="example-container">
+        <div class="example-code">
+          <pre class="prettyprint">
+&lt;div id=&quot;ani4&quot;   data-arrow=&quot;true&quot; &gt;
+  &lt;div class=&quot;page&quot;&gt;
+    &lt;div data-time=&quot;0.5&quot; data-show=&quot;pullDown&quot; data-size=&quot;50%,100%&quot; data-bg=&quot;#ccc&quot;&gt;&lt;/div&gt;
+    &lt;div data-time=&quot;1&quot; data-show=&quot;pullUp&quot; data-size=&quot;50%,100%&quot; data-pos=&quot;50%,0&quot; data-bg=&quot;#096&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;page&quot;&gt;
+    ...
+  &lt;/div&gt;
+&lt;/div&gt;
+          </pre>
+        </div>
+        <div class="example-demo">
+          <div id="ani4" class="example-box example-ani" data-play="true" >
+            <div class="page">
+              <div data-time="0.5" data-show="pullDown" data-size="50%,100%" data-bg="#ccc"></div>
+              <div data-time="1" data-show="pullUp" data-size="50%,100%" data-pos="50%,0" data-bg="#096"></div>
+              <!--<div data-time="1.5" data-show="bounceInDown" data-size="35,20" data-pos="50%" data-origin="right,center" data-color="#000">Hello</div>-->
+              <!--<div data-time="2" data-show="bounceInUp" data-size="35,20" data-pos="50%" data-origin="left,center"> &nbsp;H5Show</div>-->
+            </div>
+            <div class="page">
+                <div data-time="0.5" data-show="stretchRight" data-size="100%,50%" data-bg="#ccc"></div>
+                <div data-time="1" data-show="stretchLeft" data-size="100%,50%" data-pos="0,50%" data-bg="#096"></div>
+                <div data-time="1.5" data-show="rotateIn" data-size="50,20" data-pos="50%" data-origin="right,center" data-color="#000">Life is</div>
+                <div data-time="2" data-show="rotateIn" data-size="35,20" data-pos="50%" data-origin="left,center"  data-color="#000"> &nbsp;Beautiful</div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <p>
+        <span class="important">Time</span> <span class="muted">(data-time attribute)</span> option define when will the sprite  show in current page, value must be a number which represent second.
+        eg: 1 means 1s.
+      </p>
+
+      <p>
+        <span class="important">Show,Hide</span> options are same with Page animation.
+      </p>
+
+
+      <p>
+      <p><span class="important">Showing</span> <span class="muted">(data-showing attribute)</span> option define the animation class when sprite is already displayed in the page.
+         Using nested sprites can also implement this feature. You can compare two ways by following example.</p>
+      </p>
+      <div class="example-container">
+        <div class="example-code">
+          <pre class="prettyprint">
+&lt;div id=&quot;ani5&quot;  data-arrow=&quot;true&quot; &gt;
+  &lt;div class=&quot;page&quot;&gt;
+    &lt;div data-size=&quot;50&quot;data-pos=&quot;33%,50%&quot; data-origin=&quot;center&quot; data-bg=&quot;#666&quot;
+         data-time=&quot;0.5&quot; data-show=&quot;expandOpen&quot; data-showing=&quot;pulse&quot;&gt;&lt;/div&gt;
+    &lt;!--Nested sprites--&gt;
+    &lt;div   data-size=&quot;50&quot;  data-pos=&quot;66%,50%&quot; data-origin=&quot;center&quot; data-time=&quot;3&quot; data-show=&quot;expandOpen&quot; &gt;
+      &lt;div class=&quot;pulse&quot; data-size=&quot;100%&quot; data-bg=&quot;#666&quot; &gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+          </pre>
+        </div>
+        <div class="example-demo">
+          <div id="ani5" class="example-box example-ani"   data-play="true">
+            <div class="page" >
+                <div data-size="50" data-bg="#666" data-pos="33%,50%" data-origin="center"
+                  data-time="0.5" data-show="expandOpen" data-showing="pulse"></div>
+                <!--Nested sprites-->
+                <div   data-size="50"  data-pos="66%,50%" data-origin="center" data-time="3" data-show="expandOpen" >
+                  <div class="pulse" data-size="100%" data-bg="#666" ></div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+
+      <p>
+        <span class="important">Stay</span> option define how long will the sprite display,value must be a number which represent second.
+      </p>
+
+      <div class="example-container">
+        <div class="example-code">
+          <pre class="prettyprint">
+&lt;div id=&quot;ani6&quot; class=&quot;example-box example-ani&quot; data-arrow=&quot;true&quot;&gt;
+  &lt;div class=&quot;page&quot;&gt;
+    &lt;div data-size=&quot;50&quot; data-pos=&quot;50%&quot; data-origin=&quot;center&quot;  data-bg=&quot;#666&quot;
+         data-time=&quot;0.5&quot; data-show=&quot;zoomInLeft&quot; data-stay=&quot;1&quot; data-hide=&quot;zoomOutRight&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;page&quot;&gt;
+     ...
+  &lt;/div&gt;
+&lt;/div&gt;
+          </pre>
+        </div>
+        <div class="example-demo">
+            <div id="ani6" class="example-box example-ani"  data-play="true">
+              <div class="page">
+                  <div data-size="50" data-pos="50%" data-origin="center"  data-bg="#666"
+                    data-time="0.5" data-show="zoomInLeft" data-stay="1" data-hide="hinge"></div>
+              </div>
+              <div class="page">
+                <div data-size="50" data-pos="50%" data-origin="center"  data-bg="#666"
+                     data-time="0.5" data-show="zoomInDown" data-stay="1" data-hide="zoomOutUp"></div>
+              </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+
+      <p>
+        <span class="important">Duration</span> option define how long will animation continued ,value must be a number which represent second.
+      </p>
+
+
+
+
     </div>
 
   </div>
   <div class="clearfix"></div>
 </div>
+
+
+
+<!--<div class="example-container">-->
+  <!--<div class="example-code">-->
+          <!--<pre class="prettyprint">-->
+          <!--</pre>-->
+  <!--</div>-->
+  <!--<div class="example-demo">-->
+    <!--<div id="ani1" class="example-box example-ani"  data-arrow="true" >-->
+      <!--<div class="page">-->
+
+      <!--</div>-->
+
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="clearfix"></div>-->
+<!--</div>-->
 
 
 <script src="assets/js/prettify.js"></script>
@@ -281,6 +536,7 @@
       }
     };
     createExampleShow('.example-layout');
+    createExampleShow('.example-ani');
   })();
 </script>
 </body>

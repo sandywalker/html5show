@@ -415,21 +415,8 @@
     }; //End of _layoutElement
 
 
-    var spriteHandlers = [];
 
-    var removeHandler = function(handler) {
-        var idx = spriteHandlers.indexOf(handler);
-        if (idx >= 0) {
-            spriteHandlers.shift(idx);
-        }
-    };
 
-    var clearSpriteHandlers = function() {
-        for (var h in spriteHandlers) {
-            window.clearTimeout(spriteHandlers[h]);
-        }
-        spriteHandlers.length = 0;
-    };
 
 
     //Set animation duration of the element
@@ -442,8 +429,22 @@
         }
     };
 
+
+    var removeSpriteHandler = function(spriteHandlers, handler) {
+        var idx = spriteHandlers.indexOf(handler);
+        if (idx >= 0) {
+            spriteHandlers.shift(idx);
+        }
+    };
+
+    var clearSpriteHandlers = function(spriteHandlers) {
+        for (var h in spriteHandlers) {
+            window.clearTimeout(spriteHandlers[h]);
+        }
+        spriteHandlers.length = 0;
+    };
     //Animate the element if dataset has time property
-    var _animateElement = function(el) {
+    var _animateElement = function(el, spriteHandlers) {
         var ds = el.dataset;
         var cfg = el.config;
 
@@ -460,7 +461,7 @@
             var showH = window.setTimeout(function() {
                 removeClass(el, 'hide');
                 addClass(el, 'animated', cfg.show);
-                removeHandler(showH);
+                removeSpriteHandler(spriteHandlers, showH);
             }, time * 1000);
             spriteHandlers.push(showH);
             // Set Showing animation if user specify;
@@ -469,7 +470,7 @@
                 var showingH = window.setTimeout(function() {
                     removeClass(el, cfg.show);
                     addClass(el, cfg.showing);
-                    removeHandler(showingH);
+                    removeSpriteHandler(spriteHandlers, showingH);
                 }, (time + cfg.duration) * 1000);
                 spriteHandlers.push(showingH);
             }
@@ -487,7 +488,7 @@
                         addClass(el, hide);
                     }
 
-                    removeHandler(hideH);
+                    removeSpriteHandler(spriteHandlers, hideH);
                 }, (time + cfg.duration + stay) * 1000);
                 spriteHandlers.push(hideH);
             }
@@ -515,7 +516,7 @@
 
 
     var _defaults = {
-        autoPlay: false,
+        play: false,
         direction: 'horizontal',
         indicator: true,
         arrow: false,
@@ -543,8 +544,7 @@
 
 
 
-    var hidePageHandler = null; //handler that hide page after animate
-    var autoPlayHandler = null; //handler that auto play to next page
+
 
 
     var _cPageAni = {
@@ -568,10 +568,8 @@
     function H5Show(elId, options) {
         this.container = byId(elId);
         this.config = extend({}, _defaults, options, this.container.dataset);
-
         this.initEventListeners();
         this.init();
-
     }
 
     H5Show.prototype = {
@@ -582,13 +580,23 @@
             this.pageMap = {};
             //sprites is object to keep all sprites, by page id;
             this.sprites = {};
+            //timeout handlers of the sprites
+            this.spritesHandlers = [];
+            //handler that hide page after animate
+            this.hidePageHandler = null;
+            //handler that auto play to next page
+            this.playHandler = null;
             this.pages = $$(_sPage, this.container);
             this.pageCount = this.pages.length;
             this.container.classList.add(_cPageContainer);
 
             this.config.indicator = toBool(this.config.indicator);
             this.config.arrow = toBool(this.config.arrow);
+            this.config.play = toBool(this.config.play);
 
+            if (this.pages.length === 0) {
+                return;
+            }
             if (this.config.indicator) {
                 this.initIndicator();
             }
@@ -603,12 +611,13 @@
                 page.idx = i;
                 //If page id is not setted, create one;
                 if (!page.id) {
-                    page.id = 'page' + (page.idx + 1);
+                    page.id = this.container.id + 'page' + (page.idx + 1);
                 }
                 this.pageMap[page.id] = page;
             }
             this.lastIdx = -1;
             this.idx = this.idxFromHash() || this.config.index;
+
             this.goto(this.getPage(this.idx));
         },
         //Initialize indicator and set position,fix the position when it is set to left or right
@@ -832,6 +841,9 @@
 
             addClass(this.arrowPrev, 'hide');
             addClass(this.arrowNext, 'hide');
+            if (this.pageCount === 0) {
+                return;
+            }
             var page = this.getPage(idx);
             if (this.pageCount > 1 && page.config.arrow) {
                 if (idx > 0) {
@@ -871,7 +883,7 @@
                 removeClass(page, cfg._show);
                 addClass(page, cfg._hide);
 
-                delay(hidePageHandler, cfg.duration, function() {
+                delay(that.hidePageHandler, cfg.duration, function() {
                     if (that.idx !== idx) {
                         removeClass(page, _cPageActive, _cAnimated, cfg._hide);
                         that.hideSprites(page);
@@ -892,19 +904,20 @@
             var page = this.getPage(this.idx);
             var cfg = page.config;
             var isHor = this.config.direction === 'horizontal';
+            removeClass(page, cfg._hide);
             if (this.lastIdx < this.idx) {
                 if (lcfg) {
                     removeClass(lastPage, lcfg._hide);
-                    lcfg._hide = lcfg.hide || isHor ? _cPageAni.toL : _cPageAni.toT;
+                    lcfg._hide = lcfg.hide || (isHor ? _cPageAni.toL : _cPageAni.toT);
                 }
-                cfg._show = cfg.show || isHor ? _cPageAni.fromR : _cPageAni.fromB;
+                cfg._show = cfg.show || (isHor ? _cPageAni.fromR : _cPageAni.fromB);
             } else {
 
                 if (lcfg) {
                     removeClass(lastPage, lcfg._hide);
-                    lcfg._hide = lcfg.hide || isHor ? _cPageAni.toR : _cPageAni.toB;
+                    lcfg._hide = lcfg.hide || (isHor ? _cPageAni.toR : _cPageAni.toB);
                 }
-                cfg._show = cfg.show || isHor ? _cPageAni.fromL : _cPageAni.fromT;
+                cfg._show = cfg.show || (isHor ? _cPageAni.fromL : _cPageAni.fromT);
             }
         },
 
@@ -913,18 +926,19 @@
             var sprites = this.sprites[page.id];
             for (var i = 0; i < sprites.length; i++) {
                 var sprite = sprites[i];
-                _animateElement(sprite);
+                _animateElement(sprite, this.spritesHandlers);
             }
         },
 
         //Show page by index
         showPage: function(idx) {
 
-            window.clearTimeout(autoPlayHandler);
+            window.clearTimeout(this.playHandler);
             var page = this.getPage(idx);
             addClass(page, _cAnimated, _cPageActive, page.config._show);
             this.resetSprites(page);
-            clearSpriteHandlers();
+
+            clearSpriteHandlers(this.spritesHandlers);
 
             this.showSprites(page);
             this.lastIdx = page.idx;
@@ -935,10 +949,10 @@
         //Prepare next page to show
         prepareNext: function(idx) {
             var page = this.getPage(idx);
-            //If autoPlay is true, show next page after stay time
-            if (this.config.autoPlay) {
+            //If play is true, show next page after stay time
+            if (this.config.play) {
                 var that = this;
-                autoPlayHandler = delay(autoPlayHandler, page.config.duration + that.calcPageStay(page), function() {
+                that.playHandler = delay(that.playHandler, page.config.duration + that.calcPageStay(page), function() {
                     that.nextPage();
                 });
             }

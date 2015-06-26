@@ -2,9 +2,12 @@ body{
   font-family:"Times New Roman",Times,serif,"Calisto MT", "Avenir Next","Helvetica Neue",Avenir,Helvetica,"Lantinghei SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
   color:#333;
   background: #eee;
-  padding-top:40px;
+  padding:40px 0 0 0;
   position: relative;
+  margin:0;
 }
+
+
 
 p{
   font-size: 18px;
@@ -223,8 +226,14 @@ footer p{
   position: relative;
 }
 
+#banner h1,h2{
+  margin:0;
+  padding: 0;
+}
+
 
 #banner .intro h2{
+
   margin-bottom: 20px;
 }
 
@@ -420,7 +429,7 @@ ul.phone-sizes li.active .icon{
 
 
 /*--------- docs ------------*/
-#intro,#config,#layout{
+#intro,#config,#layout,#animation{
   padding-top: 40px;
 }
 
