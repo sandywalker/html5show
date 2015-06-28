@@ -2,6 +2,13 @@
 $arrow-color: #666;
 $indicator-color:#666;
 
+@mixin transform($transform){
+  -webkit-transform: $transform;
+     -moz-transform: $transform;
+      -ms-transform: $transform;
+          transform: $transform;
+}
+
 /* if fullScreen mode , below css is needed */
 //html,body{
 //  height:100%;
@@ -113,43 +120,43 @@ $indicator-color:#666;
 .arrow-left{
   left:10px;
   top:50%;
-  transform:translateY(-50%);
+  @include transform(translateY(-50%));
   .arrow-inner{
     border-left:3px solid $arrow-color;
     border-bottom:3px solid $arrow-color;
-    transform: translate(15px,-2.5px) rotate(45deg) ;
+    @include  transform(translate(15px,-2.5px) rotate(45deg));
   }
 }
 
 .arrow-right{
   right:10px;
   top:50%;
-  transform:translateY(-50%);
+  @include transform(translateY(-50%));
   .arrow-inner{
     border-right:3px solid $arrow-color;
     border-bottom:3px solid $arrow-color;
-    transform: translate(-15px,-2.5px) rotate(-45deg) ;
+    @include transform(translate(-15px,-2.5px) rotate(-45deg));
   }
 }
 
 .arrow-top{
   top:10px;
   left:50%;
-  transform:translateX(-50%);
+  @include transform(translateX(-50%));
   .arrow-inner{
     border-top:3px solid $arrow-color;
     border-left:3px solid $arrow-color;
-    transform: translate(-1px,13.5px) rotate(45deg) ;
+    @include transform(translate(-1px,13.5px) rotate(45deg));
   }
 }
 .arrow-bottom{
   bottom:10px;
   left:50%;
-  transform:translateX(-50%);
+  @include transform(translateX(-50%));
   .arrow-inner{
     border-bottom:3px solid $arrow-color;
     border-right:3px solid $arrow-color;
-    transform: translate(1px,-15.5px) rotate(45deg) ;
+    @include transform(translate(1px,-15.5px) rotate(45deg));
   }
 }
 

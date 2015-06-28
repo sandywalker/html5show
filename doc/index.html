@@ -6,10 +6,8 @@
 
     <title>H5Show-Home</title>
 
-    <link rel="stylesheet" href="../src/animate.css">
-    <link rel="stylesheet" href="../src/animations.css">
-    <link rel="stylesheet" href="../src/animate-page.css">
-    <link rel="stylesheet" href="../src/h5show.css">
+
+    <link rel="stylesheet" href="assets/css/h5show.min.css">
     <link rel="stylesheet" href="assets/css/doc.css">
     <link rel="stylesheet" href="assets/css/tomorrow-night.css">
 
@@ -180,7 +178,7 @@
 
         &lt;script&gt;
           (function(){
-          var show = new H5Show('showBox',{autoPlay:true});
+          var show = new H5Show('showBox',{play:true});
           })();
         &lt;/script&gt;
             </pre>
@@ -222,12 +220,12 @@
 
     <script src="assets/js/prettify.js"></script>
     <script src="assets/js/hammer.min.js"></script>
-    <script src="../src/h5show.js"></script>
+    <script src="assets/js/h5show.min.js"></script>
     <script>
     (function(){
       prettyPrint();
 
-      var bannerShow = new H5Show('banner',{autoPlay:true});
+      var bannerShow = new H5Show('banner',{play:true});
 
       var btnShowIndexDemo = document.getElementById('showIndexDemo');
       var indexDemo = document.getElementById('indexDemo');
@@ -235,7 +233,7 @@
         e.preventDefault();
         if (indexDemo.classList.contains('hide')){
           indexDemo.classList.remove('hide');
-          var show = new H5Show('showBox',{autoPlay:true});
+          var show = new H5Show('showBox',{play:true});
         }
       });
 

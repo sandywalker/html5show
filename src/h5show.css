@@ -92,44 +92,68 @@
 .arrow-left {
   left: 10px;
   top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 .arrow-left .arrow-inner {
   border-left: 3px solid #666;
   border-bottom: 3px solid #666;
+  -webkit-transform: translate(15px, -2.5px) rotate(45deg);
+  -moz-transform: translate(15px, -2.5px) rotate(45deg);
+  -ms-transform: translate(15px, -2.5px) rotate(45deg);
   transform: translate(15px, -2.5px) rotate(45deg);
 }
 
 .arrow-right {
   right: 10px;
   top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 .arrow-right .arrow-inner {
   border-right: 3px solid #666;
   border-bottom: 3px solid #666;
+  -webkit-transform: translate(-15px, -2.5px) rotate(-45deg);
+  -moz-transform: translate(-15px, -2.5px) rotate(-45deg);
+  -ms-transform: translate(-15px, -2.5px) rotate(-45deg);
   transform: translate(-15px, -2.5px) rotate(-45deg);
 }
 
 .arrow-top {
   top: 10px;
   left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
   transform: translateX(-50%);
 }
 .arrow-top .arrow-inner {
   border-top: 3px solid #666;
   border-left: 3px solid #666;
+  -webkit-transform: translate(-1px, 13.5px) rotate(45deg);
+  -moz-transform: translate(-1px, 13.5px) rotate(45deg);
+  -ms-transform: translate(-1px, 13.5px) rotate(45deg);
   transform: translate(-1px, 13.5px) rotate(45deg);
 }
 
 .arrow-bottom {
   bottom: 10px;
   left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
   transform: translateX(-50%);
 }
 .arrow-bottom .arrow-inner {
   border-bottom: 3px solid #666;
   border-right: 3px solid #666;
+  -webkit-transform: translate(1px, -15.5px) rotate(45deg);
+  -moz-transform: translate(1px, -15.5px) rotate(45deg);
+  -ms-transform: translate(1px, -15.5px) rotate(45deg);
   transform: translate(1px, -15.5px) rotate(45deg);
 }
 

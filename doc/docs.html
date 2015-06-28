@@ -6,10 +6,7 @@
   <meta name="msapplication-tap-highlight" content="no"/>
   <title>H5Show Docs</title>
 
-  <link rel="stylesheet" href="../src/animate.css">
-  <link rel="stylesheet" href="../src/animations.css">
-  <link rel="stylesheet" href="../src/animate-page.css">
-  <link rel="stylesheet" href="../src/h5show.css">
+  <link rel="stylesheet" href="assets/css/h5show.min.css">
   <link rel="stylesheet" href="assets/css/doc.css">
   <link rel="stylesheet" href="assets/css/tomorrow-night.css">
 
@@ -31,7 +28,7 @@
 
 <div class="container container-main container-doc">
 
-  <ul class="side-nav">
+  <ul class="side-nav side-nav-doc">
     <li><a href="#intro">Introduction</a></li>
     <li><a href="#config">Config</a></li>
     <li><a href="#layout">Layout</a></li>
@@ -417,9 +414,8 @@
         eg: 1 means 1s.
       </p>
 
-      <p>
-        <span class="important">Show,Hide</span> options are same with Page animation.
-      </p>
+      <p><span class="important">Show</span> <span class="muted">(data-show attribute)</span> option define the animation class when sprite element show in page.</p>
+      <p><span class="important">Hide</span> <span class="muted">(data-hide attribute)</span> option define the animation class when sprite element hide.</p>
 
 
       <p>
@@ -429,7 +425,7 @@
       <div class="example-container">
         <div class="example-code">
           <pre class="prettyprint">
-&lt;div id=&quot;ani5&quot;  data-arrow=&quot;true&quot; &gt;
+&lt;div id=&quot;ani5&quot;  data-play=&quot;true&quot; &gt;
   &lt;div class=&quot;page&quot;&gt;
     &lt;div data-size=&quot;50&quot;data-pos=&quot;33%,50%&quot; data-origin=&quot;center&quot; data-bg=&quot;#666&quot;
          data-time=&quot;0.5&quot; data-show=&quot;expandOpen&quot; data-showing=&quot;pulse&quot;&gt;&lt;/div&gt;
@@ -494,6 +490,61 @@
         <span class="important">Duration</span> option define how long will animation continued ,value must be a number which represent second.
       </p>
 
+      <div class="example-container">
+        <div class="example-code">
+          <pre class="prettyprint">
+&lt;div id=&quot;ani7&quot;  data-play=&quot;true&quot; &gt;
+  &lt;div class=&quot;page&quot;&gt;
+    &lt;div data-size=&quot;50&quot; data-pos=&quot;33%,50%&quot; data-origin=&quot;center&quot;  data-bg=&quot;#666&quot;
+         data-time=&quot;0.5&quot; data-show=&quot;zoomIn&quot;&gt;1.5s&lt;/div&gt;
+    &lt;div data-size=&quot;50&quot; data-pos=&quot;66%,50%&quot; data-origin=&quot;center&quot;  data-bg=&quot;#666&quot;
+         data-time=&quot;0.5&quot; data-show=&quot;zoomIn&quot; data-duration=&quot;3&quot;&gt;3s&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+          </pre>
+        </div>
+        <div class="example-demo">
+          <div id="ani7" class="example-box example-ani"  data-play="true" >
+            <div class="page">
+              <div data-size="50" data-pos="33%,50%" data-origin="center"  data-bg="#666"
+                data-time="0.5" data-show="zoomIn">default 1.5s</div>
+              <div data-size="50" data-pos="66%,50%" data-origin="center"  data-bg="#666"
+                   data-time="0.5" data-show="zoomIn" data-duration="3">3s</div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <p>
+        One more thing, if you feel that animation is not strong enough and don't want to write additional css, you can compose the sprites to form new animations.
+        Here is example.
+      </p>
+      <div class="example-container">
+        <div class="example-code">
+          <pre class="prettyprint">
+&lt;div id=&quot;ani8&quot; class=&quot;example-box example-ani&quot;  data-arrow=&quot;true&quot; &gt;
+  &lt;div class=&quot;page&quot;&gt;
+    &lt;div data-time=&quot;0.5&quot; data-show=&quot;rollIn&quot; data-size=&quot;50&quot; data-pos=&quot;50%&quot; data-origin=&quot;center&quot; &gt;
+      &lt;div data-time=&quot;0.5&quot; data-show=&quot;expandOpen&quot;&gt; data-size=&quot;100%&quot; data-bg=&quot;#666&quot;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+          </pre>
+        </div>
+        <div class="example-demo">
+          <div id="ani8" class="example-box example-ani"  data-play="true" >
+            <div class="page">
+              <div data-size="50" data-pos="50%" data-origin="center" data-time="0.5" data-show="rollIn" >
+                 <div data-size="100%" data-bg="#666" data-time="0.5" data-show="expandOpen">
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
 
 
 
@@ -502,28 +553,20 @@
   </div>
   <div class="clearfix"></div>
 </div>
+<p>&nbsp;</p>
+<footer class="container">
+  <div class="footer-content">
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p>This project is maintained by <a href="http://sandywalker.github.io">Sandy Duan</a>.</p>
+    <p>License MIT © Sandy Duan</p>
+    <p>Hosted on <a href="https://github.com/sandywalker/h5show">Github</a>.</p>
+  </div>
+</footer>
 
-
-
-<!--<div class="example-container">-->
-  <!--<div class="example-code">-->
-          <!--<pre class="prettyprint">-->
-          <!--</pre>-->
-  <!--</div>-->
-  <!--<div class="example-demo">-->
-    <!--<div id="ani1" class="example-box example-ani"  data-arrow="true" >-->
-      <!--<div class="page">-->
-
-      <!--</div>-->
-
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div class="clearfix"></div>-->
-<!--</div>-->
 
 
 <script src="assets/js/prettify.js"></script>
-<script src="../src/h5show.js"></script>
+<script src="assets/js/h5show.min.js"></script>
 <script>
   (function () {
     prettyPrint();

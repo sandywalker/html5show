@@ -51,9 +51,11 @@ module.exports = function (grunt) {
       options: {
         banner: '<%= banner %>'
       },
-      dist: {
-        src: '<%= concat.dist.dest %>',
-        dest: 'dist/<%= pkg.name %>.min.js'
+      dist:{
+        files:{
+          'dist/<%= pkg.name %>.min.js':['<%= concat.dist.dest %>'],
+          'doc/assets/js/<%= pkg.name %>.min.js':['<%= concat.dist.dest %>']
+        }
       }
     },
     cssmin: {
@@ -62,7 +64,8 @@ module.exports = function (grunt) {
          },
          compress: {
              files: {
-                 'dist/<%= pkg.name %>.min.css': ['dist/<%= pkg.name %>.css']
+                 'dist/<%= pkg.name %>.min.css': ['dist/<%= pkg.name %>.css'],
+                 'doc/assets/css/<%= pkg.name %>.min.css': ['dist/<%= pkg.name %>.css']
              }
          }
     },
@@ -89,6 +92,15 @@ module.exports = function (grunt) {
           jshintrc: 'src/.jshintrc'
         },
         src: ['src/**/*.js']
+      }
+    },
+    copy: {
+      main: {
+        files: [
+          // includes files within path
+          {expand: true, cwd: 'doc/', src: ['**'], dest: '/Users/sindtom/github/sandywalker.github.io/h5show/'}
+
+        ]
       }
     },
     // watch: {
@@ -119,9 +131,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-jsbeautifier');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default task.
-  grunt.registerTask('default', ['jsbeautifier','jshint', 'sass','connect', 'clean', 'concat','uglify','cssmin']);
+  grunt.registerTask('default', ['jsbeautifier','jshint', 'sass','connect', 'clean', 'concat','uglify','cssmin','copy']);
   // grunt.registerTask('server', function () {
   //   grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
   //   grunt.task.run(['serve']);

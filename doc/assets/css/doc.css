@@ -5,6 +5,7 @@ body{
   padding:40px 0 0 0;
   position: relative;
   margin:0;
+
 }
 
 
@@ -120,7 +121,8 @@ footer p{
 	right:0;
 	height:40px;
 	position: fixed;
-	background: rgba(0,0,0,.9);
+	background: rgba(0,0,0,.8);
+  z-index: 999;
 }
 
 .brand{
@@ -138,6 +140,7 @@ footer p{
 	list-style: none;
 	margin:0;
 	padding:0;
+
 }
 
 .nav li{
@@ -157,7 +160,7 @@ footer p{
 }
 
 .nav li.active a{
-	background: #333;
+	background: rgba(80,80,80,.7);
 }
 
 .side-nav{
@@ -214,19 +217,21 @@ footer p{
 
 
 #banner{
-  height:400px;
-  margin:0;
+
+  height:440px;
+  margin:-40px 0 0 0;
   padding:1px 0;
-  background: -webkit-linear-gradient(#73552e,#ba9b78);
-  background: -o-linear-gradient(#73552e,#ba9b78);
-  background: -moz-linear-gradient(#73552e, #ba9b78);
-  background: linear-gradient(#73552e,#ba9b78);
+  background: #5b2042 url(../img/bg-banner.jpg);
+  /*background: -webkit-linear-gradient(#73552e,#ba9b78);*/
+  /*background: -o-linear-gradient(#73552e,#ba9b78);*/
+  /*background: -moz-linear-gradient(#73552e, #ba9b78);*/
+  /*background: linear-gradient(#73552e,#ba9b78);*/
   color:#fff;
   overflow: hidden;
   position: relative;
 }
 
-#banner h1,h2{
+#banner p,h1,h2{
   margin:0;
   padding: 0;
 }
@@ -429,6 +434,11 @@ ul.phone-sizes li.active .icon{
 
 
 /*--------- docs ------------*/
+
+.side-nav-doc{
+  position: fixed;
+}
+
 #intro,#config,#layout,#animation{
   padding-top: 40px;
 }
@@ -440,8 +450,6 @@ ul.phone-sizes li.active .icon{
 
 .example-container .example-code,
 .example-container .example-demo{
-
-
   min-height: 200px;
 }
 
