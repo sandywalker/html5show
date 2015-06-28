@@ -14,9 +14,6 @@ Browser compatibility: Chrome,Safari,Firefox,Opera,Edge,ie11(*ie10 will be suppo
 - Support Url hash
 - Easy to reuse,customize and extend
 
-##HomePage
-[h5show home](http://sandywalker.github.io/h5show)
-
 ##Demo
 [h5show demo](http://sandywalker.github.io/h5show/demo)
 
