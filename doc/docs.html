@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   <meta name="msapplication-tap-highlight" content="no"/>
-  <title>H5Show Docs</title>
+  <title>html5show Docs</title>
 
-  <link rel="stylesheet" href="assets/css/h5show.min.css">
+  <link rel="stylesheet" href="assets/css/html5show.min.css">
   <link rel="stylesheet" href="assets/css/doc.css">
   <link rel="stylesheet" href="assets/css/tomorrow-night.css">
 
@@ -15,7 +15,7 @@
 <body>
 <div class="navbar">
   <div class="container">
-    <div class="brand">H5Show</div>
+    <div class="brand">html5show</div>
     <ul class="nav">
       <li><a href="index.html">Home</a></li>
       <li><a href="demo.html">Demo</a></li>
@@ -39,7 +39,7 @@
     <div id="intro">
       <h2>Introduction</h2>
 
-      <p>H5Show is a pure lightweight Javascript library using HTML for layout,CSS3 for animation. It does not depend on
+      <p>html5show is a pure lightweight Javascript library using HTML for layout,CSS3 for animation. It does not depend on
         any third party libraries. </p>
 
       <p>The library is inspired by two CSS3 animation project <a href="http://daneden.me/animate">Animate.css</a> and
@@ -53,7 +53,7 @@
       </p>
       <ul>
         <li><strong>Container:</strong> &nbsp; html element  used to wrap all of the elements in show.</li>
-        <li><strong>Page:</strong>  &nbsp;   a stage which animations can run in, one h5Show can have one or several pages.</li>
+        <li><strong>Page:</strong>  &nbsp;   a stage which animations can run in, one html5show can have one or several pages.</li>
         <li><strong>Sprite: </strong> &nbsp;  animated element,each page can have several sprites in it. </li>
       </ul>
       <p>
@@ -76,7 +76,7 @@
         &lt;/div&gt;
 
         &lt;script&gt;
-          var h5show = new H5Show('showBox');
+          var html5show = new html5show('showBox');
         &lt;/script&gt;
             </pre>
 
@@ -86,7 +86,7 @@
         &lt;/div&gt;
 
         &lt;script&gt;
-          var h5show = new H5Show('showBox',{arrow:true,indicator:false});
+          var html5show = new html5show('showBox',{arrow:true,indicator:false});
         &lt;/script&gt;
           </pre>
       <p>
@@ -139,7 +139,7 @@
     </div>
     <div id="layout">
       <h2>Layout</h2>
-      <p>H5Show mainly use absolute position for layout, but it doesn't not means you must set every thing with <code>position:absolute</code> ,
+      <p>html5show mainly use absolute position for layout, but it doesn't not means you must set every thing with <code>position:absolute</code> ,
          it's just for convenient, you can write css usual. If you are good at css, we suggest you do that. Let's explain layout by example codes</p>
       <p class="important"><strong>Size and Position</strong></p>
       <div class="example-container">
@@ -290,7 +290,7 @@
     <div id="animation">
       <h2>Animation</h2>
       <p>
-        H5Show use CSS3 for all page and sprite animations, if you are not familiar with CSS3 animations please visit <a
+        html5show use CSS3 for all page and sprite animations, if you are not familiar with CSS3 animations please visit <a
         href="http://www.w3schools.com/css/css3_animations.asp">w3cschools</a> website. We don't need you to learn everything about CSS3 animations,
         just know the basic concepts of it.
       </p>
@@ -299,7 +299,7 @@
         you can create animation by just adding class to the target element.
       </p>
       <p>
-        Now, let's explain how to use these animation classes in h5show.
+        Now, let's explain how to use these animation classes in html5show.
       </p>
       <p class="important"><strong>Page animations</strong></p>
       <p>
@@ -396,7 +396,7 @@
               <div data-time="0.5" data-show="pullDown" data-size="50%,100%" data-bg="#ccc"></div>
               <div data-time="1" data-show="pullUp" data-size="50%,100%" data-pos="50%,0" data-bg="#096"></div>
               <!--<div data-time="1.5" data-show="bounceInDown" data-size="35,20" data-pos="50%" data-origin="right,center" data-color="#000">Hello</div>-->
-              <!--<div data-time="2" data-show="bounceInUp" data-size="35,20" data-pos="50%" data-origin="left,center"> &nbsp;H5Show</div>-->
+              <!--<div data-time="2" data-show="bounceInUp" data-size="35,20" data-pos="50%" data-origin="left,center"> &nbsp;html5show</div>-->
             </div>
             <div class="page">
                 <div data-time="0.5" data-show="stretchRight" data-size="100%,50%" data-bg="#ccc"></div>
@@ -559,14 +559,14 @@
     <p class="pull-right"><a href="#">Back to top</a></p>
     <p>This project is maintained by <a href="http://sandywalker.github.io">Sandy Duan</a>.</p>
     <p>License MIT © Sandy Duan</p>
-    <p>Hosted on <a href="https://github.com/sandywalker/h5show">Github</a>.</p>
+    <p>Hosted on <a href="https://github.com/sandywalker/html5show">Github</a>.</p>
   </div>
 </footer>
 
 
 
 <script src="assets/js/prettify.js"></script>
-<script src="assets/js/h5show.min.js"></script>
+<script src="assets/js/html5show.min.js"></script>
 <script>
   (function () {
     prettyPrint();
@@ -575,7 +575,7 @@
       var els = [].slice.call(document.querySelectorAll(selector));
       for(var i in els){
          var el = els[i];
-         new H5Show(el.id,options);
+         new html5show(el.id,options);
       }
     };
     createExampleShow('.example-layout');

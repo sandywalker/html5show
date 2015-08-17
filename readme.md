@@ -1,4 +1,4 @@
-# h5Show
+# html5show
 
 > Cool animation html building library, based on the power of CSS3 animation in modern browsers, it's lightweight,fast, responsive ! 	 it's for both developers and designers, you just need to write simple Html, then left all other things to the library.
 
@@ -15,21 +15,21 @@ Browser compatibility: Chrome,Safari,Firefox,Opera,Edge,ie11(*ie10 will be suppo
 - Easy to reuse,customize and extend
 
 ##Demo
-[h5show demo](http://sandywalker.github.io/h5show/demo)
+[html5show demo](http://sandywalker.github.io/html5show/demo)
 
 ##Document
-[h5show docs](http://sandywalker.github.io/h5show/docs)
+[html5show docs](http://sandywalker.github.io/html5show/docs)
 
 
 ## Getting Started
 
 Add stylesheet to the <head> element of your html.
 ```html
-   <link rel="stylesheet" type="text/css" href="{path}/h5show.css">
+   <link rel="stylesheet" type="text/css" href="{path}/html5show.css">
 ```
-Put h5show.js to appropriate place (commonly before the </body>) of your html.
+Put html5show.js to appropriate place (commonly before the </body>) of your html.
 ```html
-  <script type="text/javascript" src="{path}/h5show.min.js"></script>
+  <script type="text/javascript" src="{path}/html5show.min.js"></script>
 ```
 Add a container in which you put the animation pages.
 ```html
@@ -51,7 +51,7 @@ Add animation pages and sprite elements in it,set class:'page' to each page elem
 ```html
 <div id="showBox">
    <div class="page">
-       <h1>Hello h5Show</h1>
+       <h1>Hello html5show</h1>
        <p>Amazing</p>
        <p>Flexible</p>
        <p>Powerful</p>
@@ -65,7 +65,7 @@ Now, let's add some magic , add dataset attributes to the elements which set the
 ```html
 <div id="showBox">
     <div class="page">
-        <h1 data-time="0.5" data-show="expandOpen">Hello h5Show</h1>
+        <h1 data-time="0.5" data-show="expandOpen">Hello html5show</h1>
         <p data-time="1" data-show="fadeInLeft">Amazing</p>
         <p data-time="1.25" data-show="fadeInLeft">Flexible</p>
         <p data-time="1.5" data-show="fadeInLeft">Powerful</p>
@@ -75,14 +75,14 @@ Now, let's add some magic , add dataset attributes to the elements which set the
     </div>
  </div>
 ```
-Last Step,using Javascript to create the h5Show. It's down.
+Last Step,using Javascript to create the html5show. It's down.
 ```js
   (function(){
-    var show = new H5Show('showBox',{play:true});
+    var show = new html5show('showBox',{play:true});
   })();
 ```
-To see the result , welcome to [h5show](http://sandywalker.github.io/h5show) home.
-Visit  [docs](http://sandywalker.github.io/h5show/docs)  for more details, and [demo](http://sandywalker.github.io/h5show/demo) page to see some advanced usages.
+To see the result , welcome to [html5show](http://sandywalker.github.io/html5show) home.
+Visit  [docs](http://sandywalker.github.io/html5show/docs)  for more details, and [demo](http://sandywalker.github.io/html5show/demo) page to see some advanced usages.
 
 
 ## License

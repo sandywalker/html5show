@@ -255,9 +255,9 @@
             return v;
         };
 
-       
 
-        
+
+
 
 
         //Is position set to  center
@@ -304,17 +304,17 @@
              }
         };
 
-       
 
-        /*  
+
+        /*
             calcMarginFix by origin
             sz: width or height,
-            origin: origin 
+            origin: origin
             flag: determine margin is positive or negative,value can be 1 or -1,default value = -1
         */
         var calcMarginFix = function(sz,origin,flag){
                 var fg = flag||-1;
-                var suffix = sz.indexOf('%')>=0?'%':'px';  
+                var suffix = sz.indexOf('%')>=0?'%':'px';
                 var margin = 0;
                 var intSize = fg*Number.parseInt(sz);
                 if (origin==='center'){
@@ -359,7 +359,7 @@
            }
 
         }else{
-           styles.width = '100%'; 
+           styles.width = '100%';
         }
 
         if (ds.origin){
@@ -376,7 +376,7 @@
             if (pos.length){
                 var xc = isCenter(pos[0]);
                 var yc = isCenter(pos[1]);
-                
+
                 if (xc){
                     if (sizes.length === 2){
                         styles.left = '50%';
@@ -394,7 +394,7 @@
 
                 }else{
                     getXPos(pos[0],styles);
-                    
+
                     if (yc){
                         styles.top = '50%';
                         if (sizes.length === 2){
@@ -493,7 +493,7 @@
                var stay = toNumber(ds.stay);
                var hideH = window.setTimeout(function(){
                  removeClass(el,cfg.show,cfg.showing);
-               
+
                  console.log(el.className);
                  if (el.classList.contains('hiding')){
                      addClass('hide');
@@ -501,7 +501,7 @@
                     var hide = cfg.hide||'hide';
                     addClass(el,hide);
                  }
-                 
+
                  removeHandler(hideH);
                },(time+cfg.duration+stay)*1000);
                spriteHandlers.push(hideH);
@@ -580,7 +580,7 @@
 
 
     //Construct method, set container by element Id, extend options and set value to config
-    function H5Show(elId,options){
+    function html5show(elId,options){
     	this.container = byId( elId );
       this.config = extend({},_defaults,options,this.container.dataset);
 
@@ -589,7 +589,7 @@
 
     }
 
-    H5Show.prototype = {
+    html5show.prototype = {
 
         //Initialize pages,pageCount,lastIdx, showPage by index of config
     	  init:function(){
@@ -601,7 +601,7 @@
             this.pageCount = this.pages.length;
             this.container.classList.add(_cPageContainer);
 
-            
+
 
 
             if (this.config.indicator){
@@ -633,7 +633,7 @@
           var ind = this.config.indicator;
 
           if (ind === 'true' || ind === true){
-              ind = this.config.direction === 'horizontal'? 'bottom':'right';  
+              ind = this.config.direction === 'horizontal'? 'bottom':'right';
           }
           addClass(ul,'indicator','indicator-'+ ind);
           for(var i=0;i<this.pages.length;i++){
@@ -649,7 +649,7 @@
             ul.style.top = ul.offsetTop - ul.clientHeight / 2 + 'px';
           }
           this.indicator = ul;
-     
+
 
         },
         initArrow:function(){
@@ -669,7 +669,7 @@
                 inner.dataset.flag = 'arrow';
                 inner.dataset.direction = direction;
                 addClass(inner,'arrow-inner');
-                
+
                 arr.dataset.flag = 'arrow';
                 arr.dataset.direction = direction;
 
@@ -719,7 +719,7 @@
                     that.setIdx( that.idxFromHash());
             }, false);
 
-            that.container.addEventListener('h5show.pageEnter', function (e) {
+            that.container.addEventListener('html5show.pageEnter', function (e) {
                 var newHash = '#/' + e.target.id;
                 //If the hash is changed, uses hashchange event handler to process, otherwise set page index.
                 if (window.location.hash!==newHash){
@@ -733,7 +733,7 @@
             //Init the click event handler for indicators and arrows.
             that.container.addEventListener('click',function(e){
                 var tgt = e.target;
-                
+
                 if (tgt.nodeName.toLowerCase()==='li' && tgt.dataset.flag==='indicator'){
                      var idx = toNumber(tgt.dataset.page);
                      that.goto(that.getPage(idx));
@@ -761,7 +761,7 @@
         //Go to page by id
         goto:function(page){
             if (page){
-                triggerEvent(page, 'h5show.pageEnter');
+                triggerEvent(page, 'html5show.pageEnter');
             }
         },
         //Get page index from hash
@@ -797,7 +797,7 @@
             if (this.config.indicator){
               this.updateIndicator(idx);
             }
-            
+
             if (this.config.arrow){
                 this.updateArrow(idx);
             }
@@ -849,7 +849,7 @@
                 var cfg = page.config;
                 removeClass(page,cfg._show);
                 addClass(page,cfg._hide);
-               
+
                 delay(hidePageHandler,cfg.duration,function(){
                     if (that.idx!==idx){
                         removeClass(page,_cPageActive,_cAnimated,cfg._hide);
@@ -859,9 +859,9 @@
             }
         },
 
-        
 
-        //Calculate the page animation show and hide class, then add to page config _show/_hide 
+
+        //Calculate the page animation show and hide class, then add to page config _show/_hide
         calcPageAnimation:function(){
                var lastPage = this.lastIdx>=0?this.getPage(this.lastIdx):null;
                var lcfg =  lastPage?lastPage.config:null;
@@ -872,15 +872,15 @@
                     if (lcfg){
                         removeClass(lastPage,lcfg._hide);
                         lcfg._hide = lcfg.hide||isHor?_cPageAni.toL:_cPageAni.toT;
-                    }    
-                    cfg._show = cfg.show || isHor?_cPageAni.fromR:_cPageAni.fromB;   
+                    }
+                    cfg._show = cfg.show || isHor?_cPageAni.fromR:_cPageAni.fromB;
                }else{
-                    
+
                     if (lcfg){
                         removeClass(lastPage,lcfg._hide);
                         lcfg._hide = lcfg.hide||isHor?_cPageAni.toR:_cPageAni.toB;
                     }
-                    cfg._show = cfg.show || isHor?_cPageAni.fromL:_cPageAni.fromT;   
+                    cfg._show = cfg.show || isHor?_cPageAni.fromL:_cPageAni.fromT;
                }
         },
 
@@ -901,7 +901,7 @@
           addClass(page,_cAnimated,_cPageActive,page.config._show);
           this.resetSprites(page);
           clearSpriteHandlers();
-          
+
           this.showSprites(page);
           this.lastIdx = page.idx;
 
@@ -961,6 +961,6 @@
 
 
 
-    window.H5Show = H5Show;
+    window.html5show = html5show;
 
 }(document, window));

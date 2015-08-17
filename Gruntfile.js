@@ -98,7 +98,7 @@ module.exports = function (grunt) {
       main: {
         files: [
           // includes files within path
-          {expand: true, cwd: 'doc/', src: ['**'], dest: '/Users/sindtom/github/sandywalker.github.io/h5show/'}
+          {expand: true, cwd: 'doc/', src: ['**'], dest: '/Users/sindtom/github/sandywalker.github.io/html5show/'}
 
         ]
       }

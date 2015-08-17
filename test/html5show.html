@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <meta name="msapplication-tap-highlight" content="no" />
-    <title>h5Show Test Suite</title>
+    <title>html5show Test Suite</title>
 
     <link rel="stylesheet" href="../src/animate.css">
     <link rel="stylesheet" href="../src/animations.css">
     <link rel="stylesheet" href="../src/animate-page.css">
-    <link rel="stylesheet" href="../src/h5show.css">
+    <link rel="stylesheet" href="../src/html5show.css">
     <style>
        body{
           color:#fff;
@@ -43,7 +43,7 @@
   </head>
   <body>
 
-    <div id="h5show" data-direction="horizontal" data-indicator="true" data-arrow="true">
+    <div id="html5show" data-direction="horizontal" data-indicator="true" data-arrow="true">
       <!--<ul class="indicator indicator-left">-->
          <!--<li data-page="0" class="active"></li>-->
          <!--<li data-page="1"></li>-->
@@ -53,7 +53,7 @@
          <h1>page1</h1>
          <h1 id="abc" data-pos="center,40%" data-fontsize="5%" data-size="100%,auto"  data-time="1" data-duration="1.5"
              data-show="bounceInUp"  data-showing="pulse" data-hide="bounceOutDown" data-stay="2">
-            Hello H5Show
+            Hello html5show
          </h1>
          <p data-fontsize="8%" data-time="1.5" data-show="bounceInLeft" >This is Demo !</p>
          <div data-bg="../resources/img/bg1.jpg" data-time="2" data-pos="-0,-0" data-size="300,300" >
@@ -66,7 +66,7 @@
         <div data-bg="../resources/img/bg1.jpg" data-pos="0,0" data-time="1" data-size="50%,100%" data-show="bounceInDown"></div>
         <!--<h1 data-pos="center,40%" data-fontsize="5%" data-size="100%,auto"  data-time="1" data-duration="1.5"-->
             <!--data-show="bounceInUp" data-hide="bounceOutDown" data-showing="pulse" data-stay="2">-->
-          <!--Hello H5Show-->
+          <!--Hello html5show-->
         <!--</h1>-->
         <p data-fontsize="8%" data-time="1.5" data-show="bounceInLeft" >This is Demo !</p>
         <!--<div class="box" data-time="1.5" data-stay="3" data-pos="-0,-0" data-size="50%,30%">-->
@@ -89,10 +89,10 @@
 
 
     <script src="../dist/hammer.min.js"></script>
-    <script src="../src/h5show.js"></script>
+    <script src="../src/html5show.js"></script>
     <script>
     (function(){
-       var show = new H5Show('h5show',{autoPlay:true});
+       var show = new html5show('html5show',{autoPlay:true});
 
        var page1 = document.getElementById('page1');
        // var arr =  getAllChildren(page1);

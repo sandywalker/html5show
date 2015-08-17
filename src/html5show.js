@@ -565,14 +565,14 @@
 
 
     //Construct method, set container by element Id, extend options and set value to config
-    function H5Show(elId, options) {
+    function html5show(elId, options) {
         this.container = byId(elId);
         this.config = extend({}, _defaults, options, this.container.dataset);
         this.initEventListeners();
         this.init();
     }
 
-    H5Show.prototype = {
+    html5show.prototype = {
 
         //Initialize pages,pageCount,lastIdx, showPage by index of config
         init: function() {
@@ -720,7 +720,7 @@
                     that.setIdx(that.idxFromHash());
                 }, false);
 
-                that.container.addEventListener('h5show.pageEnter', function(e) {
+                that.container.addEventListener('html5show.pageEnter', function(e) {
                     var newHash = '#/' + e.target.id;
                     //If the hash is changed, uses hashchange event handler to process, otherwise set page index.
                     if (window.location.hash !== newHash) {
@@ -769,7 +769,7 @@
         goto: function(page) {
             if (page) {
                 if (this.config.urlHash) {
-                    triggerEvent(page, 'h5show.pageEnter');
+                    triggerEvent(page, 'html5show.pageEnter');
                 } else {
                     this.setIdx(page.idx);
                 }
@@ -999,6 +999,6 @@
 
 
 
-    window.H5Show = H5Show;
+    window.html5show = html5show;
 
 }(document, window));
